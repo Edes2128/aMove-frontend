@@ -30,7 +30,6 @@
   border-radius: 50%;
 background-color: white;
 box-shadow: 0 5px 5px rgba(1,1,1,.1);
-
 }
 .div-img-form-login-home{
   width: 100%;
@@ -61,12 +60,13 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   padding:  0 5px;
 }
 .logo-move{
-  width: 100px;
+  width: 90px;
+
 }
 
 .user-move-admin{
   display: flex;
-  width: 15%;
+  width: 20%;
   justify-content: space-around;
   align-items: center;
   position: relative;
@@ -75,13 +75,13 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
 .hover-logout{
   width: 300px;
   height: 100px;
-  background-color: white;
   position: absolute;
   top: 70px;
   right: 0;
   transition: all 1s ease-in;
   display: none;
-  box-shadow: -2px 3px 10px rgba(226, 18, 18, 0.4);
+  box-shadow: -2px 3px 10px rgba(55, 168, 33, 0.4);
+  background-color: white;
 }
 .hover-logout p{
   display: flex;
@@ -102,10 +102,9 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
 }
 
 .logo-user-loggedin{
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
   box-shadow: 0 5px 7px rgba(1,1,1,.4);
+  background-color: white;
+
 }
 .user-name-admin{
   font-size: 20px;
@@ -145,4 +144,63 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
 .link p{
   width: 50%;
   margin-left: 10px;
+  display: flex;
+}
+.admin-klient{
+  display: flex;
+  width: 90%;
+  margin:0 auto;
+  padding: 20px;
+  justify-content: space-between;
+}
+.admin-klient-cat{
+  display: flex;
+  width: 30%;
+  height: 150px;
+  align-items: center;
+  background-color: white;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.admin-klient-cat-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.data-table-klient{
+  width: 87.5%;
+  margin: 0 auto;
+  background-color: white;
+
+}
+
+.klient{
+  display: flex;
+  flex-direction: column;
+}
+
+.table-first-div{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 10px 10px;
+}
+
+.table-search-add{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 25%;
+
+}
+
+.pagination{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+
 }

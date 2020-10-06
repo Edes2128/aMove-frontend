@@ -10,8 +10,8 @@ import Produkte from "./components/Produkte";
 import Oferta from "./components/Oferta";
 import Klient from "./components/Klient";
 import { light, dark } from "../../config/theme";
-import { ThemeProvider } from "@material-ui/core";
-import { createMuiTheme} from "@material-ui/core/styles";
+import { ThemeProvider, CssBaseline } from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core/styles";
 import Brightness7Icon from "@material-ui/icons/Brightness7";
 import Brightness3Icon from "@material-ui/icons/Brightness3";
 import { Link } from "react-router-dom";
@@ -22,15 +22,14 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PersonIcon from "@material-ui/icons/Person";
 import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined";
 import ArrowDropUpOutlinedIcon from "@material-ui/icons/ArrowDropUpOutlined";
+import ShtoKlient from "./components/ShtoKlient";
 
 export default function AdminDashboard({ history }) {
   const [user, setUser] = useState({});
   const [theme, setTheme] = useState(true);
+  const [dropdownKlient,Showklientdropdown] = useState(false);
   const appliedTheme = createMuiTheme(theme ? light : dark);
-  console.log(appliedTheme)
 
-
-  
   useEffect(() => {
     axios
       .post("http://localhost/demo_react_server/api/config/user_profile.php", {
@@ -47,6 +46,7 @@ export default function AdminDashboard({ history }) {
 
   return (
     <ThemeProvider theme={appliedTheme}>
+      <CssBaseline />
       <Header
         name={user.name}
         userImg={user.image_profile}
@@ -56,7 +56,6 @@ export default function AdminDashboard({ history }) {
         <div className="sidebar-dashboard">
           <div>
             <Link className="link" to="/admin">
-              {" "}
               <HomeIcon /> <p>Kreu</p>
             </Link>
             <Link className="link" to="/admin/porosite">
@@ -69,11 +68,19 @@ export default function AdminDashboard({ history }) {
               <LocalOfferIcon /> <p>Oferta</p>
             </Link>
             <Link className="link" to="/admin/klient">
-              <PersonIcon />{" "}
+              <PersonIcon />
               <p>
-                Kliente <ArrowDropDownOutlinedIcon />
-              </p>{" "}
+                Kliente {!dropdownKlient ? <ArrowDropDownOutlinedIcon onClick={() => Showklientdropdown(!dropdownKlient)} /> : <ArrowDropUpOutlinedIcon onClick={() => Showklientdropdown(!dropdownKlient)} />}
+              </p>
             </Link>
+            {dropdownKlient && 
+            
+            <div>
+                <Link className="link" to="/admin/klient">Te gjithe</Link>
+                <Link className="link" to="/admin/klient/shto" >Shto klient</Link>
+            </div>
+            
+            }
           </div>
           {theme ? (
             <Brightness3Icon
@@ -93,7 +100,8 @@ export default function AdminDashboard({ history }) {
             <ProtectedRoutes path="/admin/porosite" component={Porosite} />
             <ProtectedRoutes path="/admin/produktet" component={Produkte} />
             <ProtectedRoutes path="/admin/oferta" component={Oferta} />
-            <ProtectedRoutes path="/admin/klient" component={Klient} />
+            <ProtectedRoutes exact path="/admin/klient" component={Klient} />
+            <ProtectedRoutes path="/admin/klient/shto" component={ShtoKlient} />
           </Switch>
         </div>
       </div>
