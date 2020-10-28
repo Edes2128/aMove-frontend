@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
 import { Switch } from "react-router-dom";
 import Porosite from "./components/Porosite";
 import ProtectedRoutes from "../components/ProtectedRoutes";
