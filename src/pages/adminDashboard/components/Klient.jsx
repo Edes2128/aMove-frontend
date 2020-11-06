@@ -30,15 +30,11 @@ export default function Klient() {
   const end = page * itemPage;
 
   useEffect(() => {
-    setInterval(
-      () =>
         axios
           .get(
             "http://localhost/demo_react_server/api/config/getAll_clients.php"
           )
-          .then((res) => setClients(res.data)),
-      500
-    );
+          .then((res) => setClients(res.data))
   }, []);
 
   const handleChange = (event, value) => {

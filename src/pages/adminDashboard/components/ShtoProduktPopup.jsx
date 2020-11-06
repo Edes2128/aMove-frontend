@@ -7,6 +7,9 @@ import AddIcon from "@material-ui/icons/Add";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Button from "@material-ui/core/Button";
 import axios from "axios";
 
 export default function ShtoProduktPopup({ closePopup }) {
@@ -21,6 +24,43 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [masat, setMasat] = useState([]);
   const [image, setImage] = useState("");
 
+  const submit = (e) => {
+    e.preventDefault();
+
+    let fd = new FormData();
+    fd.append("titulli", titulli);
+    fd.append("sku", sku);
+    fd.append("pershkrimi", pershkrimi);
+    fd.append("kategoria", kategoriForm);
+    fd.append("cmimi", cmimi);
+    fd.append("sasia", sasia);
+    fd.append("njesia", njesia);
+    fd.append("ngjyrat", ngjyrat);
+    fd.append("masat", masat);
+    fd.append("image", image);
+
+    axios.post(
+      "http://localhost/demo_react_server/api/config/shto_produkt.php",
+      fd
+    );
+  };
+
+  const addNgjyrat = (e) => {
+    if (e.target.checked) {
+        setNgjyrat(ngjyrat.concat(e.target.value));
+    } else {
+        setNgjyrat(ngjyrat.filter( ngjyra => ngjyra !== e.target.value));
+    }
+  };
+
+  const addMasat = (e) => {
+    if (e.target.checked) {
+        setMasat(masat.concat(e.target.value));
+    } else {
+        setMasat(masat.filter( masa => masa !== e.target.value));
+    }
+  };
+
   return (
     <div className="shtoprodukt-popup">
       <div className="shtoprodukt-popup-opa" onClick={() => closePopup()}></div>
@@ -32,26 +72,26 @@ export default function ShtoProduktPopup({ closePopup }) {
             onClick={() => closePopup()}
           />
         </div>
-        <form className="form">
+        <form className="form" onSubmit={submit}>
           <div className="form-titulli-sku">
             <div className="titulli">
-              <InputLabel style={{ marginBottom: "20px" }}>Titulli</InputLabel>
               <TextField
                 variant="outlined"
                 onChange={(e) => setTitulli(e.target.value)}
                 type="text"
                 style={{ width: "70%" }}
                 placeholder="Titulli"
+                label="Titulli"
               />
             </div>
             <div className="sku">
-              <InputLabel style={{ marginBottom: "20px" }}>SKU</InputLabel>
               <TextField
                 variant="outlined"
                 onChange={(e) => setSku(e.target.value)}
                 type="text"
                 style={{ width: "60%" }}
                 placeholder="SKU"
+                label="SKU"
               />
             </div>
           </div>
@@ -134,14 +174,119 @@ export default function ShtoProduktPopup({ closePopup }) {
             </FormControl>
           </div>
 
-                <div className="atribute-tjera">
-                    
-                </div>
+          <div className="atribute-tjera">
+            <h3 style={{ marginBottom: "10px" }}>Atribute te tjera</h3>
+            <div className="atributes-title">
+              <p>
+                {" "}
+                <AddIcon style={{ fontSize: "15px" }} /> Mundesia e ngjyrave
+              </p>
+              <p>
+                {" "}
+                <AddIcon style={{ fontSize: "15px" }} /> Mundesia e masave
+              </p>
+            </div>
 
-
-
-
-
+            <div className="ngjyrat-masat">
+              <div className="ngjyrat">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="ngjyrat"
+                      defaultValue="bardhe"
+                      value={"bardhe"}
+                      onChange={addNgjyrat}
+                      color="primary"
+                    />
+                  }
+                  label="E Bardhe"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="ngjyrat"
+                      defaultValue="kuqe"
+                      value={"kuqe"}
+                      onChange={addNgjyrat}
+                      color="primary"
+                    />
+                  }
+                  label="E Kuqe"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="ngjyrat"
+                      defaultValue="zeze"
+                      value={"zeze"}
+                      onChange={addNgjyrat}
+                      color="primary"
+                    />
+                  }
+                  label="E Zeze"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name="ngjyrat"
+                      defaultValue="blu"
+                      value={"blu"}
+                      onChange={addNgjyrat}
+                      color="primary"
+                    />
+                  }
+                  label="Blu"
+                />
+              </div>
+              <div className="masat">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onChange={addMasat}
+                      name="vogel"
+                      value={"vogel"}
+                      color="primary"
+                    />
+                  }
+                  label="E Vogel"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onChange={addMasat}
+                      name="mesme"
+                      value={"mesme"}
+                      color="primary"
+                    />
+                  }
+                  label="E Mesme"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onChange={addMasat}
+                      name="madhe"
+                      value={"madhe"}
+                      color="primary"
+                    />
+                  }
+                  label="E Madhe"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="submit-cancel">
+            <Button
+              color="secondary"
+              variant="outlined"
+              onClick={() => closePopup()}
+            >
+              Anullo
+            </Button>
+            <Button type="submit" color="primary" variant="contained">
+              Publiko
+            </Button>
+          </div>
         </form>
       </div>
     </div>
