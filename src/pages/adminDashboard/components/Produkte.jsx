@@ -7,19 +7,34 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import ShtoProduktPopup from "./ShtoProduktPopup";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Pagination from "@material-ui/lab/Pagination";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import axios from "axios";
+import InputLabel from "@material-ui/core/InputLabel";
 
 export default function Produkte() {
   const [kategoria, setKategoria] = useState("");
   const [produktPopup, showProduktPopup] = useState(false);
   const [produktet, merrTegjithaProduktet] = useState([]);
-
+  const [page, setPage] = useState(1);
+  const [itemPage, setItempage] = useState(5);
+  const start = (page - 1) * itemPage;
+  const end = page * itemPage;
   useEffect(() => {
     axios
       .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
       .then((res) => merrTegjithaProduktet(res.data));
   }, []);
-
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   return (
     <>
       {produktPopup && (
@@ -29,7 +44,7 @@ export default function Produkte() {
         <div className="produkte-header-item">
           <div className="produkte-header-item-left">
             <p>te gjitha produktet</p>
-            <h1>890</h1>
+            <h1>{produktet.length}</h1>
             <p>20%(30 dite)</p>
           </div>
           <div className="produkte-header-item-right">
@@ -66,7 +81,7 @@ export default function Produkte() {
         <div className="produkte-header-item">
           <div className="produkte-header-item-left">
             <p>Produkte pa stok</p>
-            <h1>45</h1>
+            <h1> 1 </h1>
             <p>75%(30 dite)</p>
           </div>
           <div className="produkte-header-item-right">
@@ -121,6 +136,72 @@ export default function Produkte() {
               Shto Produkt
             </Button>
           </div>
+        </div>
+        <Table size="large">
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell align="left">Foto</TableCell>
+              <TableCell width="300px" align="left">
+                Emri
+              </TableCell>
+              <TableCell align="left">Kategoria</TableCell>
+              <TableCell align="left">Stok</TableCell>
+              <TableCell align="left">Cmimi</TableCell>
+              <TableCell align="center">Veprimet</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {produktet.slice(start, end).map((produkt) => (
+              <TableRow key={produkt.id}>
+                <TableCell>{produkt.id} </TableCell>
+                <TableCell>
+                  <img
+                    width="50"
+                    height="50"
+                    src={`http://localhost/demo_react_server/images/${produkt.image}`}
+                    alt="Foto Produkti"
+                  />
+                </TableCell>
+                <TableCell>{produkt.titulli}</TableCell>
+                <TableCell>{produkt.kategoria}</TableCell>
+                <TableCell style={{color:produkt.sasia <= 10 ? 'red' : 'green' ,fontWeight:'bold'}} >{produkt.sasia == 0 ? 'Ska stok' : produkt.sasia}</TableCell>
+                <TableCell>{produkt.cmimi}</TableCell>
+                <TableCell align="center">
+                  <div className="veprime" style={{ cursor: "pointer" }}>
+                    <VisibilityOutlinedIcon />
+                    <EditOutlinedIcon />
+                    <DeleteOutlineOutlinedIcon />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <div className="pagination">
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <InputLabel style={{ marginRight: "10px" }} id="row">
+              User ne faqe
+            </InputLabel>
+            <Select
+              labelId="row"
+              onChange={(e) => setItempage(e.target.value)}
+              value={itemPage}
+            >
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={8}>8</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={15}>15</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+            </Select>
+          </div>
+          <Pagination
+            count={Math.ceil(produktet.length / itemPage)}
+            color="primary"
+            page={page}
+            size="large"
+            onChange={handleChange}
+          />
         </div>
       </div>
     </>
