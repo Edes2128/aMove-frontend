@@ -48,7 +48,7 @@ export default function Klient() {
           <div className="admin-klient-cat">
             <div className="admin-klient-cat-content">
               <p className="all-client">Te gjithe klientet</p>
-              <p className="all-client-num">138</p>
+              <h2 className="all-client-num">{rows.length}</h2>
               <span style={{ display: "flex" }} className="span-client-offer">
                 20% <p>(30 dite)</p>
               </span>

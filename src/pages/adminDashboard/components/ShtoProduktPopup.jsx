@@ -148,12 +148,14 @@ export default function ShtoProduktPopup({ closePopup }) {
               onChange={(e) => setCmimi(e.target.value)}
               label="Cmimi"
               placeholder="Cmimi"
+              type="number"
             />
             <TextField
               variant="outlined"
               onChange={(e) => setSasia(e.target.value)}
               label="Stock"
               placeholder="Sasia"
+              type="number"
             />
             <FormControl variant="outlined">
               <InputLabel htmlFor="njesia-label">Njesia</InputLabel>

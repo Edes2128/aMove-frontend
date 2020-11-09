@@ -27,14 +27,43 @@ export default function Produkte() {
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
+  const [pastock, setPastock] = useState([]);
+  const paSasi = pastock.filter((stock) => stock.sasia == 0);
+  const [fundi, setFundi] = useState([]);
+  const drejtFunit = fundi.filter((end) => end.sasia > 10 && end.sasia < 20);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
+      .then((res) => setFundi(res.data));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
+      .then((res) => setPastock(res.data));
+  }, []);
+
   useEffect(() => {
     axios
       .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
       .then((res) => merrTegjithaProduktet(res.data));
   }, []);
+
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  const stockColor = (item) => {
+    if (item <= 10) {
+      return "red";
+    } else if (item > 10 && item < 20) {
+      return "yellow";
+    } else {
+      return "green";
+    }
+  };
+
   return (
     <>
       {produktPopup && (
@@ -81,7 +110,7 @@ export default function Produkte() {
         <div className="produkte-header-item">
           <div className="produkte-header-item-left">
             <p>Produkte pa stok</p>
-            <h1> 1 </h1>
+            <h1> {paSasi.length} </h1>
             <p>75%(30 dite)</p>
           </div>
           <div className="produkte-header-item-right">
@@ -92,7 +121,7 @@ export default function Produkte() {
         <div className="produkte-header-item">
           <div className="produkte-header-item-left">
             <p>Produkte drejt perfundimit</p>
-            <h1>12</h1>
+            <h1> {drejtFunit.length} </h1>
             <p>75%(30 dite)</p>
           </div>
           <div className="produkte-header-item-right">
@@ -137,14 +166,12 @@ export default function Produkte() {
             </Button>
           </div>
         </div>
-        <Table size="large">
+        <Table size="medium">
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell align="left">Foto</TableCell>
-              <TableCell width="300px" align="left">
-                Emri
-              </TableCell>
+              <TableCell align="left">Emri</TableCell>
               <TableCell align="left">Kategoria</TableCell>
               <TableCell align="left">Stok</TableCell>
               <TableCell align="left">Cmimi</TableCell>
@@ -165,7 +192,14 @@ export default function Produkte() {
                 </TableCell>
                 <TableCell>{produkt.titulli}</TableCell>
                 <TableCell>{produkt.kategoria}</TableCell>
-                <TableCell style={{color:produkt.sasia <= 10 ? 'red' : 'green' ,fontWeight:'bold'}} >{produkt.sasia == 0 ? 'Ska stok' : produkt.sasia}</TableCell>
+                <TableCell
+                  style={{
+                    color: stockColor(produkt.sasia),
+                    fontWeight: "bold",
+                  }}
+                >
+                  {produkt.sasia == 0 ? "Ska stok" : produkt.sasia}
+                </TableCell>
                 <TableCell>{produkt.cmimi}</TableCell>
                 <TableCell align="center">
                   <div className="veprime" style={{ cursor: "pointer" }}>
@@ -181,7 +215,7 @@ export default function Produkte() {
         <div className="pagination">
           <div style={{ display: "flex", alignItems: "center" }}>
             <InputLabel style={{ marginRight: "10px" }} id="row">
-              User ne faqe
+              Produkte ne faqe
             </InputLabel>
             <Select
               labelId="row"
