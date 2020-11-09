@@ -531,7 +531,6 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   display: flex;
   position: relative;
 }
-
 .porosite-header-item-left{
   width: 60%;
   height: 100%;
@@ -553,7 +552,7 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   right: 0;
   top: 0;
   height: 100%;
-  width: 5px;
+  width: 10px;
   background-color: rgb(39, 179, 26);
 }
 .porosite-header-item:nth-child(3)::after{
@@ -562,7 +561,7 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   right: 0;
   top: 0;
   height: 100%;
-  width: 5px;
+  width: 10px;
   background-color:  #FECD2F;
 }
 .porosite-header-item:nth-child(4)::after{
@@ -571,7 +570,7 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   right: 0;
   top: 0;
   height: 100%;
-  width: 5px;
+  width: 10px;
   background-color: #FD3258;
 }
 .porosite-header-item:nth-child(5)::after{
@@ -580,6 +579,67 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   right: 0;
   top: 0;
   height: 100%;
-  width: 5px;
+  width: 10px;
   background-color: #3c22b4;
+}
+.klient-dashboard{
+  position: relative;
+}
+.klient-sidebar-body{
+  width: 100%;
+  position: relative ;
+  display: flex ;
+  justify-content: space-between;
+}
+.klient-dashboard-header-body{
+  width:  calc(100% - 200px) ;
+  display: flex;
+  flex-direction: column;
+  margin-left: 200px;
+}
+.klient-dashboard-header{
+  width:  100% ;
+  height: 90px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 60px;
+}
+.klient-dashboard-sidebar{
+  width: 200px;
+  height: 100%;
+  background-color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.sidebar-logo{
+  width: 100%;
+  height: 90px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.klient-dashboard-header-widgets{
+  width: 18%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.klient-dashboard-body{
+  width: 100%;
+  height: 100vh;
+  background-color: #e3e3e3;
+}
+.sidebar-links{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
