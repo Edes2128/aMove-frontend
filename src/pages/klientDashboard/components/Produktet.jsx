@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -14,8 +14,22 @@ import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Slider from "@material-ui/core/Slider";
+import axios from "axios";
 
 export default function Produktet() {
+  const [sliderPrice, setSliderPrice] = useState([0, 1000]);
+  const [products, setProducts] = useState([]);
+  const handleChange = (event, newValue) => {
+    setSliderPrice(newValue);
+  };
+  function valuetext(sliderPrice) {
+    return `${sliderPrice}$`;
+  }
+
+  axios
+    .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
+    .then((res) => setProducts(res.data));
   return (
     <div>
       <div className="filter-produkte">
@@ -53,6 +67,56 @@ export default function Produktet() {
                 </RadioGroup>
               </FormControl>
             </div>
+            <div className="filter-content-price-slider">
+              <h3>Price Slider</h3>
+              <Slider
+                value={sliderPrice}
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                style={{ width: "90%", alignSelf: "center" }}
+                getAriaValueText={valuetext}
+                max="1000"
+              />
+            </div>
+            <div className="filter-content-category">
+              <h3>Category</h3>
+              <FormControl component="fieldset">
+                <RadioGroup>
+                  <FormControlLabel
+                    value="kategoria1"
+                    control={<Radio />}
+                    label="Kategoria 1"
+                  />
+                  <FormControlLabel
+                    value="kategoria2"
+                    control={<Radio />}
+                    label="Kategoria 2"
+                  />
+                  <FormControlLabel
+                    value="kategoria3"
+                    control={<Radio />}
+                    label="Kategoria 3"
+                  />
+                  <FormControlLabel
+                    value="kategoria4"
+                    control={<Radio />}
+                    label="Kategoria 4"
+                  />
+                  <FormControlLabel
+                    value="kategoria5"
+                    control={<Radio />}
+                    label="Kategoria 5"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </div>
+            <Button
+              variant="contained"
+              style={{ marginTop: "10px" }}
+              color="primary"
+            >
+              Remove Filters
+            </Button>
           </div>
         </div>
 
@@ -93,266 +157,40 @@ export default function Produktet() {
             />
           </div>
           <div className="produktet-list">
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
+            {products.map((product) => (
+              <div className="produktet-list-item">
+                <div className="produkte-header-item-image">
+                  <img
+                    width="100"
+                    src={`http://localhost/demo_react_server/images/${product.image}`}
+                    alt=""
+                  />
+                </div>
+                <div className="produktet-list-item-price">
+                  <p> {product.cmimi} Leke </p>
+                </div>
+                <div className="produkte-header-item-title-description">
+                  <h4> {product.titulli} </h4>
+                  <p> {product.pershkrimi} </p>
+                </div>
+                <div className="produkte-header-item-wish-cart">
+                  <Button
+                    startIcon={<FavoriteBorderOutlinedIcon />}
+                    color="primary"
+                    style={{ width: "50%" }}
+                  >
+                    Wish List
+                  </Button>
+                  <Button
+                    startIcon={<LocalMallOutlinedIcon />}
+                    color="secondary"
+                    style={{ width: "50%" }}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
               </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
-              </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
-              </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
-              </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
-              </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
-              </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
-              </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
-              </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
-
-            <div className="produktet-list-item">
-              <div className="produkte-header-item-image">
-                <img width="100" src="/produkt1.jpg" alt="" />
-              </div>
-              <div className="produktet-list-item-price">
-                <p>10$</p>
-              </div>
-              <div className="produkte-header-item-title-description">
-                <h4>TRACFONE - Bring your own phone</h4>
-                <p>Use your compatible cell phone on the Tracfone</p>
-              </div>
-              <div className="produkte-header-item-wish-cart">
-                <Button
-                  startIcon={<FavoriteBorderOutlinedIcon />}
-                  color="primary"
-                  style={{ width: "50%" }}
-                >
-                  Wish List
-                </Button>
-                <Button
-                  startIcon={<LocalMallOutlinedIcon />}
-                  color="secondary"
-                  style={{ width: "50%" }}
-                >
-                  Add to Cart
-                </Button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
