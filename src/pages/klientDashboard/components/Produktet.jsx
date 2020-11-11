@@ -16,6 +16,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Slider from "@material-ui/core/Slider";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 export default function Produktet() {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
@@ -158,7 +159,7 @@ export default function Produktet() {
           </div>
           <div className="produktet-list">
             {products.map((product) => (
-              <div className="produktet-list-item">
+              <Link key={product.id} className="produktet-list-item" to={`/klient/${product.id}`}>
                 <div className="produkte-header-item-image">
                   <img
                     width="100"
@@ -189,7 +190,7 @@ export default function Produktet() {
                     Add to Cart
                   </Button>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -783,7 +783,7 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   padding-right: 10px;
 }
 .produktet-list-item{
-  width: 400px;
+  width: 30%;
   height: 400px;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
@@ -792,10 +792,12 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   flex-direction: column;
   overflow: hidden;
   transition: all .3s ease-in;
+  text-decoration: none;
+  color: black;
 }
 .produktet-list-item:hover{
   box-shadow: 0 10px 10px rgba(0, 0, 0, .2);
-  transform: translateY(-7px);
+  transform: translateY(-10px);
   cursor: pointer;
 }
 .produkte-header-item-image{
@@ -829,4 +831,99 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   height: 20%;
   background-color: white;
   display: flex;
+}
+.single-product{
+  width: 95%;
+  height: 700px;
+  background-color: white;
+  margin: 50px auto 128px  auto;
+  display: flex;
+}
+.single-product-left{
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.single-product-left img{
+  width: 30%;
+  height: 30%;
+}
+.single-product-right{
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.single-product-right-title-price{
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+}
+.single-product-right-title-price::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.205);
+}
+.single-product-right-title{
+  font-size: 30px;
+}
+.single-product-right-price{
+  font-size: 25px;
+  color: #1B75BC;
+}
+.single-product-right-description-sku{
+  width: 100%;
+  height: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative; 
+}
+.single-product-right-description-sku::after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.205);
+}
+
+.single-product-right-description{
+  font-size: 18px;
+  color: gray;
+}
+.single-product-right-sku{
+  font-size: 19px;
+  color: #3c22b4;
+  font-weight: 500;
+}
+.single-product-right-stock-addcart{
+  width: 100%;
+  height: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.single-product-right-stock{
+  font-size: 20px;
+}
+.buttons-wish-cart{
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+.shko-te-produktet{
+  width:95%;
+  margin: 0 auto;
+  margin-top: 20px;
 }
