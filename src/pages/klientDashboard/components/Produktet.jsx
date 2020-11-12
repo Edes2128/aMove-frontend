@@ -24,6 +24,7 @@ export default function Produktet() {
   const [range, setRange] = useState("all");
   const [kategori, setKategori] = useState("");
   const [priceSort, setPriceSort] = useState("");
+  const [user, setUser] = useState({});
 
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
@@ -38,24 +39,62 @@ export default function Produktet() {
     setKategori("");
   };
 
+  useEffect(() => {
+    axios
+      .post("http://localhost/demo_react_server/api/config/user_profile.php", {
+        token: JSON.parse(localStorage.getItem("token")),
+      })
+      .then((res) => setUser(res.data.user));
+  }, []);
+
   function sortByProperty(property) {
     return function (a, b) {
       if (priceSort === "high") {
-        if (a[property] > b[property]){
-         return 1;
+        if (a[property] > b[property]) {
+          return 1;
         }
       } else if (priceSort === "low") {
-        if (a[property] < b[property]){
+        if (a[property] < b[property]) {
           return -1;
-        } 
+        }
       }
       return 0;
     };
   }
 
+  function addToCart(productID)  {
+    const payload = {
+      productID: productID,
+      klientID: user.id,
+    };
+
+    axios.post(
+      "http://localhost/demo_react_server/api/config/add_toCart.php",
+      payload
+    );
+  };
+
+  function addToWishlist(productID){
+
+    const payload = {
+      productID: productID,
+      klientID: user.id,
+    };
+
+    axios.post(
+      "http://localhost/demo_react_server/api/config/add_toWishlist.php",
+      payload
+    );
+
+  }
+useEffect(() => {
+
   axios
-    .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
-    .then((res) => setProducts(res.data));
+  .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
+  .then((res) => setProducts(res.data));
+
+},[])
+  
   return (
     <div>
       <div className="filter-produkte">
@@ -194,18 +233,17 @@ export default function Produktet() {
           </div>
           <div className="produktet-list">
             {products.sort(sortByProperty("cmimi")).map((product) => (
-              <Link
-                key={product.id}
-                className="produktet-list-item"
-                to={`/klient/${product.id}`}
-              >
+              <div className="produktet-list-item" key={product.id}>
                 <div className="produkte-header-item-image">
-                  <img
-                    width="100"
-                    src={`http://localhost/demo_react_server/images/${product.image}`}
-                    alt=""
-                  />
+                  <Link to={`/klient/${product.id}`}>
+                    <img
+                      width="100"
+                      src={`http://localhost/demo_react_server/images/${product.image}`}
+                      alt=""
+                    />
+                  </Link>
                 </div>
+
                 <div className="produktet-list-item-price">
                   <p> {product.cmimi} Leke </p>
                 </div>
@@ -213,11 +251,13 @@ export default function Produktet() {
                   <h4> {product.titulli} </h4>
                   <p> {product.pershkrimi} </p>
                 </div>
+
                 <div className="produkte-header-item-wish-cart">
                   <Button
                     startIcon={<FavoriteBorderOutlinedIcon />}
                     color="primary"
                     style={{ width: "50%" }}
+                    onClick={()=> addToWishlist(product.id)}
                   >
                     Wish List
                   </Button>
@@ -225,11 +265,12 @@ export default function Produktet() {
                     startIcon={<LocalMallOutlinedIcon />}
                     color="secondary"
                     style={{ width: "50%" }}
+                    onClick={() => addToCart(product.id)}
                   >
                     Add to Cart
                   </Button>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

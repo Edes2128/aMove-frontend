@@ -33,6 +33,7 @@ export default function KlientDashboard({history}) {
                             name={user.name}
                             userImg={user.image_profile}
                             handleLogout={() => handleLogout()}
+                            userID={user.id}
                     />
                      <div className="klient-dashboard-body">
                          <Switch>
