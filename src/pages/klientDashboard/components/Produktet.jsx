@@ -143,7 +143,7 @@ useEffect(() => {
                 valueLabelDisplay="auto"
                 style={{ width: "90%", alignSelf: "center" }}
                 getAriaValueText={valuetext}
-                max="1000"
+                max={1000}
               />
             </div>
             <div className="filter-content-category">
