@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -16,16 +16,41 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Slider from "@material-ui/core/Slider";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function Produktet() {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [products, setProducts] = useState([]);
+  const [range, setRange] = useState("all");
+  const [kategori, setKategori] = useState("");
+  const [priceSort, setPriceSort] = useState("");
+
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
+    setRange("");
   };
   function valuetext(sliderPrice) {
     return `${sliderPrice}$`;
+  }
+  const removeFilter = () => {
+    setSliderPrice([0, 1000]);
+    setRange("all");
+    setKategori("");
+  };
+
+  function sortByProperty(property) {
+    return function (a, b) {
+      if (priceSort === "high") {
+        if (a[property] > b[property]){
+         return 1;
+        }
+      } else if (priceSort === "low") {
+        if (a[property] < b[property]){
+          return -1;
+        } 
+      }
+      return 0;
+    };
   }
 
   axios
@@ -39,30 +64,33 @@ export default function Produktet() {
             <div className="filter-content-multi-range">
               <h3>Multi Range</h3>
               <FormControl component="fieldset">
-                <RadioGroup>
+                <RadioGroup
+                  onChange={(e) => setRange(e.target.value)}
+                  value={range}
+                >
                   <FormControlLabel
                     value="all"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="All"
                   />
                   <FormControlLabel
                     value="10"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="<=$10"
                   />
                   <FormControlLabel
                     value="100"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="$10-$100"
                   />
                   <FormControlLabel
                     value="500"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="$500"
                   />
                   <FormControlLabel
                     value="600"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label=">=$500"
                   />
                 </RadioGroup>
@@ -82,30 +110,33 @@ export default function Produktet() {
             <div className="filter-content-category">
               <h3>Category</h3>
               <FormControl component="fieldset">
-                <RadioGroup>
+                <RadioGroup
+                  onChange={(e) => setKategori(e.target.value)}
+                  value={kategori}
+                >
                   <FormControlLabel
                     value="kategoria1"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="Kategoria 1"
                   />
                   <FormControlLabel
                     value="kategoria2"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="Kategoria 2"
                   />
                   <FormControlLabel
                     value="kategoria3"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="Kategoria 3"
                   />
                   <FormControlLabel
                     value="kategoria4"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="Kategoria 4"
                   />
                   <FormControlLabel
                     value="kategoria5"
-                    control={<Radio />}
+                    control={<Radio color="primary" />}
                     label="Kategoria 5"
                   />
                 </RadioGroup>
@@ -115,6 +146,7 @@ export default function Produktet() {
               variant="contained"
               style={{ marginTop: "10px" }}
               color="primary"
+              onClick={removeFilter}
             >
               Remove Filters
             </Button>
@@ -129,9 +161,12 @@ export default function Produktet() {
               style={{ width: "50%", backgroundColor: "white" }}
             >
               <InputLabel>Featured</InputLabel>
-              <Select>
-                <MenuItem value="Lowest Price">Lowest Price</MenuItem>
-                <MenuItem value="Highest Price">Highest Price</MenuItem>
+              <Select
+                onChange={(e) => setPriceSort(e.target.value)}
+                value={priceSort}
+              >
+                <MenuItem value="low">Lowest Price</MenuItem>
+                <MenuItem value="high">Highest Price</MenuItem>
               </Select>
             </FormControl>
             <div className="katror">
@@ -158,8 +193,12 @@ export default function Produktet() {
             />
           </div>
           <div className="produktet-list">
-            {products.map((product) => (
-              <Link key={product.id} className="produktet-list-item" to={`/klient/${product.id}`}>
+            {products.sort(sortByProperty("cmimi")).map((product) => (
+              <Link
+                key={product.id}
+                className="produktet-list-item"
+                to={`/klient/${product.id}`}
+              >
                 <div className="produkte-header-item-image">
                   <img
                     width="100"
