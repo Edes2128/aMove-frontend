@@ -11,6 +11,9 @@ import SingleProduct from "./components/SingleProduct";
 export default function KlientDashboard({ history }) {
   const [user, setUser] = useState({});
   const [cartProducts, setCartProducts] = useState([]);
+  const [wishlistProducts,setWishlistProducts] = useState([]);
+
+  
 
   useEffect(() => {
     axios
@@ -25,10 +28,12 @@ export default function KlientDashboard({ history }) {
             { klientID: res.data.user.id }
           )
           .then((res) => setCartProducts(res.data))
+          axios.post("http://localhost/demo_react_server/api/config/get_productsWishlist.php",{klientID: res.data.user.id}).then(res => setWishlistProducts(res.data))
       })
       
-  }, []);
+  }, [cartProducts]);
 
+  
   const handleLogout = () => {
     localStorage.setItem("auth", false);
     localStorage.removeItem("token");
@@ -44,6 +49,7 @@ export default function KlientDashboard({ history }) {
           userImg={user.image_profile}
           handleLogout={() => handleLogout()}
           cartProducts={cartProducts}
+          wishlistProducts={wishlistProducts}
         />
         <div className="klient-dashboard-body">
           <Switch>

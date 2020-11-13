@@ -18,7 +18,7 @@ import Slider from "@material-ui/core/Slider";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function Produktet() {
+export default function Produktet({cartProducts,wishlistProducts}) {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [products, setProducts] = useState([]);
   const [range, setRange] = useState("all");

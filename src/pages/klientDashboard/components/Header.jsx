@@ -7,15 +7,15 @@ import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
-import axios from 'axios'
 
-export default function Header({ cartProducts, name, userImg, handleLogout }) {
+
+export default function Header({ cartProducts,wishlistProducts, name, userImg, handleLogout }) {
         const [logout, Setlogout] = useState(false);
         
   return (
     <div className="klient-dashboard-header">
       <div className="klient-dashboard-header-widgets-klient">
-      <Badge badgeContent={10} color="primary">
+      <Badge badgeContent={wishlistProducts.length} color="primary">
           <StarBorderOutlinedIcon />
         </Badge>
       <Badge badgeContent={cartProducts.length} color="primary">
