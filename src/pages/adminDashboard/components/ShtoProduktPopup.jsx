@@ -17,8 +17,8 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [sku, setSku] = useState("");
   const [pershkrimi, setPershkrimi] = useState("");
   const [kategoriForm, setKategoriForm] = useState("");
-  const [cmimi, setCmimi] = useState("");
-  const [sasia, setSasia] = useState("");
+  const [cmimi, setCmimi] = useState(0);
+  const [sasia, setSasia] = useState(0);
   const [njesia, setNjesia] = useState("");
   const [ngjyrat, setNgjyrat] = useState([]);
   const [masat, setMasat] = useState([]);

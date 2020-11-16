@@ -26,6 +26,7 @@ export default function Produktet({cartProducts,wishlistProducts}) {
   const [priceSort, setPriceSort] = useState("");
   const [user, setUser] = useState({});
 
+
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
     setRange("");
@@ -41,8 +42,7 @@ export default function Produktet({cartProducts,wishlistProducts}) {
 
   useEffect(() => {
     axios
-      .post("http://localhost/demo_react_server/api/config/user_profile.php", {
-        token: JSON.parse(localStorage.getItem("token")),
+      .get(`http://localhost/demo_react_server/api/config/user_profile.php?token="${JSON.parse(localStorage.getItem("token"))}"`, {
       })
       .then((res) => setUser(res.data.user));
   }, []);
@@ -233,7 +233,9 @@ useEffect(() => {
           </div>
           <div className="produktet-list">
             {products.sort(sortByProperty("cmimi")).map((product) => (
+           
               <div className="produktet-list-item" key={product.id}>
+              {console.log(product)}
                 <div className="produkte-header-item-image">
                   <Link to={`/klient/${product.id}`}>
                     <img
@@ -258,6 +260,7 @@ useEffect(() => {
                     color="primary"
                     style={{ width: "50%" }}
                     onClick={()=> addToWishlist(product.id)}
+
                   >
                     Wish List
                   </Button>
@@ -265,7 +268,9 @@ useEffect(() => {
                     startIcon={<LocalMallOutlinedIcon />}
                     color="secondary"
                     style={{ width: "50%" }}
-                    onClick={() => addToCart(product.id)}
+                    onClick={() => {
+                      addToCart(product.id);  
+                    }}
                   >
                     Add to Cart
                   </Button>
