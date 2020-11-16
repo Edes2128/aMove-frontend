@@ -14,8 +14,7 @@ export default function KlientDashboard({ history }) {
   const [cartProducts, setCartProducts] = useState([]);
   const [wishlistProducts, setWishlistProducts] = useState([]);
 
-  // axios.get(`http://localhost/demo_react_server/api/config/get_products_fromCart.php?klient=${res.data.user.id}`,).then((res) => setCartProducts(res.data))
-  // axios.get(`http://localhost/demo_react_server/api/config/get_productsWishlist.php?klient=${res.data.user.id}`).then(res => setWishlistProducts(res.data))
+
 
     const klientContext = useContext(KlientContext);
 

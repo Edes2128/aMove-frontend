@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -17,6 +17,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Slider from "@material-ui/core/Slider";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import KlientContext from '../context/KlientContext';
 
 export default function Produktet({cartProducts,wishlistProducts}) {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
@@ -26,7 +27,17 @@ export default function Produktet({cartProducts,wishlistProducts}) {
   const [priceSort, setPriceSort] = useState("");
   const [user, setUser] = useState({});
 
-  console.log(cartProducts)
+
+  const klientContext = useContext(KlientContext);
+
+  useEffect(() => {
+
+    klientContext.getAllProducts();
+
+  },[])
+
+  console.log(klientContext.products)
+
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
     setRange("");
