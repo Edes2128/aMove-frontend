@@ -26,7 +26,7 @@ export default function Produktet({cartProducts,wishlistProducts}) {
   const [priceSort, setPriceSort] = useState("");
   const [user, setUser] = useState({});
 
-
+  console.log(cartProducts)
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
     setRange("");
@@ -235,7 +235,6 @@ useEffect(() => {
             {products.sort(sortByProperty("cmimi")).map((product) => (
            
               <div className="produktet-list-item" key={product.id}>
-              {console.log(product)}
                 <div className="produkte-header-item-image">
                   <Link to={`/klient/${product.id}`}>
                     <img
