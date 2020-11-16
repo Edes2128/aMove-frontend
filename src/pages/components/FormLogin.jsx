@@ -22,10 +22,12 @@ export default function FormLogin({ history }) {
         if(res.data.status === 1 && res.data.role === '1'){
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("auth",true);
+        localStorage.setItem('id',JSON.stringify(res.data.id))
         history.push('/admin')
         }else if(res.data.status === 1 && res.data.role === '3'){
           localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("auth",true);
+        localStorage.setItem('id',JSON.stringify(res.data.id))
         history.push('/klient')
         }else{
             setError(res.data.message);

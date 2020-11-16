@@ -2,7 +2,7 @@
   "name": "a-move",
   "version": "0.1.0",
   "proxy": "http://localhost",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/data-grid": "^4.0.0-alpha.8",
@@ -13,8 +13,8 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.20.0",
     "filepond": "^4.23.1",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "^17.0.1",
+    "react-dom": "^16.8.0",
     "react-filepond": "^7.1.0",
     "react-hook-form": "^6.11.0",
     "react-query": "^2.26.2",
@@ -40,9 +40,9 @@
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      "last 5 chrome version",
+      "last 5 firefox version",
+      "last 5 safari version"
     ]
   }
 }

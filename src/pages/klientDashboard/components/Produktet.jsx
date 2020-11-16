@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -15,37 +15,24 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Slider from "@material-ui/core/Slider";
-import axios from "axios";
 import { Link } from "react-router-dom";
-import KlientContext from '../context/KlientContext';
+import KlientContext from "../context/KlientContext";
 
-export default function Produktet({cartProducts,wishlistProducts}) {
+export default function Produktet({}) {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [range, setRange] = useState("all");
   const [kategori, setKategori] = useState("");
   const [priceSort, setPriceSort] = useState("");
-  const [user, setUser] = useState({});
-
 
   const klientContext = useContext(KlientContext);
-
+  const products = klientContext.products;
+  const {cartProducts,wishlistProducts} = klientContext;
 
   useEffect(() => {
 
     klientContext.getAllProducts();
 
   },[])
-
-  useEffect(() => {
-
-    klientContext.getCartProducts()
-
-  },[])
-  
-const {id} = klientContext.user;
-console.log(klientContext.cartProducts)
-
- const products = klientContext.products;
 
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
@@ -59,13 +46,6 @@ console.log(klientContext.cartProducts)
     setRange("all");
     setKategori("");
   };
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost/demo_react_server/api/config/user_profile.php?token="${JSON.parse(localStorage.getItem("token"))}"`, {
-      })
-      .then((res) => setUser(res.data.user));
-  }, []);
 
   function sortByProperty(property) {
     return function (a, b) {
@@ -82,33 +62,6 @@ console.log(klientContext.cartProducts)
     };
   }
 
-  function addToCart(productID)  {
-    const payload = {
-      productID: productID,
-      klientID: user.id,
-    };
-
-    axios.post(
-      "http://localhost/demo_react_server/api/config/add_toCart.php",
-      payload
-    );
-  };
-
-  function addToWishlist(productID){
-
-    const payload = {
-      productID: productID,
-      klientID: user.id,
-    };
-
-    axios.post(
-      "http://localhost/demo_react_server/api/config/add_toWishlist.php",
-      payload
-    );
-
-  }
-
-  
   return (
     <div>
       <div className="filter-produkte">
@@ -247,7 +200,6 @@ console.log(klientContext.cartProducts)
           </div>
           <div className="produktet-list">
             {products.sort(sortByProperty("cmimi")).map((product) => (
-           
               <div className="produktet-list-item" key={product.id}>
                 <div className="produkte-header-item-image">
                   <Link to={`/klient/${product.id}`}>
@@ -272,8 +224,7 @@ console.log(klientContext.cartProducts)
                     startIcon={<FavoriteBorderOutlinedIcon />}
                     color="primary"
                     style={{ width: "50%" }}
-                    onClick={()=> addToWishlist(product.id)}
-
+                    onClick={() => klientContext.addToWishlist(product)}
                   >
                     Wish List
                   </Button>
@@ -282,7 +233,7 @@ console.log(klientContext.cartProducts)
                     color="secondary"
                     style={{ width: "50%" }}
                     onClick={() => {
-                      addToCart(product.id);  
+                      klientContext.addToCart(product);
                     }}
                   >
                     Add to Cart

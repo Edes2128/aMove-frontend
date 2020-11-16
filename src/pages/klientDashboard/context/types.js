@@ -2,3 +2,5 @@ export const GET_USER = 'GET_USER';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 export const GET_CART_PRODUCTS = 'GET_CART_PRODUCTS';
 export const GET_WISHLIST_PRODUCTS = 'GET_WISHLIST_PRODUCTS';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const ADD_TO_WISHLIST = 'ADD_TO_WISHLIST';

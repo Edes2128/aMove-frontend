@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext ,useEffect } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import axios from "axios";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoutes from "../components/ProtectedRoutes";
 import Home from "./components/Home";
@@ -19,6 +18,9 @@ export default function KlientDashboard({ history }) {
     localStorage.removeItem("token");
     history.push("/");
   };
+  useEffect(() => {
+    klientContext.getUser();
+  }, []);
 
   return (
 

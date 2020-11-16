@@ -9,9 +9,9 @@ import {
   GET_CART_PRODUCTS,
 } from "./types";
 
-export default function KlientState({ children }) {
-  // axios.get(`http://localhost/demo_react_server/api/config/get_productsWishlist.php?klient=${res.data.user.id}`).then(res => setWishlistProducts(res.data))
 
+export default function KlientState({ children }) {
+ 
   const initialState = {
     user: {},
     products: [],
@@ -44,7 +44,9 @@ export default function KlientState({ children }) {
 
   const getCartProducts = async () => {
     const res = await axios.get(
-      `http://localhost/demo_react_server/api/config/get_products_fromCart.php?klient=${state.user.id}`
+      `http://localhost/demo_react_server/api/config/get_products_fromCart.php?klient=${JSON.parse(
+        localStorage.getItem("id")
+      )}`
     );
     dispatch({
       type: GET_CART_PRODUCTS,
@@ -53,16 +55,45 @@ export default function KlientState({ children }) {
   };
 
   const getWishlistProducts = async () => {
-      const res = await axios.get(`http://localhost/demo_react_server/api/config/get_productsWishlist.php?klient=${state.user.id}`);
-      dispatch({
-          type : GET_WISHLIST_PRODUCTS,
-          payload : res.data
-      })
+    const res = await axios.get(
+      `http://localhost/demo_react_server/api/config/get_productsWishlist.php?klient=${JSON.parse(
+        localStorage.getItem("id")
+      )}`
+    );
+    dispatch({
+      type: GET_WISHLIST_PRODUCTS,
+      payload: res.data,
+    });
+  };
+
+  const addToCart = async (product) => {
+    const payload = {
+      productID: product.id,
+      klientID: JSON.parse(localStorage.getItem("id")),
+    };
+    await axios.post(
+      "http://localhost/demo_react_server/api/config/add_toCart.php",
+      payload
+    );
+ setTimeout(() => getCartProducts(),100) 
+    
+  };
+
+  const addToWishlist = async (product) => {
+
+    const payload = {
+        productID: product.id,
+        klientID: JSON.parse(localStorage.getItem("id")),
+      };
+  
+      axios.post(
+        "http://localhost/demo_react_server/api/config/add_toWishlist.php",
+        payload
+      );
+        
+      setTimeout(() => getWishlistProducts(),100) 
   }
 
-  useEffect(() => {
-    getUser();
-  }, []);
 
   return (
     <KlientContext.Provider
@@ -74,7 +105,9 @@ export default function KlientState({ children }) {
         getUser,
         getAllProducts,
         getCartProducts,
-        getWishlistProducts
+        getWishlistProducts,
+        addToCart,
+        addToWishlist
       }}
     >
       {children}
