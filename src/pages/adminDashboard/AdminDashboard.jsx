@@ -31,9 +31,9 @@ export default function AdminDashboard({ history }) {
 
   useEffect(() => {
     axios
-      .post("http://localhost/demo_react_server/api/config/user_profile.php", {
-        token: JSON.parse(localStorage.getItem("token")),
-      })
+      .get(    `http://localhost/demo_react_server/api/config/user_profile.php?token="${JSON.parse(
+        localStorage.getItem("token")
+      )}"`)
       .then((res) => setUser(res.data.user));
   }, []);
 

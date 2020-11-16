@@ -26,13 +26,11 @@ export default function Produktet({}) {
 
   const klientContext = useContext(KlientContext);
   const products = klientContext.products;
-  const {cartProducts,wishlistProducts} = klientContext;
+  const { cartProducts, wishlistProducts } = klientContext;
 
   useEffect(() => {
-
     klientContext.getAllProducts();
-
-  },[])
+  }, []);
 
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
@@ -228,6 +226,7 @@ export default function Produktet({}) {
                   >
                     Wish List
                   </Button>
+
                   <Button
                     startIcon={<LocalMallOutlinedIcon />}
                     color="secondary"
@@ -236,7 +235,7 @@ export default function Produktet({}) {
                       klientContext.addToCart(product);
                     }}
                   >
-                    Add to Cart
+                    Add to cart
                   </Button>
                 </div>
               </div>
