@@ -11,21 +11,8 @@ import SingleProduct from "./components/SingleProduct";
 import KlientContext from './context/KlientContext';
 
 export default function KlientDashboard({ history }) {
-  const [cartProducts, setCartProducts] = useState([]);
-  const [wishlistProducts, setWishlistProducts] = useState([]);
-
-
-
-    const klientContext = useContext(KlientContext);
-
-  useEffect(() => {
-
-    klientContext.getUser(JSON.parse(localStorage.getItem("token")))
-
-  },[])
-
-    const {name,image_profile} = klientContext.user;
-
+  const klientContext = useContext(KlientContext);
+  const {name,image_profile} = klientContext.user;
 
   const handleLogout = () => {
     localStorage.setItem("auth", false);
@@ -42,8 +29,6 @@ export default function KlientDashboard({ history }) {
           name={name}
           userImg={image_profile}
           handleLogout={() => handleLogout()}
-          cartProducts={cartProducts}
-          wishlistProducts={wishlistProducts}
         />
         <div className="klient-dashboard-body">
           <Switch>
@@ -59,8 +44,6 @@ export default function KlientDashboard({ history }) {
               render={(props) => (
                 <Produktet
                   {...props}
-                  wishlistProducts={wishlistProducts}
-                  cartProducts={cartProducts}
                 />
               )}
             />

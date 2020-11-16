@@ -21,7 +21,6 @@ import KlientContext from '../context/KlientContext';
 
 export default function Produktet({cartProducts,wishlistProducts}) {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
-  const [products, setProducts] = useState([]);
   const [range, setRange] = useState("all");
   const [kategori, setKategori] = useState("");
   const [priceSort, setPriceSort] = useState("");
@@ -30,13 +29,23 @@ export default function Produktet({cartProducts,wishlistProducts}) {
 
   const klientContext = useContext(KlientContext);
 
+
   useEffect(() => {
 
     klientContext.getAllProducts();
 
   },[])
 
-  console.log(klientContext.products)
+  useEffect(() => {
+
+    klientContext.getCartProducts()
+
+  },[])
+  
+const {id} = klientContext.user;
+console.log(klientContext.cartProducts)
+
+ const products = klientContext.products;
 
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
@@ -98,13 +107,7 @@ export default function Produktet({cartProducts,wishlistProducts}) {
     );
 
   }
-useEffect(() => {
 
-  axios
-  .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
-  .then((res) => setProducts(res.data));
-
-},[])
   
   return (
     <div>

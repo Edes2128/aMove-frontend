@@ -15,10 +15,10 @@ export default function Header({ cartProducts,wishlistProducts, name, userImg, h
   return (
     <div className="klient-dashboard-header">
       <div className="klient-dashboard-header-widgets-klient">
-      <Badge badgeContent={wishlistProducts.length} color="primary">
+      <Badge badgeContent={0} color="primary">
           <StarBorderOutlinedIcon />
         </Badge>
-      <Badge badgeContent={cartProducts.length} color="primary">
+      <Badge badgeContent={0} color="primary">
           <ShoppingCartOutlinedIcon />
         </Badge> 
         <Badge badgeContent={9} color="primary">
