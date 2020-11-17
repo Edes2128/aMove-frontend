@@ -79,6 +79,14 @@ export default function KlientState({ children }) {
     
   };
 
+  const removeFromCart = async (product) => {
+
+    axios.post(`http://localhost/demo_react_server/api/config/remove_product_fromCart.php?klient=${JSON.parse(localStorage.getItem("id"))}&product=${product.id}`);
+
+    setTimeout(() => getCartProducts(),100) 
+
+  }
+
   const addToWishlist = async (product) => {
 
     const payload = {
@@ -94,6 +102,12 @@ export default function KlientState({ children }) {
       setTimeout(() => getWishlistProducts(),100) 
   }
 
+  const removeFromWishlist = async (product) => {
+
+        axios.post(`http://localhost/demo_react_server/api/config/remove_product_fromWishlist.php?klient=${JSON.parse(localStorage.getItem("id"))}&product=${product.id}`);
+
+        setTimeout(() => getWishlistProducts(),100) 
+  }
 
   return (
     <KlientContext.Provider
@@ -107,7 +121,9 @@ export default function KlientState({ children }) {
         getCartProducts,
         getWishlistProducts,
         addToCart,
-        addToWishlist
+        addToWishlist,
+        removeFromWishlist,
+        removeFromCart
       }}
     >
       {children}

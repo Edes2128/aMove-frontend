@@ -18,6 +18,7 @@ import Slider from "@material-ui/core/Slider";
 import { Link } from "react-router-dom";
 import KlientContext from "../context/KlientContext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+
 export default function Produktet({}) {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [range, setRange] = useState("all");
@@ -226,7 +227,9 @@ export default function Produktet({}) {
                       color="primary"
                       style={{ width: "50%" }}
                     >
+                      <Link to="/klient/shporta" style={{color:'inherit',textDecoration:'none'}}>
                       View in Cart
+                      </Link>
                     </Button>
                   ) : (
                     <Button
@@ -248,6 +251,7 @@ export default function Produktet({}) {
                       startIcon={<FavoriteIcon />}
                       color="secondary"
                       style={{ width: "50%" }}
+                      onClick={() => klientContext.removeFromWishlist(product)}
                     >
                       Wish List
                     </Button>

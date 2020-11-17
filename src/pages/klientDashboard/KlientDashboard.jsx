@@ -8,6 +8,7 @@ import Porosite from "./components/Porosite";
 import Produktet from "./components/Produktet";
 import SingleProduct from "./components/SingleProduct";
 import KlientContext from './context/KlientContext';
+import Shporta from "./components/Shporta";
 
 export default function KlientDashboard({ history }) {
   const klientContext = useContext(KlientContext);
@@ -49,6 +50,7 @@ export default function KlientDashboard({ history }) {
                 />
               )}
             />
+                <ProtectedRoutes exact path="/klient/shporta" component={Shporta} />
             <ProtectedRoutes
               exact
               path="/klient/:id"
