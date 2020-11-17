@@ -17,7 +17,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Slider from "@material-ui/core/Slider";
 import { Link } from "react-router-dom";
 import KlientContext from "../context/KlientContext";
-
+import FavoriteIcon from "@material-ui/icons/Favorite";
 export default function Produktet({}) {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [range, setRange] = useState("all");
@@ -218,25 +218,49 @@ export default function Produktet({}) {
                 </div>
 
                 <div className="produkte-header-item-wish-cart">
-                  <Button
-                    startIcon={<FavoriteBorderOutlinedIcon />}
-                    color="primary"
-                    style={{ width: "50%" }}
-                    onClick={() => klientContext.addToWishlist(product)}
-                  >
-                    Wish List
-                  </Button>
+                  {cartProducts.some(
+                    (item) => item.product_id === product.id
+                  ) === true ? (
+                    <Button
+                      startIcon={<LocalMallOutlinedIcon />}
+                      color="primary"
+                      style={{ width: "50%" }}
+                    >
+                      View in Cart
+                    </Button>
+                  ) : (
+                    <Button
+                      startIcon={<LocalMallOutlinedIcon />}
+                      color="primary"
+                      style={{ width: "50%" }}
+                      onClick={() => {
+                        klientContext.addToCart(product);
+                      }}
+                    >
+                      Add to Cart
+                    </Button>
+                  )}
 
-                  <Button
-                    startIcon={<LocalMallOutlinedIcon />}
-                    color="secondary"
-                    style={{ width: "50%" }}
-                    onClick={() => {
-                      klientContext.addToCart(product);
-                    }}
-                  >
-                    Add to cart
-                  </Button>
+                  {wishlistProducts.some(
+                    (item) => item.product_id === product.id
+                  ) ? (
+                    <Button
+                      startIcon={<FavoriteIcon />}
+                      color="secondary"
+                      style={{ width: "50%" }}
+                    >
+                      Wish List
+                    </Button>
+                  ) : (
+                    <Button
+                      startIcon={<FavoriteBorderOutlinedIcon />}
+                      color="secondary"
+                      style={{ width: "50%" }}
+                      onClick={() => klientContext.addToWishlist(product)}
+                    >
+                      Wish List
+                    </Button>
+                  )}
                 </div>
               </div>
             ))}
