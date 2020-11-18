@@ -661,7 +661,7 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  height: 20%;
+  height: 35%;
 }
 .klient-dashboard-sidebar-link{
   display: flex;
@@ -669,7 +669,7 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
   width: 60%;
   color: black;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 16px;
 }
 .filter-produkte{
   width: 100%;
@@ -976,7 +976,7 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
 }
 
 .shporta-item-image img{
-  width: auto;
+  width: 120px;
   height: auto;
 }
 .shporta-item-center{
@@ -1031,4 +1031,95 @@ box-shadow: 0 5px 5px rgba(1,1,1,.1);
     margin-top: 20px;
     border-radius: 7px;
     box-shadow: 0 5px 5px rgba(0, 0, 0, .1);
+}
+.empty-shop{
+  width: 93%;
+  height: 150px;
+  background-color: white;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .1);
+  margin-top: 20px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.wishlist{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.wishlist-content{
+  width: 98%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+.wishlist-item{
+  width: 23%;
+  height: 400px;
+  background-color: white;
+  border-radius: 5px;
+  transition: all .4s ease-in-out;
+  margin-bottom: 20px;
+  margin-right: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.wishlist-item:hover{
+box-shadow: 0 10px 10px rgba(0, 0, 0, .1);
+transform: translateY(-7px);
+cursor: pointer;
+}
+.wishlist-item-image{
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wishlist-item-image img{
+  width: 120px;
+  height: auto;
+}
+.wishlist-item-content{
+  width: 100%;
+  height: 35%;
+  display: flex;
+  flex-direction: column;
+}
+.wishlist-item-content-price{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+.wishlist-item-content-title{
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 10px;
+}
+.wishlist-item-content-button{
+  width: 100%;
+  height: 15%;
+  overflow: hidden;
+}
+.empty-wishlit{
+  width: 95%;
+  height: 150px;
+  background-color: white;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, .1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-left: 20px;
+  border-radius: 7px;
 }

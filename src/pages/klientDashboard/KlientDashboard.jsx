@@ -9,6 +9,7 @@ import Produktet from "./components/Produktet";
 import SingleProduct from "./components/SingleProduct";
 import KlientContext from './context/KlientContext';
 import Shporta from "./components/Shporta";
+import Wishlist from "./components/Wishlist";
 
 export default function KlientDashboard({ history }) {
   const klientContext = useContext(KlientContext);
@@ -51,6 +52,7 @@ export default function KlientDashboard({ history }) {
               )}
             />
                 <ProtectedRoutes exact path="/klient/shporta" component={Shporta} />
+                <ProtectedRoutes exact path="/klient/wishlist" component={Wishlist} />
             <ProtectedRoutes
               exact
               path="/klient/:id"

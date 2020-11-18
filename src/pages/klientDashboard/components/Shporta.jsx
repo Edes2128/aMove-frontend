@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import KlientContext from "../context/KlientContext";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
+import {Link} from 'react-router-dom';
 
 export default function Shporta() {
   const klientContext = useContext(KlientContext);
@@ -9,15 +10,16 @@ export default function Shporta() {
 
   return (
     <>
-      <h1 style={{marginLeft:'60px'}}>Shporta</h1>
+     { cartProducts.length > 0 ? <h1 style={{ marginLeft: "60px" }}>Shporta</h1> : '' }
       <div className="shporta">
-          
-        <div className="shporta-items">
+        {cartProducts.length > 0 ?
+        <>
+          <div className="shporta-items">
           <div className="shporta-items-content">
             {cartProducts.map((item) => (
               <div className="shporta-item" key={item.id}>
                 <div className="shporta-item-image">
-                  <img src="/produkt1.jpg" alt="" />
+                  <img src={`http://localhost/demo_react_server/images/${item.image}`} alt="" />
                 </div>
                 <div className="shporta-item-center">
                   <div className="shporta-item-center-title">
@@ -50,7 +52,7 @@ export default function Shporta() {
                   <Button
                     startIcon={<CloseIcon />}
                     variant="contained"
-                    onClick={ () => klientContext.removeFromCart(item)}
+                    onClick={() => klientContext.removeFromCart(item)}
                     style={{ marginTop: "20px" }}
                   >
                     {" "}
@@ -63,12 +65,16 @@ export default function Shporta() {
         </div>
 
         <div className="shporta-checkout">
-
-                    <div className="shporta-checkout-content">
-
-                    </div>
-
+          <div className="shporta-checkout-content"></div>
         </div>
+        </>
+         : 
+         <div className="empty-shop">
+                <h2>Shporta eshte bosh</h2>
+                <Link to="/klient/produktet" style={{color:'inherit',textDecoration:'none'}}><Button color="primary" variant="outlined" >Shiko produktet</Button></Link>
+         </div>
+         }
+       
       </div>
     </>
   );
