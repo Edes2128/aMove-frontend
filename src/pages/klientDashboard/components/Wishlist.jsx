@@ -77,7 +77,7 @@ export default function Wishlist() {
         </div>
       ) : (
         <div className="empty-wishlit">
-          <h3>Wishlist eshte bosh</h3>
+          <h2>Wishlist eshte bosh</h2>
           <Link
             to="/klient/produktet"
             style={{ textDecoration: "none", color: "inherit" }}
