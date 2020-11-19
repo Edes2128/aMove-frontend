@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 export default function Shporta() {
   const klientContext = useContext(KlientContext);
   const { cartProducts } = klientContext;
-
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  const cmimet = cartProducts.map(item => item.cmimi)
   return (
     <>
       {cartProducts.length > 0 ? (
@@ -40,14 +41,18 @@ export default function Shporta() {
                             color="primary"
                             variant="contained"
                             style={{ width: "10%" }}
+                            onClick={() => klientContext.decreaseQty(item)}
+                            disabled={item.qty === "1" ? true : false}
                           >
                             -
                           </Button>
-                          <p>0</p>
+                          <p> {item.qty} </p>
                           <Button
                             color="primary"
                             variant="contained"
                             style={{ width: "10%" }}
+                            onClick={() => klientContext.increaseQty(item)}
+                            disabled={item.qty === item.sasia ? true : false}
                           >
                             +
                           </Button>
@@ -55,7 +60,7 @@ export default function Shporta() {
                       </div>
                     </div>
                     <div className="shporta-item-right">
-                      <p> {item.cmimi} Leke </p>
+                      <p> {item.cmimi * item.qty} Leke </p>
                       <Button
                         startIcon={<CloseIcon />}
                         variant="contained"
@@ -72,7 +77,11 @@ export default function Shporta() {
             </div>
 
             <div className="shporta-checkout">
-              <div className="shporta-checkout-content"></div>
+              <div className="shporta-checkout-content">
+                  <h2>Totali:</h2>
+                    <p>  </p>
+                    {console.log(cmimet.reduce(reducer))}
+              </div>
             </div>
           </>
         ) : (

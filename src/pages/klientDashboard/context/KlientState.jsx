@@ -9,9 +9,7 @@ import {
   GET_CART_PRODUCTS,
 } from "./types";
 
-
 export default function KlientState({ children }) {
- 
   const initialState = {
     user: {},
     products: [],
@@ -75,39 +73,68 @@ export default function KlientState({ children }) {
       "http://localhost/demo_react_server/api/config/add_toCart.php",
       payload
     );
- setTimeout(() => getCartProducts(),100) 
-    
+    setTimeout(() => getCartProducts(), 100);
   };
 
   const removeFromCart = async (product) => {
+    axios.post(
+      `http://localhost/demo_react_server/api/config/remove_product_fromCart.php?klient=${JSON.parse(
+        localStorage.getItem("id")
+      )}&product=${product.id}`
+    );
 
-    axios.post(`http://localhost/demo_react_server/api/config/remove_product_fromCart.php?klient=${JSON.parse(localStorage.getItem("id"))}&product=${product.id}`);
-
-    setTimeout(() => getCartProducts(),100) 
-
-  }
+    setTimeout(() => getCartProducts(), 100);
+  };
 
   const addToWishlist = async (product) => {
-
     const payload = {
-        productID: product.id,
-        klientID: JSON.parse(localStorage.getItem("id")),
-      };
-  
-      axios.post(
-        "http://localhost/demo_react_server/api/config/add_toWishlist.php",
-        payload
-      );
-        
-      setTimeout(() => getWishlistProducts(),100) 
-  }
+      productID: product.id,
+      klientID: JSON.parse(localStorage.getItem("id")),
+    };
+
+    axios.post(
+      "http://localhost/demo_react_server/api/config/add_toWishlist.php",
+      payload
+    );
+
+    setTimeout(() => getWishlistProducts(), 100);
+  };
 
   const removeFromWishlist = async (product) => {
+    axios.post(
+      `http://localhost/demo_react_server/api/config/remove_product_fromWishlist.php?klient=${JSON.parse(
+        localStorage.getItem("id")
+      )}&product=${product.id}`
+    );
 
-        axios.post(`http://localhost/demo_react_server/api/config/remove_product_fromWishlist.php?klient=${JSON.parse(localStorage.getItem("id"))}&product=${product.id}`);
+    setTimeout(() => getWishlistProducts(), 100);
+  };
 
-        setTimeout(() => getWishlistProducts(),100) 
-  }
+  const increaseQty = async (product) => {
+    const payload = {
+      id: product.product_id,
+    };
+
+    axios.post(
+      "http://localhost/demo_react_server/api/config/increase_qty.php",
+      payload
+    );
+
+    setTimeout(() => getCartProducts(), 100);
+  };
+
+  const decreaseQty = async (product) => {
+    const payload = {
+      id: product.product_id,
+    };
+
+    axios.post(
+      "http://localhost/demo_react_server/api/config/decrease_qty.php",
+      payload
+    );
+
+    setTimeout(() => getCartProducts(), 100);
+  };
 
   return (
     <KlientContext.Provider
@@ -123,7 +150,9 @@ export default function KlientState({ children }) {
         addToCart,
         addToWishlist,
         removeFromWishlist,
-        removeFromCart
+        removeFromCart,
+        increaseQty,
+        decreaseQty,
       }}
     >
       {children}

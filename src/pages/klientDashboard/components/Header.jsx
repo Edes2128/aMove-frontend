@@ -80,7 +80,7 @@ export default function Header({ name, userImg, handleLogout }) {
               </div>
               <div className="header-cart-products-content">
                 {cartProducts.map((item) => (
-                  <div className="header-cart-products-content-item">
+                  <div className="header-cart-products-content-item" key={item.id} >
                     <div className="header-cart-products-content-item-image">
                       <img
                         src={`http://localhost/demo_react_server/images/${item.image}`}
@@ -144,7 +144,7 @@ export default function Header({ name, userImg, handleLogout }) {
               </div>
               <div className="header-cart-products-content">
                 {wishlistProducts.map((item) => (
-                  <div className="header-cart-products-content-item">
+                  <div className="header-cart-products-content-item" key={item.id} >
                     <div className="header-cart-products-content-item-image">
                       <img
                         src={`http://localhost/demo_react_server/images/${item.image}`}
