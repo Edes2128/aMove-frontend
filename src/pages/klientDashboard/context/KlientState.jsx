@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer} from "react";
 import axios from "axios";
 import KlientContext from "./KlientContext";
 import KlientReducer from "./KlientReducer";
@@ -136,6 +136,14 @@ export default function KlientState({ children }) {
     setTimeout(() => getCartProducts(), 100);
   };
 
+  const editQtySinlge = async (product) => {
+        const payload = {
+            id: product.product_id,
+        };
+
+        axios.post("http://localhost/demo_react_server/api/config/edit_qty_singleProduct.php",payload);
+  }
+
   return (
     <KlientContext.Provider
       value={{
@@ -153,6 +161,7 @@ export default function KlientState({ children }) {
         removeFromCart,
         increaseQty,
         decreaseQty,
+        editQtySinlge
       }}
     >
       {children}

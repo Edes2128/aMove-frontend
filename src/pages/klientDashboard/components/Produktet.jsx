@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import KlientContext from "../context/KlientContext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
-export default function Produktet({}) {
+export default function Produktet() {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [range, setRange] = useState("all");
   const [kategori, setKategori] = useState("");

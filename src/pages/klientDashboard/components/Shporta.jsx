@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import KlientContext from "../context/KlientContext";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 export default function Shporta() {
   const klientContext = useContext(KlientContext);
   const { cartProducts } = klientContext;
+  const cmimet = cartProducts.map(item => item.cmimi);
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  const cmimet = cartProducts.map(item => item.cmimi)
+
   return (
     <>
       {cartProducts.length > 0 ? (
@@ -42,7 +43,7 @@ export default function Shporta() {
                             variant="contained"
                             style={{ width: "10%" }}
                             onClick={() => klientContext.decreaseQty(item)}
-                            disabled={item.qty === "1" ? true : false}
+                            disabled={item.qty === 1 ? true : false}
                           >
                             -
                           </Button>
@@ -60,11 +61,14 @@ export default function Shporta() {
                       </div>
                     </div>
                     <div className="shporta-item-right">
-                      <p> {item.cmimi * item.qty} Leke </p>
+                      <p> {item.cmimi} Leke </p>
                       <Button
                         startIcon={<CloseIcon />}
                         variant="contained"
-                        onClick={() => klientContext.removeFromCart(item)}
+                        onClick={() => { 
+                            klientContext.removeFromCart(item)
+                            klientContext.editQtySinlge(item)
+                        }}
                         style={{ marginTop: "20px" }}
                       >
                         {" "}
@@ -79,8 +83,8 @@ export default function Shporta() {
             <div className="shporta-checkout">
               <div className="shporta-checkout-content">
                   <h2>Totali:</h2>
-                    <p>  </p>
-                    {console.log(cmimet.reduce(reducer))}
+                    <p> {cmimet.reduce(reducer)}  Leke</p>
+                    
               </div>
             </div>
           </>
