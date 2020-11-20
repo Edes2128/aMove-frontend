@@ -84,8 +84,9 @@ export default function Shporta() {
               <div className="shporta-checkout-content">
                   <h2>Totali:</h2>
                     <p> {cmimet.reduce(reducer)}  Leke</p>
-                    
+                    <Button variant="outlined" size="large" color="primary"> Porosit </Button>
               </div>
+
             </div>
           </>
         ) : (
