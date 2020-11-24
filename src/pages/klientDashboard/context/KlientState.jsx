@@ -1,4 +1,4 @@
-import React, { useReducer} from "react";
+import React, { useReducer } from "react";
 import axios from "axios";
 import KlientContext from "./KlientContext";
 import KlientReducer from "./KlientReducer";
@@ -137,12 +137,33 @@ export default function KlientState({ children }) {
   };
 
   const editQtySinlge = async (product) => {
-        const payload = {
-            id: product.product_id,
-        };
+    const payload = {
+      id: product.product_id,
+    };
 
-        axios.post("http://localhost/demo_react_server/api/config/edit_qty_singleProduct.php",payload);
-  }
+    axios.post(
+      "http://localhost/demo_react_server/api/config/edit_qty_singleProduct.php",
+      payload
+    );
+  };
+
+  const makeOrder = (payload) => {
+    axios
+      .post(
+        `http://localhost/demo_react_server/api/config/add_Order.php?klient=${JSON.parse(
+          localStorage.getItem("id")
+        )}`,
+        payload
+      )
+      .then((res) => {
+        if (res.data.status === 1) {
+          axios.post(
+            "http://localhost/demo_react_server/api/config/remove_AllProducts_from_cart.php"
+          );
+          setTimeout(() => getCartProducts(), 100);
+        }
+      });
+  };
 
   return (
     <KlientContext.Provider
@@ -161,7 +182,8 @@ export default function KlientState({ children }) {
         removeFromCart,
         increaseQty,
         decreaseQty,
-        editQtySinlge
+        editQtySinlge,
+        makeOrder,
       }}
     >
       {children}
