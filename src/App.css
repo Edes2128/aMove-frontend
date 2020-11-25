@@ -1205,3 +1205,23 @@ cursor: pointer;
   align-items: center;
   padding-left: 10px;
 }
+
+.porosite-data-table{
+  width: 98%;
+  background-color: white;
+  margin: 0 auto;
+
+}
+.porosite-data-table-header{
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.porosite-data-table-buttons{
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+}

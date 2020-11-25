@@ -147,19 +147,18 @@ export default function KlientState({ children }) {
     );
   };
 
-  const makeOrder = (payload) => {
+  const makeOrder = (payload,totali) => {
     axios
       .post(
         `http://localhost/demo_react_server/api/config/add_Order.php?klient=${JSON.parse(
           localStorage.getItem("id")
         )}`,
-        payload
+        {payload,totali}
       )
       .then((res) => {
         if (res.data.status === 1) {
-          axios.post(
-            "http://localhost/demo_react_server/api/config/remove_AllProducts_from_cart.php"
-          );
+          axios.post("http://localhost/demo_react_server/api/config/remove_AllProducts_from_cart.php");
+          axios.post("http://localhost/demo_react_server/api/config/reset_allQty.php");
           setTimeout(() => getCartProducts(), 100);
         }
       });

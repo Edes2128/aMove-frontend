@@ -86,7 +86,7 @@ export default function Shporta() {
                     <p> {cmimet.reduce(reducer)}  Leke</p>
                     <Button variant="outlined" size="large" color="primary" 
                     onClick={() => {
-                      klientContext.makeOrder(cartProducts)
+                      klientContext.makeOrder(cartProducts , cmimet.reduce(reducer))
                       }} > Porosit </Button>
               </div>
 

@@ -30,7 +30,7 @@ export default function Produkte() {
   const [pastock, setPastock] = useState([]);
   const paSasi = pastock.filter((stock) => stock.sasia == 0);
   const [fundi, setFundi] = useState([]);
-  const drejtFunit = fundi.filter((end) => end.sasia > 10 && end.sasia < 20);
+  const drejtFunit = fundi.filter((end) => end.sasia >= 1 && end.sasia <= 20);
 
   useEffect(() => {
     axios
@@ -55,9 +55,9 @@ export default function Produkte() {
   };
 
   const stockColor = (item) => {
-    if (item <= 10) {
+    if (item == 0) {
       return "red";
-    } else if (item > 10 && item < 20) {
+    } else if (item >= 1 && item <= 20) {
       return "yellow";
     } else {
       return "green";
