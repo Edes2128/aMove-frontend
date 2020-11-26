@@ -16,7 +16,7 @@ export default function FormLogin({ history }) {
     e.preventDefault();
 
     axios
-      .post("http://localhost/demo_react_server/api/config/login.php", {email,password})
+      .post("https://192.168.88.250/demo_react_server/api/config/login.php", {email,password})
       .then((res) => {
         console.log(res.data)
         if(res.data.status === 1 && res.data.role === '1'){

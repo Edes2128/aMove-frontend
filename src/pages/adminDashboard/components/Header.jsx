@@ -19,7 +19,7 @@ export default function Header({ name, userImg,handleLogout }) {
         <Badge  badgeContent={9} color="primary">
           <NotificationsIcon/>
           </Badge>
-          <Avatar  className="logo-user-loggedin" src={`http://localhost/demo_react_server/images/${userImg}`} alt="LogoUser"/>
+          <Avatar  className="logo-user-loggedin" src={`https://192.168.88.250/demo_react_server/images/${userImg}`} alt="LogoUser"/>
         <p className="user-name-admin" onClick={() => Setlogout(!logout)}>{name}</p>
         { !logout && <ArrowDropDownOutlinedIcon onClick={() => Setlogout(!logout)}/>}
         {logout && <ArrowDropUpOutlinedIcon onClick={() => Setlogout(!logout)} />}

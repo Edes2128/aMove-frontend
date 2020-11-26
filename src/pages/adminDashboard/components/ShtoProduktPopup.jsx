@@ -40,7 +40,7 @@ export default function ShtoProduktPopup({ closePopup }) {
     fd.append("image", image);
 
     axios.post(
-      "http://localhost/demo_react_server/api/config/shto_produkt.php",
+      "https://192.168.88.250/demo_react_server/api/config/shto_produkt.php",
       fd
     );
   };

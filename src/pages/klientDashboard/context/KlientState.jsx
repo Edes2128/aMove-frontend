@@ -20,7 +20,7 @@ export default function KlientState({ children }) {
 
   const getUser = async () => {
     const res = await axios.get(
-      `http://localhost/demo_react_server/api/config/user_profile.php?token="${JSON.parse(
+      `https://192.168.88.250/demo_react_server/api/config/user_profile.php?token="${JSON.parse(
         localStorage.getItem("token")
       )}"`
     );
@@ -32,7 +32,7 @@ export default function KlientState({ children }) {
 
   const getAllProducts = async () => {
     const res = await axios.get(
-      "http://localhost/demo_react_server/api/config/get_allProducts.php"
+      "https://192.168.88.250/demo_react_server/api/config/get_allProducts.php"
     );
     dispatch({
       type: GET_ALL_PRODUCTS,
@@ -42,7 +42,7 @@ export default function KlientState({ children }) {
 
   const getCartProducts = async () => {
     const res = await axios.get(
-      `http://localhost/demo_react_server/api/config/get_products_fromCart.php?klient=${JSON.parse(
+      `https://192.168.88.250/demo_react_server/api/config/get_products_fromCart.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}`
     );
@@ -54,7 +54,7 @@ export default function KlientState({ children }) {
 
   const getWishlistProducts = async () => {
     const res = await axios.get(
-      `http://localhost/demo_react_server/api/config/get_productsWishlist.php?klient=${JSON.parse(
+      `https://192.168.88.250/demo_react_server/api/config/get_productsWishlist.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}`
     );
@@ -70,7 +70,7 @@ export default function KlientState({ children }) {
       klientID: JSON.parse(localStorage.getItem("id")),
     };
     await axios.post(
-      "http://localhost/demo_react_server/api/config/add_toCart.php",
+      "https://192.168.88.250/demo_react_server/api/config/add_toCart.php",
       payload
     );
     setTimeout(() => getCartProducts(), 100);
@@ -78,7 +78,7 @@ export default function KlientState({ children }) {
 
   const removeFromCart = async (product) => {
     axios.post(
-      `http://localhost/demo_react_server/api/config/remove_product_fromCart.php?klient=${JSON.parse(
+      `https://192.168.88.250/demo_react_server/api/config/remove_product_fromCart.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}&product=${product.id}`
     );
@@ -93,7 +93,7 @@ export default function KlientState({ children }) {
     };
 
     axios.post(
-      "http://localhost/demo_react_server/api/config/add_toWishlist.php",
+      "https://192.168.88.250/demo_react_server/api/config/add_toWishlist.php",
       payload
     );
 
@@ -102,7 +102,7 @@ export default function KlientState({ children }) {
 
   const removeFromWishlist = async (product) => {
     axios.post(
-      `http://localhost/demo_react_server/api/config/remove_product_fromWishlist.php?klient=${JSON.parse(
+      `https://192.168.88.250/demo_react_server/api/config/remove_product_fromWishlist.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}&product=${product.id}`
     );
@@ -116,7 +116,7 @@ export default function KlientState({ children }) {
     };
 
     axios.post(
-      "http://localhost/demo_react_server/api/config/increase_qty.php",
+      "https://192.168.88.250/demo_react_server/api/config/increase_qty.php",
       payload
     );
 
@@ -129,7 +129,7 @@ export default function KlientState({ children }) {
     };
 
     axios.post(
-      "http://localhost/demo_react_server/api/config/decrease_qty.php",
+      "https://192.168.88.250/demo_react_server/api/config/decrease_qty.php",
       payload
     );
 
@@ -142,7 +142,7 @@ export default function KlientState({ children }) {
     };
 
     axios.post(
-      "http://localhost/demo_react_server/api/config/edit_qty_singleProduct.php",
+      "https://192.168.88.250/demo_react_server/api/config/edit_qty_singleProduct.php",
       payload
     );
   };
@@ -150,15 +150,15 @@ export default function KlientState({ children }) {
   const makeOrder = (payload,totali) => {
     axios
       .post(
-        `http://localhost/demo_react_server/api/config/add_Order.php?klient=${JSON.parse(
+        `https://192.168.88.250/demo_react_server/api/config/add_Order.php?klient=${JSON.parse(
           localStorage.getItem("id")
         )}`,
         {payload,totali}
       )
       .then((res) => {
         if (res.data.status === 1) {
-          axios.post("http://localhost/demo_react_server/api/config/remove_AllProducts_from_cart.php");
-          axios.post("http://localhost/demo_react_server/api/config/reset_allQty.php");
+          axios.post("https://192.168.88.250/demo_react_server/api/config/remove_AllProducts_from_cart.php");
+          axios.post("https://192.168.88.250/demo_react_server/api/config/reset_allQty.php");
           setTimeout(() => getCartProducts(), 100);
         }
       });

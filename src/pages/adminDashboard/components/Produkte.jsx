@@ -34,19 +34,19 @@ export default function Produkte() {
 
   useEffect(() => {
     axios
-      .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
+      .get("https://192.168.88.250/demo_react_server/api/config/get_allProducts.php")
       .then((res) => setFundi(res.data));
   }, []);
 
   useEffect(() => {
     axios
-      .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
+      .get("https://192.168.88.250/demo_react_server/api/config/get_allProducts.php")
       .then((res) => setPastock(res.data));
   }, []);
 
   useEffect(() => {
     axios
-      .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
+      .get("https://192.168.88.250/demo_react_server/api/config/get_allProducts.php")
       .then((res) => merrTegjithaProduktet(res.data));
   }, []);
 
@@ -186,7 +186,7 @@ export default function Produkte() {
                   <img
                     width="50"
                     height="50"
-                    src={`http://localhost/demo_react_server/images/${produkt.image}`}
+                    src={`https://192.168.88.250/demo_react_server/images/${produkt.image}`}
                     alt="Foto Produkti"
                   />
                 </TableCell>

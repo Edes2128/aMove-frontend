@@ -32,7 +32,7 @@ export default function Klient() {
   useEffect(() => {
         axios
           .get(
-            "http://localhost/demo_react_server/api/config/getAll_clients.php"
+            "https//192.168.88.250/demo_react_server/api/config/getAll_clients.php"
           )
           .then((res) => setClients(res.data))
   }, []);

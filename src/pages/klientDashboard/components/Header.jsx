@@ -51,7 +51,7 @@ export default function Header({ name, userImg, handleLogout }) {
         </Badge>
         <Avatar
           className="logo-user-loggedin"
-          src={`http://localhost/demo_react_server/images/${userImg}`}
+          src={`https://192.168.88.250/demo_react_server/images/${userImg}`}
           alt="LogoUser"
         />
         <p onClick={() => Setlogout(!logout)}>{name}</p>

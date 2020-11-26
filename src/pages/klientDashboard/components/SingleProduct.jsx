@@ -41,7 +41,7 @@ export default function SingleProduct({ match }) {
         <div key={single.id} className="single-product">
           <div className="single-product-left">
             <img
-              src={`http://localhost/demo_react_server/images/${single.image}`}
+              src={`https://192.168.88.250/demo_react_server/images/${single.image}`}
               alt={single.titulli}
             />
           </div>

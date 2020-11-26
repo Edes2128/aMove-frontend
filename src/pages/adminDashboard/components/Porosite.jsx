@@ -26,7 +26,7 @@ export default function Porosite() {
 
   useEffect(() => {
     axios
-      .get("http://localhost/demo_react_server/api/config/getAll_orders.php")
+      .get("https://192.168.88.250/demo_react_server/api/config/getAll_orders.php")
       .then((res) => setOrders(res.data));
   }, []);
   const handleChange = (event, value) => {

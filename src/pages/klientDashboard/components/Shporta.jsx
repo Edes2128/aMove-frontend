@@ -26,7 +26,7 @@ export default function Shporta() {
                   <div className="shporta-item" key={item.id}>
                     <div className="shporta-item-image">
                       <img
-                        src={`http://localhost/demo_react_server/images/${item.image}`}
+                        src={`https://192.168.88.250/demo_react_server/images/${item.image}`}
                         alt=""
                       />
                     </div>

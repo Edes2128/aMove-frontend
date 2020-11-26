@@ -40,7 +40,7 @@ export default function ShtoKlientPopup({ closePopup }) {
       const config = {     
         headers: { 'content-type': 'multipart/form-data' }
     }
-    axios.post('http://localhost/demo_react_server/api/config/register_klient.php', avatar, config).then(res => setMsg(res.data));
+    axios.post('https://192.168.88.250/demo_react_server/api/config/register_klient.php', avatar, config).then(res => setMsg(res.data));
 
     if(msg.status == 1){
       closePopup();
