@@ -164,6 +164,13 @@ export default function KlientState({ children }) {
       });
   };
 
+
+  const getAllOrders = () => {
+
+    
+
+  }
+
   return (
     <KlientContext.Provider
       value={{

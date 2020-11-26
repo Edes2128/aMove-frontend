@@ -11,11 +11,13 @@ import KlientContext from "../context/KlientContext";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
 
 export default function Header({ name, userImg, handleLogout }) {
   const [logout, Setlogout] = useState(false);
   const [showProducts, setShowProducts] = useState(false);
-  const [typeCart, setTypeCart] = useState("");
+  const [showWishlist, setShowWishlist] = useState(false);
   const klientContext = useContext(KlientContext);
   const cartProducts = klientContext.cartProducts;
   const wishlistProducts = klientContext.wishlistProducts;
@@ -25,27 +27,35 @@ export default function Header({ name, userImg, handleLogout }) {
     klientContext.getWishlistProducts();
   }, []);
 
+
   return (
     <div className="klient-dashboard-header">
       <div className="klient-dashboard-header-widgets-klient">
+        
+    <ClickAwayListener onClickAway={() => setShowWishlist(false)}>
         <Badge badgeContent={wishlistProducts.length} color="primary">
           <StarBorderOutlinedIcon
             onClick={() => {
-              setTypeCart("wishlist");
-              setShowProducts(!showProducts);
+              setShowWishlist(!showWishlist);
             }}
             style={{ cursor: "pointer" }}
           />
         </Badge>
+        </ClickAwayListener>
+
+
+          <ClickAwayListener onClickAway={() => setShowProducts(false)} >
         <Badge badgeContent={cartProducts.length} color="primary">
           <ShoppingCartOutlinedIcon
             onClick={() => {
-              setTypeCart("cart");
               setShowProducts(!showProducts);
             }}
             style={{ cursor: "pointer" }}
           />
         </Badge>
+        </ClickAwayListener>
+        
+        
         <Badge badgeContent={9} color="primary">
           <NotificationsIcon />
         </Badge>
@@ -54,13 +64,20 @@ export default function Header({ name, userImg, handleLogout }) {
           src={`https://192.168.88.250/demo_react_server/images/${userImg}`}
           alt="LogoUser"
         />
-        <p onClick={() => Setlogout(!logout)}>{name}</p>
+        <ClickAwayListener onClickAway={() => Setlogout(false)} >
+        <p onClick={() => Setlogout(!logout)} style={{cursor:'pointer'}} >{name}</p>
+        </ClickAwayListener>
         {!logout && (
+                  <ClickAwayListener onClickAway={() => Setlogout(false)} >
           <ArrowDropDownOutlinedIcon onClick={() => Setlogout(!logout)} />
+          </ClickAwayListener>
         )}
         {logout && (
+                <ClickAwayListener onClickAway={() => Setlogout(false)} >
           <ArrowDropUpOutlinedIcon onClick={() => Setlogout(!logout)} />
+          </ClickAwayListener>
         )}
+
       </div>
       <div className={!logout ? "hover-logout" : "hover-logout display-block"}>
         <p onClick={handleLogout}>
@@ -70,7 +87,7 @@ export default function Header({ name, userImg, handleLogout }) {
         </p>
       </div>
 
-      {typeCart === "cart" && showProducts === true && (
+      { showProducts === true && (
         <div className="header-cart-products">
           {cartProducts.length > 0 ? (
             <>
@@ -134,7 +151,7 @@ export default function Header({ name, userImg, handleLogout }) {
         </div>
       )}
 
-      {typeCart === "wishlist" && showProducts === true && (
+      { showWishlist === true && (
         <div className="header-cart-products">
           {wishlistProducts.length > 0 ? (
             <>

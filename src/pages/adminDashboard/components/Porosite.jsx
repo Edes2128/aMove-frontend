@@ -19,6 +19,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 export default function Porosite() {
   const [orders, setOrders] = useState([]);
+  const [orderDetails, showOrderDetails] = useState(false);
+  const [orderContentDetails, setOrderDetailsContent] = useState([]);
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
@@ -26,12 +28,16 @@ export default function Porosite() {
 
   useEffect(() => {
     axios
-      .get("https://192.168.88.250/demo_react_server/api/config/getAll_orders.php")
+      .get(
+        "https://192.168.88.250/demo_react_server/api/config/getAll_orders.php"
+      )
       .then((res) => setOrders(res.data));
   }, []);
+
   const handleChange = (event, value) => {
     setPage(value);
   };
+
   const renderButtonStatus = (status) => {
     if (status == 1) {
       return "Aktive";
@@ -58,6 +64,34 @@ export default function Porosite() {
 
   return (
     <>
+      {orderDetails && (
+        <div className="order-details-pop">
+          <div
+            className="order-details-pop-opa"
+            onClick={() => {
+              showOrderDetails(false);
+              setOrderDetailsContent([]);
+            }}
+          ></div>
+          <div className="order-details-pop-content" >
+            {orderContentDetails.map((order) => (
+              <div className="order-details-pop-content-item" key={order.ID}>
+                <div className="order-details-pop-content-item-image">
+                  <img src={`https://192.168.88.250/demo_react_server/images/${order.image}`} alt="" />
+                </div>
+                <div className="order-details-pop-content-item-title">
+                  <h2> {order.titulli} </h2>
+                  <p> {order.pershkrimi} </p>
+                </div>
+                <div className="order-details-pop-content-item-price">
+                  <h3> {order.cmimiProduktit} Leke</h3>
+                  <p>Sasia: {order.qty} </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="porosite-header">
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
@@ -169,7 +203,16 @@ export default function Porosite() {
 
                 <TableCell align="center">
                   <div className="veprime" style={{ cursor: "pointer" }}>
-                    <VisibilityOutlinedIcon />
+                    <VisibilityOutlinedIcon
+                      onClick={() => {
+                        showOrderDetails(true);
+                        axios
+                          .get(
+                            `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klient_id}&order_id=${order.ID}`
+                          )
+                          .then((res) => setOrderDetailsContent(res.data));
+                      }}
+                    />
                     <EditOutlinedIcon />
                     <DeleteOutlineOutlinedIcon />
                   </div>
