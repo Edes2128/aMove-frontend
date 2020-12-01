@@ -13,10 +13,10 @@ export default function Sidebar() {
         <img width="120" height="120" src="/move-logo.png" alt="" />
       </div>
       <div className="sidebar-links">
-        <Link className="klient-dashboard-sidebar-link" to="/klient">
+        {/* <Link className="klient-dashboard-sidebar-link" to="/klient">
           {" "}
           <HomeOutlinedIcon style={{marginRight:'20px',fontSize:'20px'}} /> Home
-        </Link>
+        </Link> */}
         <Link className="klient-dashboard-sidebar-link" to="/klient/porosite">
           {" "}
           <LocalMallOutlinedIcon style={{marginRight:'20px',fontSize:'20px'}}/> Porosite
