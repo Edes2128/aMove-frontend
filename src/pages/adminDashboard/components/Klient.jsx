@@ -144,7 +144,7 @@ export default function Klient() {
               </TableHead>
               <TableBody>
                 {rows.slice(start, end).map((row) => (
-                  <TableRow key={row.id}>
+                  <TableRow  key={row.id}>
                     <TableCell>{row.id}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.email}</TableCell>
