@@ -27,7 +27,7 @@ export default function FormLogin({ history }) {
           localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("auth",true);
         localStorage.setItem('id',JSON.stringify(res.data.id))
-        history.push('/klient')
+        history.push('/klient/produktet')
         }else{
             setError(res.data.message);
         }

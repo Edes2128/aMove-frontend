@@ -69,12 +69,12 @@ export default function Header({ name, userImg, handleLogout }) {
         </ClickAwayListener>
         {!logout && (
                   <ClickAwayListener onClickAway={() => Setlogout(false)} >
-          <ArrowDropDownOutlinedIcon onClick={() => Setlogout(!logout)} />
+          <ArrowDropDownOutlinedIcon style={{cursor:'pointer'}}  onClick={() => Setlogout(!logout)} />
           </ClickAwayListener>
         )}
         {logout && (
                 <ClickAwayListener onClickAway={() => Setlogout(false)} >
-          <ArrowDropUpOutlinedIcon onClick={() => Setlogout(!logout)} />
+          <ArrowDropUpOutlinedIcon style={{cursor:'pointer'}} onClick={() => Setlogout(!logout)} />
           </ClickAwayListener>
         )}
 

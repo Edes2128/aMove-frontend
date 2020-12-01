@@ -53,6 +53,9 @@ export default function AdminDashboard({ history }) {
       />
       <div className="sidebar">
         <div className="sidebar-dashboard">
+          <div className="sidebar-dashboard-image">
+            <img src="/move-logo.png" alt=""/>
+          </div>
           <div>
             <Link className="link" to="/admin">
               <HomeIcon /> <p>Kreu</p>
@@ -81,17 +84,6 @@ export default function AdminDashboard({ history }) {
             
             }
           </div>
-          {theme ? (
-            <Brightness3Icon
-              style={{ fontSize: "35px" }}
-              onClick={() => setTheme(!theme)}
-            />
-          ) : (
-            <Brightness7Icon
-              style={{ fontSize: "35px" }}
-              onClick={() => setTheme(!theme)}
-            />
-          )}
         </div>
         <div className="sidebar-right">
           <Switch>

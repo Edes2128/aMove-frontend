@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
+// import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import FormatListBulletedOutlinedIcon from "@material-ui/icons/FormatListBulletedOutlined";
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';

@@ -12,9 +12,6 @@ export default function Header({ name, userImg,handleLogout }) {
 
   return (
     <div className="admin-header">
-      <div className="logo-move-admin">
-        <img className="logo-move" src="move-logo.png" alt="" />
-      </div>
       <div className="user-move-admin">
         <Badge  badgeContent={9} color="primary">
           <NotificationsIcon/>
