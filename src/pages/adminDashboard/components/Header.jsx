@@ -6,7 +6,7 @@ import ArrowDropUpOutlinedIcon from '@material-ui/icons/ArrowDropUpOutlined';
 import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 
-export default function Header({ name, userImg,handleLogout }) {
+export default function Header({ name, userImg , handleLogout }) {
 
   const [logout,Setlogout] = useState(false);
 
