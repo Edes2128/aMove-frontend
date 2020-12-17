@@ -14,22 +14,24 @@ export default function FormLogin({ history }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     axios
-      .post("https://192.168.88.250/demo_react_server/api/config/login.php", {email,password})
+      .post("https://192.168.88.250/demo_react_server/api/config/login.php", {
+        email,
+        password,
+      })
       .then((res) => {
-        console.log(res.data)
-        if(res.data.status === 1 && res.data.role === '1'){
-        localStorage.setItem("token", JSON.stringify(res.data.token));
-        localStorage.setItem("auth",true);
-        history.push('/admin')
-        }else if(res.data.status === 1 && res.data.role === '3'){
+        console.log(res.data);
+        if (res.data.status === 1 && res.data.role === "1") {
           localStorage.setItem("token", JSON.stringify(res.data.token));
-        localStorage.setItem("auth",true);
-        localStorage.setItem('id',JSON.stringify(res.data.id))
-        history.push('/klient/produktet')
-        }else{
-            setError(res.data.message);
+          localStorage.setItem("auth", true);
+          history.push("/admin");
+        } else if (res.data.status === 1 && res.data.role === "3") {
+          localStorage.setItem("token", JSON.stringify(res.data.token));
+          localStorage.setItem("auth", true);
+          localStorage.setItem("id", JSON.stringify(res.data.id));
+          history.push("/klient/produktet");
+        } else {
+          setError(res.data.message);
         }
       });
   };
