@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext } from "react";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -17,7 +17,7 @@ import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import GroupAddOutlinedIcon from "@material-ui/icons/GroupAddOutlined";
 import ShtoKlientPopup from "./ShtoKlientPopup";
-import axios from "axios";
+import DepoContext from '../../../context/depoContext/DepoContext';
 
 export default function Klient() {
   const [userPopup, shotUserPopup] = useState(false);
@@ -25,16 +25,15 @@ export default function Klient() {
   const [zona, Setzona] = useState("");
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
-  const [rows, setClients] = useState([]);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
+  const depoContext = useContext(DepoContext);
+  const {klientet} = depoContext;
 
   useEffect(() => {
-        axios
-          .get(
-            "https://192.168.88.250/demo_react_server/api/config/getAll_clients.php"
-          )
-          .then((res) => setClients(res.data))
+
+    depoContext.getAllClients();
+
   }, []);
 
   const handleChange = (event, value) => {
@@ -48,7 +47,7 @@ export default function Klient() {
           <div className="admin-klient-cat">
             <div className="admin-klient-cat-content">
               <p className="all-client">Te gjithe klientet</p>
-              <h2 className="all-client-num">{rows.length}</h2>
+              <h2 className="all-client-num">{klientet.length}</h2>
               <span style={{ display: "flex" }} className="span-client-offer">
                 20% <p>(30 dite)</p>
               </span>
@@ -143,7 +142,7 @@ export default function Klient() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.slice(start, end).map((row) => (
+                {klientet.slice(start, end).map((row) => (
                   <TableRow  key={row.id}>
                     <TableCell>{row.id}</TableCell>
                     <TableCell>{row.name}</TableCell>
@@ -181,7 +180,7 @@ export default function Klient() {
                 </Select>
               </div>
               <Pagination
-                count={Math.ceil(rows.length / itemPage)}
+                count={Math.ceil(klientet.length / itemPage)}
                 color="primary"
                 page={page}
                 size="large"

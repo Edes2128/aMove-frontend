@@ -12,6 +12,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 
+
 export default function ShtoProduktPopup({ closePopup }) {
   const [titulli, setTitulli] = useState("");
   const [sku, setSku] = useState("");
@@ -23,6 +24,9 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [ngjyrat, setNgjyrat] = useState([]);
   const [masat, setMasat] = useState([]);
   const [image, setImage] = useState("");
+
+
+
 
   const submit = (e) => {
     e.preventDefault();
@@ -59,9 +63,11 @@ export default function ShtoProduktPopup({ closePopup }) {
     } else {
         setMasat(masat.filter( masa => masa !== e.target.value));
     }
+
   };
 
   return (
+    <>
     <div className="shtoprodukt-popup">
       <div className="shtoprodukt-popup-opa" onClick={() => closePopup()}></div>
       <div className="shtoprodukt-popup-form">
@@ -292,5 +298,7 @@ export default function ShtoProduktPopup({ closePopup }) {
         </form>
       </div>
     </div>
+
+          </>
   );
 }

@@ -7,7 +7,7 @@ import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
-import KlientContext from "../context/KlientContext";
+import KlientContext from "../../../context/klientContext/KlientContext";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";

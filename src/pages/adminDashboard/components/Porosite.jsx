@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -16,22 +16,20 @@ import Pagination from "@material-ui/lab/Pagination";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import DepoContext from "../../../context/depoContext/DepoContext";
 
 export default function Porosite() {
-  const [orders, setOrders] = useState([]);
   const [orderDetails, showOrderDetails] = useState(false);
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
+  const depoContext = useContext(DepoContext);
+  const { porosite } = depoContext;
 
   useEffect(() => {
-    axios
-      .get(
-        "https://192.168.88.250/demo_react_server/api/config/getAll_orders.php"
-      )
-      .then((res) => setOrders(res.data));
+    depoContext.getAllOrders();
   }, []);
 
   const handleChange = (event, value) => {
@@ -73,11 +71,14 @@ export default function Porosite() {
               setOrderDetailsContent([]);
             }}
           ></div>
-          <div className="order-details-pop-content" >
+          <div className="order-details-pop-content">
             {orderContentDetails.map((order) => (
               <div className="order-details-pop-content-item" key={order.ID}>
                 <div className="order-details-pop-content-item-image">
-                  <img src={`https://192.168.88.250/demo_react_server/images/${order.image}`} alt="" />
+                  <img
+                    src={`https://192.168.88.250/demo_react_server/images/${order.image}`}
+                    alt=""
+                  />
                 </div>
                 <div className="order-details-pop-content-item-title">
                   <h2> {order.titulli} </h2>
@@ -179,7 +180,7 @@ export default function Porosite() {
           </TableHead>
 
           <TableBody>
-            {orders.slice(start, end).map((order) => (
+            {porosite.slice(start, end).map((order) => (
               <TableRow key={order.ID}>
                 <TableCell> {order.ID} </TableCell>
                 <TableCell> {order.klient_emer} </TableCell>
@@ -240,7 +241,7 @@ export default function Porosite() {
             </Select>
           </div>
           <Pagination
-            count={Math.ceil(orders.length / itemPage)}
+            count={Math.ceil(porosite.length / itemPage)}
             color="primary"
             page={page}
             size="large"

@@ -4,7 +4,6 @@ import DepoReducer from "./DepoReducer";
 import axios from "axios";
 import {
   GET_ALL_CLIENTS,
-  GET_ORDERS_SINGLE_USER,
   GET_ALL_ORDERS,
   GET_USER,
   GET_ALL_PRODUCTS,
@@ -33,6 +32,36 @@ export default function DepoState({ children }) {
     })
   };
 
+  const getAllClients = async () => {
+    const res = await axios.get('https://192.168.88.250/demo_react_server/api/config/getAll_clients.php')
+
+    dispatch({
+      type : GET_ALL_CLIENTS,
+      payload: res.data
+    })
+  }
+
+  const getAllProducts = async () => {
+
+    const res = await axios.get('https://192.168.88.250/demo_react_server/api/config/get_allProducts.php')
+
+    dispatch({
+      type : GET_ALL_PRODUCTS,
+      payload : res.data
+    })
+
+  }
+
+  const getAllOrders = async () => {
+
+    const res = await axios.get('https://192.168.88.250/demo_react_server/api/config/getAll_orders.php')
+
+    dispatch({
+      type : GET_ALL_ORDERS,
+      payload : res.data
+    })
+  }
+
   return (
     <DepoContext.Provider
       value={{
@@ -40,7 +69,10 @@ export default function DepoState({ children }) {
         klientet: state.klientet,
         produktet: state.produktet,
         porosite: state.porosite,
-        getUser
+        getUser,
+        getAllClients,
+        getAllProducts,
+        getAllOrders,
       }}
     >
       {children}

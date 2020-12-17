@@ -16,7 +16,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Slider from "@material-ui/core/Slider";
 import { Link } from "react-router-dom";
-import KlientContext from "../context/KlientContext";
+import KlientContext from "../../../context/klientContext/KlientContext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
 export default function Produktet() {

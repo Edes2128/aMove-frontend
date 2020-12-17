@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
-import KlientContext from "../context/KlientContext";
+import KlientContext from "../../../context/klientContext/KlientContext";
 import { Link } from "react-router-dom";
 
 export default function Wishlist() {

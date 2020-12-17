@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext } from "react";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -16,38 +16,23 @@ import Pagination from "@material-ui/lab/Pagination";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
-import axios from "axios";
 import InputLabel from "@material-ui/core/InputLabel";
+import DepoContext from '../../../context/depoContext/DepoContext';
 
 export default function Produkte() {
   const [kategoria, setKategoria] = useState("");
   const [produktPopup, showProduktPopup] = useState(false);
-  const [produktet, merrTegjithaProduktet] = useState([]);
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
-  const [pastock, setPastock] = useState([]);
-  const paSasi = pastock.filter((stock) => stock.sasia == 0);
-  const [fundi, setFundi] = useState([]);
-  const drejtFunit = fundi.filter((end) => end.sasia >= 1 && end.sasia <= 20);
+  const depoContext = useContext(DepoContext);
+  const { produktet } = depoContext
 
   useEffect(() => {
-    axios
-      .get("https://192.168.88.250/demo_react_server/api/config/get_allProducts.php")
-      .then((res) => setFundi(res.data));
-  }, []);
 
-  useEffect(() => {
-    axios
-      .get("https://192.168.88.250/demo_react_server/api/config/get_allProducts.php")
-      .then((res) => setPastock(res.data));
-  }, []);
+    depoContext.getAllProducts()
 
-  useEffect(() => {
-    axios
-      .get("https://192.168.88.250/demo_react_server/api/config/get_allProducts.php")
-      .then((res) => merrTegjithaProduktet(res.data));
   }, []);
 
   const handleChange = (event, value) => {
@@ -110,7 +95,7 @@ export default function Produkte() {
         <div className="produkte-header-item">
           <div className="produkte-header-item-left">
             <p>Produkte pa stok</p>
-            <h1> {paSasi.length} </h1>
+            <h1> {(produktet.filter((stock) => stock.sasia == 0)).length} </h1>
             <p>75%(30 dite)</p>
           </div>
           <div className="produkte-header-item-right">
@@ -121,7 +106,7 @@ export default function Produkte() {
         <div className="produkte-header-item">
           <div className="produkte-header-item-left">
             <p>Produkte drejt perfundimit</p>
-            <h1> {drejtFunit.length} </h1>
+            <h1> {(produktet.filter((end) => end.sasia >= 1 && end.sasia <= 20)).length} </h1>
             <p>75%(30 dite)</p>
           </div>
           <div className="produkte-header-item-right">

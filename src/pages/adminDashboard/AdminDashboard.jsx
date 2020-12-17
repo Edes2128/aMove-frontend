@@ -16,7 +16,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined";
 import ArrowDropUpOutlinedIcon from "@material-ui/icons/ArrowDropUpOutlined";
 import ShtoKlient from "./components/ShtoKlient";
-import DepoContext from './context/DepoContext';
+import DepoContext from '../../context/depoContext/DepoContext';
 
 export default function AdminDashboard({ history }) {
 

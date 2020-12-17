@@ -5,18 +5,21 @@ import { Switch, Route } from 'react-router-dom';
 import AdminDashboard from './pages/adminDashboard/AdminDashboard';
 import ProtectedRoutes from './pages/components/ProtectedRoutes';
 import KlientDashboard from './pages/klientDashboard/KlientDashboard';
-import KlientState from './pages/klientDashboard/context/KlientState';
-import DepoState from './pages/adminDashboard/context/DepoState';
-function App() {
+import KlientState from './context/klientContext/KlientState';
+import DepoState from './context/depoContext/DepoState';
+import AlertState from './context/alertContext/AlertState';
 
+function App() {
   return (
     <DepoState>
       <KlientState>
-        <Switch>
-          <Route exact path="/" component={FormLogin} />
-          <ProtectedRoutes path="/admin" component={AdminDashboard} />
-          <ProtectedRoutes path="/klient" component={KlientDashboard} />
-        </Switch>
+        <AlertState>
+          <Switch>
+            <Route exact path="/" component={FormLogin} />
+            <ProtectedRoutes path="/admin" component={AdminDashboard} />
+            <ProtectedRoutes path="/klient" component={KlientDashboard} />
+          </Switch>
+        </AlertState>
       </KlientState>
     </DepoState>
   );

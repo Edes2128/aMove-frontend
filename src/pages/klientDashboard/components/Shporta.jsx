@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import KlientContext from "../context/KlientContext";
+import KlientContext from "./../../../context/klientContext/KlientContext";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
@@ -18,6 +18,7 @@ export default function Shporta() {
   const handleClose = () => {
     showSnackbar(false);
   };
+
   return (
     <>
       {cartProducts.length > 0 ? (
@@ -145,7 +146,12 @@ export default function Shporta() {
             </React.Fragment>
           }
         >
-          <Alert variant="filled" color="success" onClose={handleClose} severity="success">
+          <Alert
+            variant="filled"
+            color="success"
+            onClose={handleClose}
+            severity="success"
+          >
             Porosia u shtua
           </Alert>
         </Snackbar>

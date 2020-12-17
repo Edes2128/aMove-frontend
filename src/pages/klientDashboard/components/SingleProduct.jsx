@@ -5,7 +5,7 @@ import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import { Link } from "react-router-dom";
 import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
-import KlientContext from "../context/KlientContext";
+import KlientContext from "../../../context/klientContext/KlientContext";
 import StarIcon from '@material-ui/icons/Star';
 
 export default function SingleProduct({ match }) {

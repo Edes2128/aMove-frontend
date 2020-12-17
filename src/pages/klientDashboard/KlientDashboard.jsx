@@ -7,7 +7,7 @@ import Home from "./components/Home";
 import Porosite from "./components/Porosite";
 import Produktet from "./components/Produktet";
 import SingleProduct from "./components/SingleProduct";
-import KlientContext from './context/KlientContext';
+import KlientContext from '../../context/klientContext/KlientContext';
 import Shporta from "./components/Shporta";
 import Wishlist from "./components/Wishlist";
 

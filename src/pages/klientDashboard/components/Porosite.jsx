@@ -16,7 +16,7 @@ import Pagination from "@material-ui/lab/Pagination";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
-import KlientContext from "../context/KlientContext";
+import KlientContext from "../../../context/klientContext/KlientContext";
 
 export default function Porosite() {
   const klientConext = useContext(KlientContext);
