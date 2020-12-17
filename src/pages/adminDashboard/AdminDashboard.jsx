@@ -17,6 +17,7 @@ import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined"
 import ArrowDropUpOutlinedIcon from "@material-ui/icons/ArrowDropUpOutlined";
 import ShtoKlient from "./components/ShtoKlient";
 import DepoContext from '../../context/depoContext/DepoContext';
+import Alerts from '../components/Alert';
 
 export default function AdminDashboard({ history }) {
 
@@ -36,12 +37,13 @@ export default function AdminDashboard({ history }) {
 
   return (
 <>
+      <Alerts/>
       <Header
         name={user.name}
         userImg={user.image_profile}
         handleLogout={() => handleLogout()}
       />
-      <div className="sidebar">
+      <div  className="sidebar">
         <div className="sidebar-dashboard">
           <div className="sidebar-dashboard-image">
             <img src="/move-logo.png" alt=""/>

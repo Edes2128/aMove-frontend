@@ -9,41 +9,46 @@ export default function Alerts() {
   const alertContext = useContext(AlertContext);
   const { alerts } = alertContext;
 
-  const [snackbar, showSnackbar] = useState(false);
+  const [snackbar, showSnackbar] = useState(true);
 
   const handleClose = () => {
     showSnackbar(false);
   };
 
   return (
-    alerts !==
-    null(
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={snackbar}
-        autoHideDuration={5000}
-        onClose={handleClose}
-        message="Porosia u shtua"
-        action={
-          <React.Fragment>
-            <IconButton
-              size="small"
-              aria-label="close"
-              color="inherit"
-              onClick={handleClose}
-            >
-              <CloseOutlinedIcon fontSize="small" />
-            </IconButton>
-          </React.Fragment>
-        }
-      >
-        <Alert variant="filled" onClose={handleClose} severity={alerts.type}>
-          {alerts.msg}
-        </Alert>
-      </Snackbar>
-    )
+    <>
+      {alerts !== null && (
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          open={snackbar}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          message="Porosia u shtua"
+          action={
+            <React.Fragment>
+              <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+              >
+                <CloseOutlinedIcon fontSize="small" />
+              </IconButton>
+            </React.Fragment>
+          }
+        >
+          <Alert
+            variant="filled"
+            onClose={handleClose}
+            severity={`${alerts.type}`}
+          >
+            {alerts.msg}
+          </Alert>
+        </Snackbar>
+      )}
+    </>
   );
 }
