@@ -14,11 +14,17 @@ export default function AlertState({ children }) {
       payload: { msg, type },
     });
 
-    setTimeout(() => dispatch({ type: REMOVE_ALERT }), 5000);
+    setTimeout(() => dispatch({ type: REMOVE_ALERT }), 7000);
+  };
+
+  const removeAlert = () => {
+    dispatch({
+      type: REMOVE_ALERT,
+    });
   };
 
   return (
-    <AlertContext.Provider value={{ alerts: state, setAlert }}>
+    <AlertContext.Provider value={{ alerts: state, setAlert, removeAlert }}>
       {children}
     </AlertContext.Provider>
   );

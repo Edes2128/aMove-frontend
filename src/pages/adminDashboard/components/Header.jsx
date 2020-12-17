@@ -17,7 +17,7 @@ export default function Header({ name, userImg , handleLogout }) {
   return (
     <div className="admin-header">
       <div className="user-move-admin">
-        <Badge onClick={() => alertContext.setAlert('test','error')}  badgeContent={9} color="primary">
+        <Badge onClick={() => alertContext.setAlert('test amove test test','warning')}  badgeContent={9} color="primary">
           <NotificationsIcon  />
           </Badge>
           <Avatar  className="logo-user-loggedin" src={`https://192.168.88.250/demo_react_server/images/${userImg}`} alt="LogoUser"/>
