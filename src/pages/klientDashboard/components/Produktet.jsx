@@ -287,11 +287,11 @@ export default function Produktet() {
                 onChange={(e) => setItempage(e.target.value)}
                 value={itemPage}
               >
-                <MenuItem value={6}>5</MenuItem>
-                <MenuItem value={12}>8</MenuItem>
-                <MenuItem value={18}>10</MenuItem>
-                <MenuItem value={24}>15</MenuItem>
-                <MenuItem value={30}>20</MenuItem>
+                <MenuItem value={6}>6</MenuItem>
+                <MenuItem value={12}>12</MenuItem>
+                <MenuItem value={18}>18</MenuItem>
+                <MenuItem value={24}>24</MenuItem>
+                <MenuItem value={30}>30</MenuItem>
               </Select>
             </div>
             <Pagination
