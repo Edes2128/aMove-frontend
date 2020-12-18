@@ -3,7 +3,7 @@ import KlientContext from "./../../../context/klientContext/KlientContext";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
-import AlertContext from '../../../context/alertContext/AlertContext';
+import AlertContext from "../../../context/alertContext/AlertContext";
 
 export default function Shporta() {
   const klientContext = useContext(KlientContext);
@@ -11,6 +11,7 @@ export default function Shporta() {
   const cmimet = cartProducts.map((item) => item.cmimi);
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
   const alertContext = useContext(AlertContext);
+
   return (
     <>
       {cartProducts.length > 0 ? (

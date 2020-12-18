@@ -18,16 +18,8 @@ export default function ShtoKlientPopup({ closePopup }) {
   const [zonaForm, setZonaForm] = useState("");
   const [kategoriForm, setKategoriForm] = useState("");
   const [image, setAvatar] = useState("");
-  const [msg, setMsg] = useState("");
-
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
-
-  useEffect(() => {
-    if (!msg == "") {
-      setTimeout(() => setMsg(""), 5000);
-    }
-  });
 
   const shtoKlient = (e) => {
     e.preventDefault();
@@ -154,11 +146,6 @@ export default function ShtoKlientPopup({ closePopup }) {
           >
             Shto
           </Button>
-          {msg.status === 0 && (
-            <Alert duration={5000} severity="error">
-              {msg.message}
-            </Alert>
-          )}
         </form>
       </div>
     </div>
