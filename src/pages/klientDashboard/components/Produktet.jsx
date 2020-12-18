@@ -18,13 +18,17 @@ import Slider from "@material-ui/core/Slider";
 import { Link } from "react-router-dom";
 import KlientContext from "../../../context/klientContext/KlientContext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import Pagination from "@material-ui/lab/Pagination";
 
 export default function Produktet() {
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [range, setRange] = useState("all");
   const [kategori, setKategori] = useState("");
   const [priceSort, setPriceSort] = useState("");
-
+  const [page, setPage] = useState(1);
+  const [itemPage, setItempage] = useState(6);
+  const start = (page - 1) * itemPage;
+  const end = page * itemPage;
   const klientContext = useContext(KlientContext);
   const products = klientContext.products;
   const { cartProducts, wishlistProducts } = klientContext;
@@ -32,6 +36,10 @@ export default function Produktet() {
   useEffect(() => {
     klientContext.getAllProducts();
   }, []);
+
+  const handleChange2 = (event, value) => {
+    setPage(value);
+  };
 
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
@@ -198,7 +206,7 @@ export default function Produktet() {
             />
           </div>
           <div className="produktet-list">
-            {products.sort(sortByProperty("cmimi")).map((product) => (
+            {products.slice(start,end).sort(sortByProperty("cmimi")).map((product) => (
               <div className="produktet-list-item" key={product.id}>
                 <div className="produkte-header-item-image">
                   <Link to={`/klient/${product.id}`}>
@@ -267,7 +275,32 @@ export default function Produktet() {
                   )}
                 </div>
               </div>
-            ))}
+            ))} 
+          </div>
+          <div className="produkte-pagination">
+          <div style={{ display: "flex", alignItems: "center" }}>
+              <InputLabel style={{ marginRight: "10px" }} id="row">
+                Produkte ne faqe
+              </InputLabel>
+              <Select
+                labelId="row"
+                onChange={(e) => setItempage(e.target.value)}
+                value={itemPage}
+              >
+                <MenuItem value={6}>5</MenuItem>
+                <MenuItem value={12}>8</MenuItem>
+                <MenuItem value={18}>10</MenuItem>
+                <MenuItem value={24}>15</MenuItem>
+                <MenuItem value={30}>20</MenuItem>
+              </Select>
+            </div>
+            <Pagination
+              count={Math.ceil(products.length / itemPage)}
+              color="primary"
+              page={page}
+              size="large"
+              onChange={handleChange2}
+            />
           </div>
         </div>
       </div>
