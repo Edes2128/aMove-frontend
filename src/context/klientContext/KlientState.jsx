@@ -2,6 +2,8 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import KlientContext from "./KlientContext";
 import KlientReducer from "./KlientReducer";
+
+
 import {
   GET_USER,
   GET_ALL_PRODUCTS,
@@ -11,6 +13,8 @@ import {
 } from "./types";
 
 export default function KlientState({ children }) {
+
+
   const initialState = {
     user: {},
     products: [],
@@ -165,8 +169,10 @@ export default function KlientState({ children }) {
           axios.post(
             "https://192.168.88.250/demo_react_server/api/config/reset_allQty.php"
           );
+
           setTimeout(() => getCartProducts(), 100);
         }
+
       });
   };
 

@@ -1,24 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import KlientContext from "./../../../context/klientContext/KlientContext";
 import Button from "@material-ui/core/Button";
 import CloseIcon from "@material-ui/icons/Close";
 import { Link } from "react-router-dom";
-import Snackbar from "@material-ui/core/Snackbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import Alert from "@material-ui/lab/Alert";
+import AlertContext from '../../../context/alertContext/AlertContext';
 
 export default function Shporta() {
   const klientContext = useContext(KlientContext);
   const { cartProducts } = klientContext;
   const cmimet = cartProducts.map((item) => item.cmimi);
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
-  const [snackbar, showSnackbar] = useState(false);
-
-  const handleClose = () => {
-    showSnackbar(false);
-  };
-
+  const alertContext = useContext(AlertContext);
   return (
     <>
       {cartProducts.length > 0 ? (
@@ -102,11 +94,10 @@ export default function Shporta() {
                       cartProducts,
                       cmimet.reduce(reducer)
                     );
-                    showSnackbar(true);
+                    alertContext.setAlert("Porosia u shtua!", "success");
                   }}
                 >
-                  {" "}
-                  Porosit{" "}
+                  Porosit
                 </Button>
               </div>
             </div>
@@ -124,37 +115,6 @@ export default function Shporta() {
             </Link>
           </div>
         )}
-        <Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          open={snackbar}
-          autoHideDuration={5000}
-          onClose={handleClose}
-          message="Porosia u shtua"
-          action={
-            <React.Fragment>
-              <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={handleClose}
-              >
-                <CloseOutlinedIcon fontSize="small" />
-              </IconButton>
-            </React.Fragment>
-          }
-        >
-          <Alert
-            variant="filled"
-            color="success"
-            onClose={handleClose}
-            severity="success"
-          >
-            Porosia u shtua
-          </Alert>
-        </Snackbar>
       </div>
     </>
   );
