@@ -1,13 +1,15 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
-import Input from '@material-ui/core/Input';
+import Input from "@material-ui/core/Input";
 import { Button } from "@material-ui/core";
-import Alert from '@material-ui/lab/Alert';
-import axios from 'axios';
+import Alert from "@material-ui/lab/Alert";
+import axios from "axios";
+import AlertContext from "../../../context/alertContext/AlertContext";
+import DepoContext from "../../../context/depoContext/DepoContext";
 
 export default function ShtoKlientPopup({ closePopup }) {
   const [emri, setEmer] = useState("");
@@ -15,43 +17,56 @@ export default function ShtoKlientPopup({ closePopup }) {
   const [password, setPassword] = useState("");
   const [zonaForm, setZonaForm] = useState("");
   const [kategoriForm, setKategoriForm] = useState("");
-  const [image,setAvatar] = useState("");
-  const [msg,setMsg] = useState('');
+  const [image, setAvatar] = useState("");
+  const [msg, setMsg] = useState("");
+
+  const depoContext = useContext(DepoContext);
+  const alertContext = useContext(AlertContext);
 
   useEffect(() => {
-    if(!msg == ''){
-      setTimeout(() => setMsg(''),5000)
+    if (!msg == "") {
+      setTimeout(() => setMsg(""), 5000);
     }
-  })
+  });
 
   const shtoKlient = (e) => {
-      e.preventDefault()
+    e.preventDefault();
 
-      let avatar = new FormData();
+    let avatar = new FormData();
 
-      avatar.append('name',emri);
-      avatar.append('email',email);
-      avatar.append('password',password);
-      avatar.append('role',3);
-      avatar.append('zona',zonaForm);
-      avatar.append('kategoria',kategoriForm);
-      avatar.append('image',image)
+    avatar.append("name", emri);
+    avatar.append("email", email);
+    avatar.append("password", password);
+    avatar.append("role", 3);
+    avatar.append("zona", zonaForm);
+    avatar.append("kategoria", kategoriForm);
+    avatar.append("image", image);
 
-      const config = {     
-        headers: { 'content-type': 'multipart/form-data' }
-    }
-    axios.post('https://192.168.88.250/demo_react_server/api/config/register_klient.php', avatar, config).then(res => setMsg(res.data));
-
-    if(msg.status == 1){
-      closePopup();
-      setEmer("");
-      setEmail("");
-      setPassword("");
-      setZonaForm("");
-      setKategoriForm("");
-      setAvatar("");
-    }
-  }
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+    axios
+      .post(
+        "https://192.168.88.250/demo_react_server/api/config/register_klient.php",
+        avatar,
+        config
+      )
+      .then((res) => {
+        if (res.data.status == 0) {
+          alertContext.setAlert("Plotesoni te gjitha fushat!", "error");
+        } else if (res.data.status == 1) {
+          alertContext.setAlert("Klienti u shtua!", "success");
+          depoContext.getAllClients();
+          closePopup();
+          setEmer("");
+          setEmail("");
+          setPassword("");
+          setZonaForm("");
+          setKategoriForm("");
+          setAvatar("");
+        }
+      });
+  };
 
   return (
     <div className="shtoklient-popup">
@@ -72,7 +87,7 @@ export default function ShtoKlientPopup({ closePopup }) {
             onClick={() => closePopup()}
           />
         </div>
-        <form className="shtoklient-popup-form"  onSubmit={shtoKlient}>
+        <form className="shtoklient-popup-form" onSubmit={shtoKlient}>
           <TextField
             className="input-popup"
             label="Emri"
@@ -119,17 +134,31 @@ export default function ShtoKlientPopup({ closePopup }) {
               variant="outlined"
               color="primary"
             >
-              <MenuItem value="None">
-              </MenuItem>
+              <MenuItem value="None"></MenuItem>
               <MenuItem value={"Kategoria 1"}>Kategoria 1</MenuItem>
               <MenuItem value={"Ktegoria 2"}>Kategoria 2</MenuItem>
               <MenuItem value={"Kategoria 3"}>Kategoria 3</MenuItem>
             </Select>
           </div>
-          <Input type="file" className="input-file" onChange={(e) => setAvatar(e.target.files[0])} />
-          
-          <Button color="primary" variant="contained" type="submit" style={{width:'40%',marginTop:'50px',marginBottom:'40px'}} >Shto</Button>
-        {msg.status === 0 && <Alert duration={5000} severity="error" >{msg.message}</Alert>}
+          <Input
+            type="file"
+            className="input-file"
+            onChange={(e) => setAvatar(e.target.files[0])}
+          />
+
+          <Button
+            color="primary"
+            variant="contained"
+            type="submit"
+            style={{ width: "40%", marginTop: "50px", marginBottom: "40px" }}
+          >
+            Shto
+          </Button>
+          {msg.status === 0 && (
+            <Alert duration={5000} severity="error">
+              {msg.message}
+            </Alert>
+          )}
         </form>
       </div>
     </div>
