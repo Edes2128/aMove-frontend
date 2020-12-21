@@ -242,6 +242,7 @@ export default function Produktet() {
                   ) : (
                     <Button
                       startIcon={<LocalMallOutlinedIcon />}
+                      disabled={product.sasia == 0 ? true : false}
                       color="primary"
                       style={{ width: "50%" }}
                       onClick={() => {

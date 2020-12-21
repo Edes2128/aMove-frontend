@@ -25,6 +25,7 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [ngjyrat, setNgjyrat] = useState([]);
   const [masat, setMasat] = useState([]);
   const [image, setImage] = useState("");
+  const [file,setFile] = useState('');
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
 
@@ -50,7 +51,7 @@ export default function ShtoProduktPopup({ closePopup }) {
         fd
       )
       .then((res) => {
-        console.log(res.data.status)
+        console.log(res.data.status);
         if (res.data.status === 0) {
           alertContext.setAlert(
             "Plotesoni fushat,produkti nuk u shtua",
@@ -136,24 +137,36 @@ export default function ShtoProduktPopup({ closePopup }) {
                   style={{ width: "80%", height: "80%" }}
                 ></textarea>
               </div>
-              <div className="image">
-                <InputLabel
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    cursor: "pointer",
-                  }}
-                  htmlFor="image"
-                >
-                  <AddIcon style={{ fontSize: "70px" }} /> upload{" "}
-                </InputLabel>
-                <Input
-                  onChange={(e) => setImage(e.target.files[0])}
-                  id="image"
-                  type="file"
-                  style={{ display: "none" }}
-                />
+              <div
+                className={image === "" ? "image" : "image outlinestyle-none"}
+              >
+                {image === "" ? (
+                  <>
+                    <InputLabel
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                      htmlFor="image"
+                    >
+                      <AddIcon style={{ fontSize: "70px" }} /> upload{" "}
+                    </InputLabel>
+
+                    <Input
+                      onChange={(e) =>{
+                        setImage(e.target.files[0])
+                        setFile(URL.createObjectURL(e.target.files[0]))
+                      }}
+                      id="image"
+                      type="file"
+                      style={{ display: "none" }}
+                    />
+                  </>
+                ) : (
+                  <img src={file} alt="" />
+                )}
               </div>
             </div>
             <div className="kategori-cmimi-stock">

@@ -10,6 +10,7 @@ import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
 import AlertContext from "../../../context/alertContext/AlertContext";
 import DepoContext from "../../../context/depoContext/DepoContext";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 
 export default function ShtoKlientPopup({ closePopup }) {
   const [emri, setEmer] = useState("");
@@ -18,6 +19,7 @@ export default function ShtoKlientPopup({ closePopup }) {
   const [zonaForm, setZonaForm] = useState("");
   const [kategoriForm, setKategoriForm] = useState("");
   const [image, setAvatar] = useState("");
+  const [file, setFile] = useState("");
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
 
@@ -132,11 +134,27 @@ export default function ShtoKlientPopup({ closePopup }) {
               <MenuItem value={"Kategoria 3"}>Kategoria 3</MenuItem>
             </Select>
           </div>
-          <Input
-            type="file"
-            className="input-file"
-            onChange={(e) => setAvatar(e.target.files[0])}
-          />
+          {image === "" ? (
+            <Input
+              type="file"
+              className="input-file"
+              onChange={(e) => {
+                setAvatar(e.target.files[0]);
+                setFile(URL.createObjectURL(e.target.files[0]));
+              }}
+            />
+          ) : (
+            <div className="image-klient-form">
+              <DeleteOutlineOutlinedIcon
+                onClick={() => {
+                  setAvatar("");
+                  setFile("");
+                }}
+                className="delete-icon-image"
+              />
+              <img src={file} alt="" />
+            </div>
+          )}
 
           <Button
             color="primary"

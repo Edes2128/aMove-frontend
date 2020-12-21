@@ -32,7 +32,6 @@ export default function Header({ name, userImg, handleLogout }) {
     <div className="klient-dashboard-header">
       <div className="klient-dashboard-header-widgets-klient">
         
-    <ClickAwayListener onClickAway={() => setShowWishlist(false)}>
         <Badge badgeContent={wishlistProducts.length} color="primary">
           <StarBorderOutlinedIcon
             onClick={() => {
@@ -41,10 +40,10 @@ export default function Header({ name, userImg, handleLogout }) {
             style={{ cursor: "pointer" }}
           />
         </Badge>
-        </ClickAwayListener>
 
 
-          <ClickAwayListener onClickAway={() => setShowProducts(false)} >
+
+
         <Badge badgeContent={cartProducts.length} color="primary">
           <ShoppingCartOutlinedIcon
             onClick={() => {
@@ -53,7 +52,7 @@ export default function Header({ name, userImg, handleLogout }) {
             style={{ cursor: "pointer" }}
           />
         </Badge>
-        </ClickAwayListener>
+
         
         
         <Badge badgeContent={9} color="primary">
@@ -88,11 +87,12 @@ export default function Header({ name, userImg, handleLogout }) {
       </div>
 
       { showProducts === true && (
+                  <ClickAwayListener onClickAway={() => setShowProducts(false)} >
         <div className="header-cart-products">
           {cartProducts.length > 0 ? (
             <>
               <div className="header-cart-products-length">
-                <h2>7 items</h2>
+                <h2> {cartProducts.length} items </h2>
                 <p>In your cart</p>
               </div>
               <div className="header-cart-products-content">
@@ -149,15 +149,17 @@ export default function Header({ name, userImg, handleLogout }) {
             </div>
           )}
         </div>
+        </ClickAwayListener>
       )}
 
       { showWishlist === true && (
+            <ClickAwayListener onClickAway={() => setShowWishlist(false)}>
         <div className="header-cart-products">
           {wishlistProducts.length > 0 ? (
             <>
               <div className="header-cart-products-length">
-                <h2>7 items</h2>
-                <p>In your cart</p>
+                <h2>  {wishlistProducts.length} items</h2>
+                <p>In your wishlist</p>
               </div>
               <div className="header-cart-products-content">
                 {wishlistProducts.map((item) => (
@@ -213,6 +215,7 @@ export default function Header({ name, userImg, handleLogout }) {
             </div>
           )}
         </div>
+        </ClickAwayListener>
       )}
     </div>
   );
