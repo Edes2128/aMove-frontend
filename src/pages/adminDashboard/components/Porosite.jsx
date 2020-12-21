@@ -27,7 +27,21 @@ export default function Porosite() {
   const end = page * itemPage;
   const depoContext = useContext(DepoContext);
   const { porosite } = depoContext;
+  const [propertyName,setProperty] = useState(null);
+  
+if(propertyName !== null){
+    porosite.sort((a,b) => {
 
+        if( a[propertyName] < b[propertyName] ){
+
+            return -1;
+        }
+        if(a[propertyName] > b[propertyName]){
+            return 1;
+        }
+        return 0;
+    })
+}
   useEffect(() => {
     depoContext.getAllOrders();
   }, []);
@@ -96,9 +110,9 @@ export default function Porosite() {
       <div className="porosite-header">
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
-            <p>Porosi sot</p>
-            <h2>138</h2>
-            <p>1/04/2020</p>
+            <p>Porosi gjithsej</p>
+            <h2> {porosite.length} </h2>
+            <p></p>
           </div>
           <div className="porosite-header-item-right">
             <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
@@ -107,9 +121,9 @@ export default function Porosite() {
 
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
-            <p>Porosi sot</p>
-            <h2>138</h2>
-            <p>1/04/2020</p>
+            <p>Porosi aktive</p>
+            <h2> {(porosite.filter(porosi => porosi.order_status === 1)).length} </h2>
+            <p></p>
           </div>
           <div className="porosite-header-item-right">
             <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
@@ -118,9 +132,9 @@ export default function Porosite() {
 
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
-            <p>Porosi sot</p>
-            <h2>138</h2>
-            <p>1/04/2020</p>
+            <p>Porosi ne pritje</p>
+            <h2> {(porosite.filter(porosi => porosi.order_status === 2)).length} </h2>
+            <p></p>
           </div>
           <div className="porosite-header-item-right">
             <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
@@ -129,9 +143,9 @@ export default function Porosite() {
 
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
-            <p>Porosi sot</p>
-            <h2>138</h2>
-            <p>1/04/2020</p>
+            <p>Porosi te anulluara</p>
+            <h2> {(porosite.filter(porosi => porosi.order_status === 3)).length} </h2>
+            <p></p>
           </div>
           <div className="porosite-header-item-right">
             <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
@@ -140,9 +154,9 @@ export default function Porosite() {
 
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
-            <p>Porosi sot</p>
-            <h2>138</h2>
-            <p>1/04/2020</p>
+            <p>Porosi te perfunduara</p>
+            <h2> {(porosite.filter(porosi => porosi.order_status === 4)).length} </h2>
+            <p></p>
           </div>
           <div className="porosite-header-item-right">
             <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
@@ -169,18 +183,18 @@ export default function Porosite() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="left">Emri</TableCell>
-              <TableCell align="left">Data</TableCell>
-              <TableCell align="left">Zona</TableCell>
-              <TableCell align="left">Vlera</TableCell>
-              <TableCell align="left">Porosia</TableCell>
+              <TableCell onClick={() => setProperty('ID')} >ID</TableCell>
+              <TableCell align="left" onClick={() => setProperty('klient_emer')} >Emri</TableCell>
+              <TableCell align="left" onClick={() => setProperty('order_date')} >Data</TableCell>
+              <TableCell align="left" onClick={() => setProperty('klient_zona')} >Zona</TableCell>
+              <TableCell align="left" onClick={() => setProperty('total_price')} >Vlera</TableCell>
+              <TableCell align="left" onClick={() => setProperty('order_status')} >Porosia</TableCell>
               <TableCell align="center">Veprimet</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {porosite.slice(start, end).map((order) => (
+            {porosite.slice(start, end).sort().map((order) => (
               <TableRow key={order.ID}>
                 <TableCell> {order.ID} </TableCell>
                 <TableCell> {order.klient_emer} </TableCell>
@@ -226,7 +240,7 @@ export default function Porosite() {
         <div className="pagination">
           <div style={{ display: "flex", alignItems: "center" }}>
             <InputLabel style={{ marginRight: "10px" }} id="row">
-              User ne faqe
+              Porosi ne faqe
             </InputLabel>
             <Select
               labelId="row"
