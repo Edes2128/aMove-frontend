@@ -500,6 +500,7 @@ body {
   align-items: center;
   outline-style: dotted;
   height: 80%;
+  position: relative;
 }
 .outlinestyle-none {
   outline: none;

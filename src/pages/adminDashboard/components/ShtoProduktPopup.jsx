@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import DepoContext from "../../../context/depoContext/DepoContext";
 import AlertContext from "../../../context/alertContext/AlertContext";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 
 export default function ShtoProduktPopup({ closePopup }) {
   const [titulli, setTitulli] = useState("");
@@ -25,10 +26,9 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [ngjyrat, setNgjyrat] = useState([]);
   const [masat, setMasat] = useState([]);
   const [image, setImage] = useState("");
-  const [file,setFile] = useState('');
+  const [file, setFile] = useState("");
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
-
 
   const submit = (e) => {
     e.preventDefault();
@@ -155,9 +155,9 @@ export default function ShtoProduktPopup({ closePopup }) {
                     </InputLabel>
 
                     <Input
-                      onChange={(e) =>{
-                        setImage(e.target.files[0])
-                        setFile(URL.createObjectURL(e.target.files[0]))
+                      onChange={(e) => {
+                        setImage(e.target.files[0]);
+                        setFile(URL.createObjectURL(e.target.files[0]));
                       }}
                       id="image"
                       type="file"
@@ -165,7 +165,16 @@ export default function ShtoProduktPopup({ closePopup }) {
                     />
                   </>
                 ) : (
-                  <img src={file} alt="" />
+                  <>
+                    <DeleteOutlineOutlinedIcon
+                      onClick={() => {
+                        setImage("");
+                        setFile("");
+                      }}
+                      className="delete-icon-image"
+                    />
+                    <img src={file} alt="" />
+                  </>
                 )}
               </div>
             </div>
