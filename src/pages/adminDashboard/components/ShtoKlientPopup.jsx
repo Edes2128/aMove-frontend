@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
@@ -6,11 +6,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import { Button } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
 import AlertContext from "../../../context/alertContext/AlertContext";
 import DepoContext from "../../../context/depoContext/DepoContext";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import AddIcon from "@material-ui/icons/Add";
 
 export default function ShtoKlientPopup({ closePopup }) {
   const [emri, setEmer] = useState("");
@@ -135,14 +135,29 @@ export default function ShtoKlientPopup({ closePopup }) {
             </Select>
           </div>
           {image === "" ? (
-            <Input
-              type="file"
-              className="input-file"
-              onChange={(e) => {
-                setAvatar(e.target.files[0]);
-                setFile(URL.createObjectURL(e.target.files[0]));
-              }}
-            />
+            <>
+              <InputLabel
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+                htmlFor="image"
+              >
+                <AddIcon style={{ fontSize: "70px" }} /> Upload image{" "}
+              </InputLabel>
+              <Input
+                type="file"
+                id="image"
+                className="input-file"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  setAvatar(e.target.files[0]);
+                  setFile(URL.createObjectURL(e.target.files[0]));
+                }}
+              />
+            </>
           ) : (
             <div className="image-klient-form">
               <DeleteOutlineOutlinedIcon
