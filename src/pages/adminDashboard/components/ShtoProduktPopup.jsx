@@ -28,6 +28,7 @@ export default function ShtoProduktPopup({ closePopup }) {
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
 
+
   const submit = (e) => {
     e.preventDefault();
 
@@ -49,12 +50,13 @@ export default function ShtoProduktPopup({ closePopup }) {
         fd
       )
       .then((res) => {
-        if (res.data.status == 0) {
+        console.log(res.data.status)
+        if (res.data.status === 0) {
           alertContext.setAlert(
             "Plotesoni fushat,produkti nuk u shtua",
             "error"
           );
-        } else if (res.data.status == 1) {
+        } else if (res.data.status === 1) {
           alertContext.setAlert("Produkti u shtua", "success");
           depoContext.getAllProducts();
           closePopup();

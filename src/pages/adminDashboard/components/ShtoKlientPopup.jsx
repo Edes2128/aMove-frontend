@@ -44,9 +44,9 @@ export default function ShtoKlientPopup({ closePopup }) {
         config
       )
       .then((res) => {
-        if (res.data.status == 0) {
+        if (res.data.status === 0) {
           alertContext.setAlert("Plotesoni te gjitha fushat!", "error");
-        } else if (res.data.status == 1) {
+        } else if (res.data.status === 1) {
           alertContext.setAlert("Klienti u shtua!", "success");
           depoContext.getAllClients();
           closePopup();
