@@ -49,8 +49,9 @@ export default function Klient() {
       order.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
       order.email.toLowerCase().includes(searchFilter.toLowerCase()) ||
       order.zona.toLowerCase().includes(searchFilter.toLowerCase()) ||
-      order.kategoria.toLowerCase().includes(searchFilter.toLowerCase())
-  );
+      order.kategoria.toLowerCase().includes(searchFilter.toLowerCase()) 
+
+      );
 
   useEffect(() => {
     depoContext.getAllClients();
