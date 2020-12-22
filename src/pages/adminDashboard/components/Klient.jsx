@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -17,7 +17,9 @@ import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import GroupAddOutlinedIcon from "@material-ui/icons/GroupAddOutlined";
 import ShtoKlientPopup from "./ShtoKlientPopup";
-import DepoContext from '../../../context/depoContext/DepoContext';
+import DepoContext from "../../../context/depoContext/DepoContext";
+import { CloseOutlined } from "@material-ui/icons";
+import Avatar from "@material-ui/core/Avatar";
 
 export default function Klient() {
   const [userPopup, shotUserPopup] = useState(false);
@@ -28,12 +30,11 @@ export default function Klient() {
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const depoContext = useContext(DepoContext);
-  const {klientet} = depoContext;
-
+  const { klientet } = depoContext;
+  const [userDetails, setUserDetails] = useState({});
+  const [userDetailsPop, showUserDetailsPop] = useState(false);
   useEffect(() => {
-
     depoContext.getAllClients();
-
   }, []);
 
   const handleChange = (event, value) => {
@@ -41,6 +42,52 @@ export default function Klient() {
   };
   return (
     <>
+      {userDetailsPop && (
+        <div className="user-details-pop">
+          <div
+            className="user-details-pop-opa"
+            onClick={() => showUserDetailsPop(false)}
+          ></div>
+          <div className="user-details-pop-container">
+            <CloseOutlined
+              style={{
+                alignSelf: "flex-end",
+                marginRight: "20px",
+                marginTop: "20px",
+                fontSize: "30px",
+                cursor: "pointer",
+              }}
+              onClick={() => showUserDetailsPop(false)}
+            />
+            <Avatar
+              src={`https://192.168.88.250/demo_react_server/images/${userDetails.image_profile}`}
+              style={{ height: "80px", width: "80px" }}
+            />
+            <div className="user-pop-details-content">
+              <h3>Emri: </h3>
+              <i>
+                <p>{userDetails.name}</p>
+              </i>
+
+              <h3>Email: </h3>
+              <i>
+                {" "}
+                <p>{userDetails.email}</p>
+              </i>
+
+              <h3>Zona: </h3>
+              <i>
+                <p>{userDetails.zona}</p>
+              </i>
+
+              <h3>Kategoria: </h3>
+              <i>
+                <p>{userDetails.kategoria}</p>
+              </i>
+            </div>
+          </div>
+        </div>
+      )}
       {userPopup && <ShtoKlientPopup closePopup={() => shotUserPopup(false)} />}
       <div className="klient">
         <div className="admin-klient">
@@ -130,12 +177,14 @@ export default function Klient() {
           </div>
 
           <div className="data-table">
-            <Table size="medium">
+            <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>ID</TableCell>
                   <TableCell align="left">Emri</TableCell>
-                  <TableCell width="300px" align="left">Email</TableCell>
+                  <TableCell width="300px" align="left">
+                    Email
+                  </TableCell>
                   <TableCell align="left">Zona</TableCell>
                   <TableCell align="left">Kategoria</TableCell>
                   <TableCell align="center">Veprimet</TableCell>
@@ -143,7 +192,7 @@ export default function Klient() {
               </TableHead>
               <TableBody>
                 {klientet.slice(start, end).map((row) => (
-                  <TableRow  key={row.id}>
+                  <TableRow key={row.id}>
                     <TableCell>{row.id}</TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.email}</TableCell>
@@ -152,7 +201,12 @@ export default function Klient() {
 
                     <TableCell align="center">
                       <div className="veprime" style={{ cursor: "pointer" }}>
-                        <VisibilityOutlinedIcon />
+                        <VisibilityOutlinedIcon
+                          onClick={() => {
+                            setUserDetails(row);
+                            showUserDetailsPop(true);
+                          }}
+                        />
                         <EditOutlinedIcon />
                         <DeleteOutlineOutlinedIcon />
                       </div>

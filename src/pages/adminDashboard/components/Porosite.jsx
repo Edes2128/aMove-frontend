@@ -49,6 +49,7 @@ export default function Porosite() {
         .toLowerCase()
         .includes(searchFilter.toLowerCase())
   );
+
   useEffect(() => {
     depoContext.getAllOrders();
   }, []);
@@ -357,7 +358,6 @@ export default function Porosite() {
           <TableBody>
             {filteredOrder
               .slice(start, end)
-              .sort()
               .map((order) => (
                 <TableRow key={order.ID}>
                   <TableCell> {order.ID} </TableCell>

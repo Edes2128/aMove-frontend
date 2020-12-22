@@ -9,7 +9,6 @@ import {
   GET_ALL_PRODUCTS,
 } from "./types";
 
-
 export default function DepoState({ children }) {
   const initialState = {
     user: {},
@@ -27,48 +26,59 @@ export default function DepoState({ children }) {
       )}"`
     );
     dispatch({
-        type : GET_USER,
-        payload : res.data.user
-    })
+      type: GET_USER,
+      payload: res.data.user,
+    });
   };
 
   const getAllClients = async () => {
-    const res = await axios.get('https://192.168.88.250/demo_react_server/api/config/getAll_clients.php')
+    const res = await axios.get(
+      "https://192.168.88.250/demo_react_server/api/config/getAll_clients.php"
+    );
 
     dispatch({
-      type : GET_ALL_CLIENTS,
-      payload: res.data
-    })
-  }
+      type: GET_ALL_CLIENTS,
+      payload: res.data,
+    });
+  };
 
   const getAllProducts = async () => {
-
-    const res = await axios.get('https://192.168.88.250/demo_react_server/api/config/get_allProducts.php')
+    const res = await axios.get(
+      "https://192.168.88.250/demo_react_server/api/config/get_allProducts.php"
+    );
 
     dispatch({
-      type : GET_ALL_PRODUCTS,
-      payload : res.data
-    })
-
-  }
+      type: GET_ALL_PRODUCTS,
+      payload: res.data,
+    });
+  };
 
   const getAllOrders = async () => {
-
-    const res = await axios.get('https://192.168.88.250/demo_react_server/api/config/getAll_orders.php')
+    const res = await axios.get(
+      "https://192.168.88.250/demo_react_server/api/config/getAll_orders.php"
+    );
 
     dispatch({
-      type : GET_ALL_ORDERS,
-      payload : res.data
-    })
-  }
+      type: GET_ALL_ORDERS,
+      payload: res.data,
+    });
+  };
 
   const cancelOrder = async (order_id) => {
+    await axios.post(
+      `http://localhost/demo_react_server/api/config/cancel_order.php?order_id=${order_id}`
+    );
 
-      axios.post(`http://localhost/demo_react_server/api/config/cancel_order.php?order_id=${order_id}`)
+    setTimeout(() => getAllOrders(), 100);
+  };
 
-    setTimeout(() => getAllOrders(),100)
+  const deleteProduct = async (product_id) => {
+    await axios.post(
+      `http://localhost/demo_react_server/api/config/delete_product.php?product_id=${product_id}`
+    );
 
-  }
+    setTimeout(() => getAllProducts(), 100);
+  };
 
   return (
     <DepoContext.Provider
@@ -81,7 +91,8 @@ export default function DepoState({ children }) {
         getAllClients,
         getAllProducts,
         getAllOrders,
-        cancelOrder
+        cancelOrder,
+        deleteProduct,
       }}
     >
       {children}

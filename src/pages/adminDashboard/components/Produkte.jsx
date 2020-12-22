@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -17,22 +17,43 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import InputLabel from "@material-ui/core/InputLabel";
-import DepoContext from '../../../context/depoContext/DepoContext';
+import DepoContext from "../../../context/depoContext/DepoContext";
+import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
+import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
+import AlertContext from "../../../context/alertContext/AlertContext";
 
 export default function Produkte() {
   const [kategoria, setKategoria] = useState("");
   const [produktPopup, showProduktPopup] = useState(false);
   const [page, setPage] = useState(1);
+  const [idDelete, setDeleteId] = useState("");
   const [itemPage, setItempage] = useState(5);
+  const [searchFilter, setSearchFilter] = useState("");
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const depoContext = useContext(DepoContext);
-  const { produktet } = depoContext
+  const { produktet } = depoContext;
+  const alertContext = useContext(AlertContext);
+  const [propertyName, setProperty] = useState({
+    key: "id",
+    direction: "descending",
+  });
+  const [deletePop, showDeletePop] = useState(false);
+
+  const filteredProducts = produktet.filter(
+    (order) =>
+      order.id.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.titulli.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.kategoria.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.sasia
+        .toString()
+        .toLowerCase()
+        .includes(searchFilter.toLowerCase()) ||
+      order.cmimi.toString().toLowerCase().includes(searchFilter.toLowerCase())
+  );
 
   useEffect(() => {
-
-    depoContext.getAllProducts()
-
+    depoContext.getAllProducts();
   }, []);
 
   const handleChange = (event, value) => {
@@ -49,8 +70,68 @@ export default function Produkte() {
     }
   };
 
+  if (propertyName !== null) {
+    filteredProducts.sort((a, b) => {
+      if (a[propertyName.key] < b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? -1 : 1;
+      }
+      if (a[propertyName.key] > b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (
+      propertyName &&
+      propertyName.key === key &&
+      propertyName.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setProperty({ key, direction });
+  };
   return (
     <>
+      {deletePop && (
+        <div className="delete-pop">
+          <div
+            className="delete-pop-opa"
+            onClick={() => {
+              showDeletePop(false);
+              alertContext.setAlert("Produkti nuk u fshi!", "info");
+            }}
+          ></div>
+          <div className="delete-pop-container">
+            <h3>Jeni te sigurt qe doni te fshini produktin?</h3>
+            <div className="delete-pop-buttons">
+              <Button
+                className="btn-delete-opa"
+                variant="contained"
+                onClick={() => {
+                  alertContext.setAlert("Produkti u fshi!", "warning");
+                  showDeletePop(false);
+                  depoContext.deleteProduct(idDelete);
+                }}
+              >
+                Po
+              </Button>
+              <Button
+                onClick={() => {
+                  showDeletePop(false);
+                  alertContext.setAlert("Produkti nuk u fshi!", "info");
+                }}
+                className="btn-delete-opa"
+                variant="contained"
+              >
+                Jo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       {produktPopup && (
         <ShtoProduktPopup closePopup={() => showProduktPopup(false)} />
       )}
@@ -95,7 +176,7 @@ export default function Produkte() {
         <div className="produkte-header-item">
           <div className="produkte-header-item-left">
             <p>Produkte pa stok</p>
-            <h1> {(produktet.filter((stock) => stock.sasia == 0)).length} </h1>
+            <h1> {produktet.filter((stock) => stock.sasia == 0).length} </h1>
             <p>75%(30 dite)</p>
           </div>
           <div className="produkte-header-item-right">
@@ -106,7 +187,13 @@ export default function Produkte() {
         <div className="produkte-header-item">
           <div className="produkte-header-item-left">
             <p>Produkte drejt perfundimit</p>
-            <h1> {(produktet.filter((end) => end.sasia >= 1 && end.sasia <= 20)).length} </h1>
+            <h1>
+              {" "}
+              {
+                produktet.filter((end) => end.sasia >= 1 && end.sasia <= 20)
+                  .length
+              }{" "}
+            </h1>
             <p>75%(30 dite)</p>
           </div>
           <div className="produkte-header-item-right">
@@ -140,6 +227,7 @@ export default function Produkte() {
               variant="outlined"
               label="Kerko"
               placeholder="Kerko"
+              onChange={(e) => setSearchFilter(e.target.value)}
             ></TextField>
             <Button
               color="primary"
@@ -154,17 +242,67 @@ export default function Produkte() {
         <Table size="medium">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              <TableCell onClick={() => requestSort("id")}>
+                ID
+                {propertyName.key === "id" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "id" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
               <TableCell align="left">Foto</TableCell>
-              <TableCell align="left">Emri</TableCell>
-              <TableCell align="left">Kategoria</TableCell>
-              <TableCell align="left">Stok</TableCell>
-              <TableCell align="left">Cmimi</TableCell>
+              <TableCell onClick={() => requestSort("titulli")} align="left">
+                Titulli
+                {propertyName.key === "titulli" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "titulli" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell onClick={() => requestSort("kategoria")} align="left">
+                Kategoria
+                {propertyName.key === "kategoria" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "kategoria" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell onClick={() => requestSort("sasia")} align="left">
+                Stok
+                {propertyName.key === "sasia" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "sasia" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell onClick={() => requestSort("cmimi")} align="left">
+                Cmimi
+                {propertyName.key === "cmimi" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "cmimi" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
               <TableCell align="center">Veprimet</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {produktet.slice(start, end).map((produkt) => (
+            {filteredProducts.slice(start, end).map((produkt) => (
               <TableRow key={produkt.id}>
                 <TableCell>{produkt.id} </TableCell>
                 <TableCell>
@@ -190,7 +328,12 @@ export default function Produkte() {
                   <div className="veprime" style={{ cursor: "pointer" }}>
                     <VisibilityOutlinedIcon />
                     <EditOutlinedIcon />
-                    <DeleteOutlineOutlinedIcon />
+                    <DeleteOutlineOutlinedIcon
+                      onClick={() => {
+                        showDeletePop(true);
+                        setDeleteId(produkt.id);
+                      }}
+                    />
                   </div>
                 </TableCell>
               </TableRow>
@@ -215,7 +358,7 @@ export default function Produkte() {
             </Select>
           </div>
           <Pagination
-            count={Math.ceil(produktet.length / itemPage)}
+            count={Math.ceil(filteredProducts.length / itemPage)}
             color="primary"
             page={page}
             size="large"
