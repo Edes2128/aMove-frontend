@@ -10,6 +10,9 @@ html {
 body {
   background-color: #ededed;
 }
+tr:nth-child(even) {
+  background-color: #eceaea;
+}
 .App {
   height: 90vh;
   width: 100%;
@@ -1391,3 +1394,54 @@ background-color: white;
 padding: 0 20px;
 }
 
+.delete-pop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.delete-pop-opa{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  opacity: .4;
+  background-color: black;
+}
+.delete-pop-container{
+  width: 500px;
+  height: 400px;
+  z-index: 101;
+  background-color: white;
+  border-radius: 30px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.delete-pop-buttons{
+  width: 95%;
+  height: 20%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.btn-delete-opa{
+  width: 40%;
+  height: 40px;
+}
+
+.btn-delete-opa:nth-child(1){
+  background-color: green;
+  color: white;
+}
+
+.btn-delete-opa:nth-child(2){
+  background-color: red;
+  color: white;
+}

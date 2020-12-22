@@ -23,6 +23,8 @@ import AlertContext from "../../../context/alertContext/AlertContext";
 
 export default function Porosite() {
   const [orderDetails, showOrderDetails] = useState(false);
+  const [deletePop, showDeletePop] = useState(false);
+  const [idDelete, setDeleteId] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
@@ -105,6 +107,43 @@ export default function Porosite() {
 
   return (
     <>
+      {deletePop && (
+        <div className="delete-pop">
+          <div
+            className="delete-pop-opa"
+            onClick={() => {
+              showDeletePop(false);
+              alertContext.setAlert("Porosia nuk u anullua!", "info");
+            }}
+          ></div>
+          <div className="delete-pop-container">
+            <h3>Jeni te sigurt qe doni te anulloni porosine?</h3>
+            <div className="delete-pop-buttons">
+              <Button
+                className="btn-delete-opa"
+                variant="contained"
+                onClick={() => {
+                  depoContext.cancelOrder(idDelete);
+                  alertContext.setAlert("Porosia u anullua!", "warning");
+                  showDeletePop(false);
+                }}
+              >
+                Po
+              </Button>
+              <Button
+                onClick={() => {
+                  showDeletePop(false);
+                  alertContext.setAlert("Porosia nuk u anullua!", "info");
+                }}
+                className="btn-delete-opa"
+                variant="contained"
+              >
+                Jo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       {orderDetails && (
         <div className="order-details-pop">
           <div
@@ -356,8 +395,11 @@ export default function Porosite() {
                       <EditOutlinedIcon />
                       <DeleteOutlineOutlinedIcon
                         onClick={() => {
-                          alertContext.setAlert("Porosia u anullua", "warning");
-                          depoContext.cancelOrder(order.ID);
+                          showDeletePop(true);
+                          setDeleteId(order.ID);
+                        }}
+                        style={{
+                          display: order.order_status === 3 ? "none" : "",
                         }}
                       />
                     </div>
@@ -374,7 +416,9 @@ export default function Porosite() {
             </InputLabel>
             <Select
               labelId="row"
-              onChange={(e) => setItempage(e.target.value)}
+              onChange={(e) => {
+                setItempage(e.target.value);
+              }}
               value={itemPage}
             >
               <MenuItem value={5}>5</MenuItem>
