@@ -259,6 +259,7 @@ export default function Porosite() {
           <div className="porosite-data-table-buttons">
             <TextField
               variant="outlined"
+              type="search"
               size="small"
               label="Kerko"
               placeholder="Kerko..."

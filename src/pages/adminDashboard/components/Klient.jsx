@@ -20,9 +20,13 @@ import ShtoKlientPopup from "./ShtoKlientPopup";
 import DepoContext from "../../../context/depoContext/DepoContext";
 import { CloseOutlined } from "@material-ui/icons";
 import Avatar from "@material-ui/core/Avatar";
+import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
+import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
+import AlertContext from "../../../context/alertContext/AlertContext";
 
 export default function Klient() {
   const [userPopup, shotUserPopup] = useState(false);
+  const alertContext = useContext(AlertContext);
   const [kategori, Setkategori] = useState("");
   const [zona, Setzona] = useState("");
   const [page, setPage] = useState(1);
@@ -33,9 +37,48 @@ export default function Klient() {
   const { klientet } = depoContext;
   const [userDetails, setUserDetails] = useState({});
   const [userDetailsPop, showUserDetailsPop] = useState(false);
+  const [propertyName, setProperty] = useState({
+    key: "id",
+    direction: "descending",
+  });
+  const [searchFilter, setSearchFilter] = useState("");
+
+  const klientetFiltered = klientet.filter(
+    (order) =>
+      order.id.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.email.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.zona.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.kategoria.toLowerCase().includes(searchFilter.toLowerCase())
+  );
+
   useEffect(() => {
     depoContext.getAllClients();
   }, []);
+
+  if (propertyName !== null) {
+    klientetFiltered.sort((a, b) => {
+      if (a[propertyName.key] < b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? -1 : 1;
+      }
+      if (a[propertyName.key] > b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (
+      propertyName &&
+      propertyName.key === key &&
+      propertyName.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setProperty({ key, direction });
+  };
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -162,6 +205,7 @@ export default function Klient() {
                 type="search"
                 label="Kerko"
                 variant="outlined"
+                onChange={(e) => setSearchFilter(e.target.value)}
               ></TextField>
               <Button
                 variant="contained"
@@ -180,18 +224,83 @@ export default function Klient() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell align="left">Emri</TableCell>
-                  <TableCell width="300px" align="left">
-                    Email
+                  <TableCell onClick={() => requestSort("id")}>
+                    ID
+                    {propertyName.key === "id" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "id" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
                   </TableCell>
-                  <TableCell align="left">Zona</TableCell>
-                  <TableCell align="left">Kategoria</TableCell>
+                  <TableCell onClick={() => requestSort("name")} align="left">
+                    Emri
+                    {propertyName.key === "name" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "name" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
+                  </TableCell>
+                  <TableCell
+                    onClick={() => requestSort("email")}
+                    width="300px"
+                    align="left"
+                  >
+                    Email
+                    {propertyName.key === "email" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "email" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
+                  </TableCell>
+                  <TableCell onClick={() => requestSort("zona")} align="left">
+                    Zona
+                    {propertyName.key === "zona" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "zona" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
+                  </TableCell>
+                  <TableCell
+                    onClick={() => requestSort("kategoria")}
+                    align="left"
+                  >
+                    Kategoria
+                    {propertyName.key === "kategoria" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "kategoria" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
+                  </TableCell>
                   <TableCell align="center">Veprimet</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {klientet.slice(start, end).map((row) => (
+                {klientetFiltered.slice(start, end).map((row) => (
                   <TableRow key={row.id}>
                     <TableCell>{row.id}</TableCell>
                     <TableCell>{row.name}</TableCell>
@@ -234,7 +343,7 @@ export default function Klient() {
                 </Select>
               </div>
               <Pagination
-                count={Math.ceil(klientet.length / itemPage)}
+                count={Math.ceil(klientetFiltered.length / itemPage)}
                 color="primary"
                 page={page}
                 size="large"

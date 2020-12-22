@@ -227,6 +227,7 @@ export default function Produkte() {
               variant="outlined"
               label="Kerko"
               placeholder="Kerko"
+              type="search"
               onChange={(e) => setSearchFilter(e.target.value)}
             ></TextField>
             <Button
