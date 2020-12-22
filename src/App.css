@@ -11,7 +11,7 @@ body {
   background-color: #ededed;
 }
 tr:nth-child(even) {
-  background-color: #eceaea;
+  background-color: #f3f0f0;
 }
 .App {
   height: 90vh;

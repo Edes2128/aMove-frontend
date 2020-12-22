@@ -43,7 +43,7 @@ export default function Produkte() {
     if (item == 0) {
       return "red";
     } else if (item >= 1 && item <= 20) {
-      return "yellow";
+      return "#FECD2F";
     } else {
       return "green";
     }

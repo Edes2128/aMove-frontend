@@ -97,7 +97,7 @@ export default function Porosite() {
     if (status == 1) {
       return "green";
     } else if (status == 2) {
-      return "yellow";
+      return "#FECD2F";
     } else if (status == 3) {
       return "red";
     } else {
