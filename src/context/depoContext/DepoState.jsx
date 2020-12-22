@@ -62,6 +62,14 @@ export default function DepoState({ children }) {
     })
   }
 
+  const cancelOrder = async (order_id) => {
+
+      axios.post(`http://localhost/demo_react_server/api/config/cancel_order.php?order_id=${order_id}`)
+
+    setTimeout(() => getAllOrders(),100)
+
+  }
+
   return (
     <DepoContext.Provider
       value={{
@@ -73,6 +81,7 @@ export default function DepoState({ children }) {
         getAllClients,
         getAllProducts,
         getAllOrders,
+        cancelOrder
       }}
     >
       {children}

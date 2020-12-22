@@ -17,6 +17,9 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import DepoContext from "../../../context/depoContext/DepoContext";
+import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
+import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
+import AlertContext from "../../../context/alertContext/AlertContext";
 
 export default function Porosite() {
   const [orderDetails, showOrderDetails] = useState(false);
@@ -26,25 +29,51 @@ export default function Porosite() {
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const depoContext = useContext(DepoContext);
+  const alertContext = useContext(AlertContext);
   const { porosite } = depoContext;
-  const [propertyName,setProperty] = useState(null);
-  
-if(propertyName !== null){
-    porosite.sort((a,b) => {
-
-        if( a[propertyName] < b[propertyName] ){
-
-            return -1;
-        }
-        if(a[propertyName] > b[propertyName]){
-            return 1;
-        }
-        return 0;
-    })
-}
+  const [propertyName, setProperty] = useState({
+    key: "order_date",
+    direction: "descending",
+  });
+  const [searchFilter, setSearchFilter] = useState("");
+  const filteredOrder = porosite.filter(
+    (order) =>
+      order.ID.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.klient_emer.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.order_date.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.klient_zona.toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.total_price
+        .toString()
+        .toLowerCase()
+        .includes(searchFilter.toLowerCase())
+  );
   useEffect(() => {
     depoContext.getAllOrders();
   }, []);
+
+  if (propertyName !== null) {
+    filteredOrder.sort((a, b) => {
+      if (a[propertyName.key] < b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? -1 : 1;
+      }
+      if (a[propertyName.key] > b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (
+      propertyName &&
+      propertyName.key === key &&
+      propertyName.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setProperty({ key, direction });
+  };
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -122,7 +151,12 @@ if(propertyName !== null){
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
             <p>Porosi aktive</p>
-            <h2> {(porosite.filter(porosi => porosi.order_status === 1)).length} </h2>
+            <h2>
+              {" "}
+              {
+                porosite.filter((porosi) => porosi.order_status === 1).length
+              }{" "}
+            </h2>
             <p></p>
           </div>
           <div className="porosite-header-item-right">
@@ -133,7 +167,12 @@ if(propertyName !== null){
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
             <p>Porosi ne pritje</p>
-            <h2> {(porosite.filter(porosi => porosi.order_status === 2)).length} </h2>
+            <h2>
+              {" "}
+              {
+                porosite.filter((porosi) => porosi.order_status === 2).length
+              }{" "}
+            </h2>
             <p></p>
           </div>
           <div className="porosite-header-item-right">
@@ -144,7 +183,12 @@ if(propertyName !== null){
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
             <p>Porosi te anulluara</p>
-            <h2> {(porosite.filter(porosi => porosi.order_status === 3)).length} </h2>
+            <h2>
+              {" "}
+              {
+                porosite.filter((porosi) => porosi.order_status === 3).length
+              }{" "}
+            </h2>
             <p></p>
           </div>
           <div className="porosite-header-item-right">
@@ -155,7 +199,12 @@ if(propertyName !== null){
         <div className="porosite-header-item">
           <div className="porosite-header-item-left">
             <p>Porosi te perfunduara</p>
-            <h2> {(porosite.filter(porosi => porosi.order_status === 4)).length} </h2>
+            <h2>
+              {" "}
+              {
+                porosite.filter((porosi) => porosi.order_status === 4).length
+              }{" "}
+            </h2>
             <p></p>
           </div>
           <div className="porosite-header-item-right">
@@ -173,6 +222,7 @@ if(propertyName !== null){
               size="small"
               label="Kerko"
               placeholder="Kerko..."
+              onChange={(e) => setSearchFilter(e.target.value)}
             />
             <Button startIcon={<AddIcon />} color="primary" variant="contained">
               Shto Porosi
@@ -183,57 +233,137 @@ if(propertyName !== null){
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell onClick={() => setProperty('ID')} >ID</TableCell>
-              <TableCell align="left" onClick={() => setProperty('klient_emer')} >Emri</TableCell>
-              <TableCell align="left" onClick={() => setProperty('order_date')} >Data</TableCell>
-              <TableCell align="left" onClick={() => setProperty('klient_zona')} >Zona</TableCell>
-              <TableCell align="left" onClick={() => setProperty('total_price')} >Vlera</TableCell>
-              <TableCell align="left" onClick={() => setProperty('order_status')} >Porosia</TableCell>
+              <TableCell onClick={() => requestSort("ID")}>
+                ID
+                {propertyName.key === "ID" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "ID" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell
+                align="left"
+                onClick={() => requestSort("klient_emer")}
+              >
+                Emri
+                {propertyName.key === "klient_emer" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "klient_emer" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell align="left" onClick={() => requestSort("order_date")}>
+                Data
+                {propertyName.key === "order_date" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "order_date" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell
+                align="left"
+                onClick={() => requestSort("klient_zona")}
+              >
+                Zona
+                {propertyName.key === "klient_zona" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "klient_zona" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell
+                align="left"
+                onClick={() => requestSort("total_price")}
+              >
+                Vlera
+                {propertyName.key === "total_price" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "total_price" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell
+                align="left"
+                onClick={() => requestSort("order_status")}
+              >
+                Porosia
+                {propertyName.key === "order_status" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "order_status" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
               <TableCell align="center">Veprimet</TableCell>
             </TableRow>
           </TableHead>
 
           <TableBody>
-            {porosite.slice(start, end).sort().map((order) => (
-              <TableRow key={order.ID}>
-                <TableCell> {order.ID} </TableCell>
-                <TableCell> {order.klient_emer} </TableCell>
-                <TableCell> {order.order_date} </TableCell>
-                <TableCell> {order.klient_zona} </TableCell>
-                <TableCell> {order.total_price} Leke </TableCell>
-                <TableCell>
-                  <Button
-                    size="medium"
-                    style={{
-                      backgroundColor: renderButtonColorsStatus(
-                        order.order_status
-                      ),
-                      color: "white",
-                    }}
-                  >
-                    {" "}
-                    {renderButtonStatus(order.order_status)}{" "}
-                  </Button>
-                </TableCell>
-
-                <TableCell align="center">
-                  <div className="veprime" style={{ cursor: "pointer" }}>
-                    <VisibilityOutlinedIcon
-                      onClick={() => {
-                        showOrderDetails(true);
-                        axios
-                          .get(
-                            `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klient_id}&order_id=${order.ID}`
-                          )
-                          .then((res) => setOrderDetailsContent(res.data));
+            {filteredOrder
+              .slice(start, end)
+              .sort()
+              .map((order) => (
+                <TableRow key={order.ID}>
+                  <TableCell> {order.ID} </TableCell>
+                  <TableCell> {order.klient_emer} </TableCell>
+                  <TableCell> {order.order_date} </TableCell>
+                  <TableCell> {order.klient_zona} </TableCell>
+                  <TableCell> {order.total_price} Leke </TableCell>
+                  <TableCell>
+                    <Button
+                      size="medium"
+                      style={{
+                        backgroundColor: renderButtonColorsStatus(
+                          order.order_status
+                        ),
+                        color: "white",
                       }}
-                    />
-                    <EditOutlinedIcon />
-                    <DeleteOutlineOutlinedIcon />
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
+                    >
+                      {" "}
+                      {renderButtonStatus(order.order_status)}{" "}
+                    </Button>
+                  </TableCell>
+
+                  <TableCell align="center">
+                    <div className="veprime" style={{ cursor: "pointer" }}>
+                      <VisibilityOutlinedIcon
+                        onClick={() => {
+                          showOrderDetails(true);
+                          axios
+                            .get(
+                              `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klient_id}&order_id=${order.ID}`
+                            )
+                            .then((res) => setOrderDetailsContent(res.data));
+                        }}
+                      />
+                      <EditOutlinedIcon />
+                      <DeleteOutlineOutlinedIcon
+                        onClick={() => {
+                          alertContext.setAlert("Porosia u anullua", "warning");
+                          depoContext.cancelOrder(order.ID);
+                        }}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
 
@@ -255,7 +385,7 @@ if(propertyName !== null){
             </Select>
           </div>
           <Pagination
-            count={Math.ceil(porosite.length / itemPage)}
+            count={Math.ceil(filteredOrder.length / itemPage)}
             color="primary"
             page={page}
             size="large"
