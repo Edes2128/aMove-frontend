@@ -69,7 +69,6 @@ export default function Shporta() {
                         variant="contained"
                         onClick={() => {
                           klientContext.removeFromCart(item);
-                          klientContext.editQtySinlge(item);
                         }}
                         style={{ marginTop: "20px" }}
                       >

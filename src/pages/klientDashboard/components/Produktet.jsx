@@ -33,6 +33,9 @@ export default function Produktet() {
   const products = klientContext.products;
   const { cartProducts, wishlistProducts } = klientContext;
 
+  console.log(products)
+
+
   useEffect(() => {
     klientContext.getAllProducts();
   }, []);
@@ -206,7 +209,7 @@ export default function Produktet() {
             />
           </div>
           <div className="produktet-list">
-            {products.slice(start,end).sort(sortByProperty("cmimi")).map((product) => (
+            {products.slice(start,end).map((product) => (
               <div className="produktet-list-item" key={product.id}>
                 <div className="produkte-header-item-image">
                   <Link to={`/klient/${product.id}`}>

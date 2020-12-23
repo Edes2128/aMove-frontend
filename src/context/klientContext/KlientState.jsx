@@ -142,17 +142,6 @@ export default function KlientState({ children }) {
     setTimeout(() => getCartProducts(), 100);
   };
 
-  const editQtySinlge = async (product) => {
-    const payload = {
-      id: product.product_id,
-    };
-
-    axios.post(
-      "https://192.168.88.250/demo_react_server/api/config/edit_qty_singleProduct.php",
-      payload
-    );
-  };
-
   const makeOrder = async (payload, totali) => {
     await axios
       .post(
@@ -165,9 +154,6 @@ export default function KlientState({ children }) {
         if (res.data.status === 1) {
           axios.post(
             "https://192.168.88.250/demo_react_server/api/config/remove_AllProducts_from_cart.php"
-          );
-          axios.post(
-            "https://192.168.88.250/demo_react_server/api/config/reset_allQty.php"
           );
 
           setTimeout(() => getCartProducts(), 100);
@@ -207,7 +193,6 @@ export default function KlientState({ children }) {
         removeFromCart,
         increaseQty,
         decreaseQty,
-        editQtySinlge,
         makeOrder,
         getAllOrders,
       }}
