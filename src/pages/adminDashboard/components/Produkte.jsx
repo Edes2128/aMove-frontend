@@ -25,9 +25,11 @@ import AddIcon from "@material-ui/icons/Add";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import axios from "axios";
+import Avatar from "@material-ui/core/Avatar";
 
 export default function Produkte() {
   const [produktDetails, setProduktDetails] = useState({});
+  const [detailsPop, setDetailsPop] = useState(false);
   const [editID, setEditID] = useState(1);
   const [editTitulli, setEditTitulli] = useState("");
   const [editSku, setEditSku] = useState("");
@@ -68,9 +70,9 @@ export default function Produkte() {
 
   const renderButtonColorsStatus = (status) => {
     if (status === 1) {
-      return "green";
+      return "#3ccc38";
     } else if (status === 0) {
-      return "red";
+      return "#fd3259";
     }
   };
 
@@ -127,11 +129,11 @@ export default function Produkte() {
 
   const stockColor = (item) => {
     if (item == 0) {
-      return "red";
+      return "#fd3259";
     } else if (item >= 1 && item <= 20) {
       return "#FECD2F";
     } else {
-      return "green";
+      return "#3ccc38";
     }
   };
 
@@ -160,6 +162,39 @@ export default function Produkte() {
   };
   return (
     <>
+      {detailsPop && (
+        <div className="produkt-details-pop">
+          <div
+            className="produkt-details-pop-opa"
+            onClick={() => {
+              setDetailsPop(false);
+            }}
+          ></div>
+
+          <div className="produkt-details-pop-container">
+            <Avatar
+              style={{ width: "80px", height: "80px" }}
+              src={`https://192.168.88.250/demo_react_server/images/${produktDetails.image}`}
+              alt={produktDetails.titulli}
+            />
+            <h2>Titulli :</h2>
+            {produktDetails.titulli}
+            <h2>Pershkrimi</h2>
+            {produktDetails.pershkrimi}
+            <h2>Sku:</h2>
+            {produktDetails.sku}
+            <h2>Kategoria:</h2>
+            {produktDetails.kategoria}
+            <h2>Cmimi:</h2>
+            {produktDetails.cmimi}
+            <h2>Stock :</h2>
+            {produktDetails.sasia}
+            <h2>Status</h2>
+            {produktDetails.status === 1 ? "Aktive" : "Joaktive"}
+          </div>
+        </div>
+      )}
+
       {produktDetailsPop && (
         <div className="produkt-edit-pop">
           <div
@@ -167,6 +202,7 @@ export default function Produkte() {
             onClick={() => {
               showPorduktDetailsPop(false);
               setDeletedImage(false);
+              alertContext.setAlert("Produkti nuk u ndryshua", "warning");
             }}
           ></div>
 
@@ -328,7 +364,15 @@ export default function Produkte() {
                 <Button color="primary" variant="outlined" type="submit">
                   Edit
                 </Button>
-                <Button color="secondary" variant="outlined">
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  onClick={() => {
+                    showPorduktDetailsPop(false);
+                    setDeletedImage(false);
+                    alertContext.setAlert("Produkti nuk u ndryshua", "warning");
+                  }}
+                >
                   Anullo
                 </Button>
               </div>
@@ -575,7 +619,7 @@ export default function Produkte() {
                     fontWeight: "bold",
                   }}
                 >
-                  {produkt.sasia == 0 ? "Ska stok" : produkt.sasia}
+                  {produkt.sasia === 0 ? "Ska stok" : produkt.sasia}
                 </TableCell>
                 <TableCell>{produkt.cmimi}</TableCell>
                 <TableCell>
@@ -593,7 +637,12 @@ export default function Produkte() {
                 </TableCell>
                 <TableCell align="center">
                   <div className="veprime" style={{ cursor: "pointer" }}>
-                    <VisibilityOutlinedIcon />
+                    <VisibilityOutlinedIcon
+                      onClick={() => {
+                        setProduktDetails(produkt);
+                        setDetailsPop(true);
+                      }}
+                    />
                     <EditOutlinedIcon
                       onClick={() => {
                         showPorduktDetailsPop(true);

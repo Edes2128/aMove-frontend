@@ -23,8 +23,23 @@ import Avatar from "@material-ui/core/Avatar";
 import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 import AlertContext from "../../../context/alertContext/AlertContext";
+import FormControl from "@material-ui/core/FormControl";
+import AddIcon from "@material-ui/icons/Add";
+import Input from "@material-ui/core/Input";
+import axios from "axios";
 
 export default function Klient() {
+  const [editID, setEditID] = useState("");
+  const [editEmri, setEditEmri] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+  const [editPassword, setEditPassword] = useState("");
+  const [editStatus, setEditStatus] = useState("");
+  const [editZona, setEditZona] = useState("");
+  const [editKategoria, setEditKategoria] = useState("");
+  const [editFile, setEditFile] = useState("");
+  const [editImage, setEditImage] = useState("");
+  const [deletedImage, setDeletedImage] = useState(false);
+  const [userEditPop, setUserEditPop] = useState(false);
   const [userPopup, shotUserPopup] = useState(false);
   const alertContext = useContext(AlertContext);
   const [kategori, Setkategori] = useState("");
@@ -49,9 +64,36 @@ export default function Klient() {
       order.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
       order.email.toLowerCase().includes(searchFilter.toLowerCase()) ||
       order.zona.toLowerCase().includes(searchFilter.toLowerCase()) ||
-      order.kategoria.toLowerCase().includes(searchFilter.toLowerCase()) 
+      order.kategoria.toLowerCase().includes(searchFilter.toLowerCase())
+  );
 
-      );
+  const onEditUser = (e) => {
+    e.preventDefault();
+
+    let fd = new FormData();
+    fd.append("name", editEmri);
+    fd.append("email", editEmail);
+    fd.append("password", editPassword);
+    fd.append("zona", editZona);
+    fd.append("kategoria", editKategoria);
+    fd.append("image", editImage);
+    fd.append("status", editStatus);
+
+    axios
+      .post(
+        `https://192.168.88.250/demo_react_server/api/config/edit_user.php?user_id=${editID}`,
+        fd
+      )
+      .then((res) => {
+        if (res.data.status === 0) {
+          alertContext.setAlert(`${res.data.message}`, "error");
+        } else if (res.data.status === 1) {
+          alertContext.setAlert(`${res.data.message}`, "success");
+          depoContext.getAllClients();
+          setUserEditPop(false);
+        }
+      });
+  };
 
   useEffect(() => {
     depoContext.getAllClients();
@@ -69,6 +111,21 @@ export default function Klient() {
     });
   }
 
+  const renderButtonStatus = (status) => {
+    if (status === 1) {
+      return "Aktive";
+    } else if (status === 0) {
+      return "Joaktive";
+    }
+  };
+
+  const renderButtonColorsStatus = (status) => {
+    if (status === 1) {
+      return "#3ccc38";
+    } else if (status === 0) {
+      return "#fd3259";
+    }
+  };
   const requestSort = (key) => {
     let direction = "ascending";
     if (
@@ -86,6 +143,182 @@ export default function Klient() {
   };
   return (
     <>
+      {userEditPop && (
+        <div className="user-edit-pop">
+          <div
+            className="user-edit-pop-opa"
+            onClick={() => {
+              setUserEditPop(false);
+              alertContext.setAlert("Klienti nuk u ndryshua", "info");
+            }}
+          ></div>
+
+          <div className="user-edit-pop-container">
+            <form
+              className="user-edit-pop-container-form"
+              onSubmit={onEditUser}
+            >
+              <TextField
+                label="Emri"
+                style={{ width: "60%" }}
+                variant="outlined"
+                value={editEmri}
+                type="text"
+                onChange={(e) => setEditEmri(e.target.value)}
+              />
+              <TextField
+                label="Email"
+                style={{ width: "60%" }}
+                variant="outlined"
+                value={editEmail}
+                type="email"
+                onChange={(e) => setEditEmail(e.target.value)}
+              />
+              <TextField
+                type="password"
+                label="Password"
+                style={{ width: "60%" }}
+                variant="outlined"
+                value={editPassword}
+                onChange={(e) => setEditPassword(e.target.value)}
+              />
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="njesia-label">Status</InputLabel>
+                <Select
+                  value={editStatus}
+                  onChange={(e) => setEditStatus(e.target.value)}
+                  style={{ width: "150px" }}
+                  label="Status"
+                  inputProps={{
+                    name: "status",
+                    id: "njesia-label",
+                  }}
+                >
+                  <MenuItem value={1}>Aktive</MenuItem>
+                  <MenuItem value={0}>Joaktive</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="njesia-label">Kategoria</InputLabel>
+                <Select
+                  value={editKategoria}
+                  onChange={(e) => setEditKategoria(e.target.value)}
+                  style={{ width: "150px" }}
+                  label="Status"
+                  inputProps={{
+                    name: "status",
+                    id: "njesia-label",
+                  }}
+                >
+                  <MenuItem value="None"></MenuItem>
+                  <MenuItem value={"Kategoria 1"}>Kategoria 1</MenuItem>
+                  <MenuItem value={"Ktegoria 2"}>Kategoria 2</MenuItem>
+                  <MenuItem value={"Kategoria 3"}>Kategoria 3</MenuItem>
+                </Select>
+              </FormControl>
+
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="njesia-label">Zona</InputLabel>
+                <Select
+                  value={editZona}
+                  onChange={(e) => setEditZona(e.target.value)}
+                  style={{ width: "150px" }}
+                  label="Status"
+                  inputProps={{
+                    name: "status",
+                    id: "njesia-label",
+                  }}
+                >
+                  <MenuItem value="None"></MenuItem>
+                  <MenuItem value={"Zona 1"}>Zona 1</MenuItem>
+                  <MenuItem value={"Zona 2"}>Zona 2</MenuItem>
+                  <MenuItem value={"Zona 3"}>Zona 3</MenuItem>
+                </Select>
+              </FormControl>
+
+              <div
+                className={
+                  editImage === "" ? "image-2" : "image-2 outlinestyle-none"
+                }
+              >
+                {editImage === "" ? (
+                  <>
+                    <InputLabel
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                      htmlFor="image"
+                    >
+                      <AddIcon style={{ fontSize: "70px" }} /> upload{" "}
+                    </InputLabel>
+                    <Input
+                      onChange={(e) => {
+                        setEditImage(e.target.files[0]);
+                        setEditFile(URL.createObjectURL(e.target.files[0]));
+                      }}
+                      id="image"
+                      type="file"
+                      style={{ display: "none" }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {deletedImage === true ? (
+                      <>
+                        <DeleteOutlineOutlinedIcon
+                          onClick={() => {
+                            setEditImage("");
+                            setEditFile("");
+                            setDeletedImage(true);
+                          }}
+                          className="delete-icon-image"
+                        />
+                        <img src={editFile} alt="" />
+                      </>
+                    ) : (
+                      <>
+                        <DeleteOutlineOutlinedIcon
+                          onClick={() => {
+                            setEditImage("");
+                            setEditFile("");
+                            setDeletedImage(true);
+                          }}
+                          className="delete-icon-image"
+                        />
+                        <img
+                          src={`https://192.168.88.250/demo_react_server/images/${editFile}`}
+                          alt=""
+                        />
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+              <div className="edit-user-pop-buttons">
+                <Button color="primary" variant="outlined" type="submit">
+                  {" "}
+                  Edit{" "}
+                </Button>
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  onClick={() => {
+                    setUserEditPop(false);
+                    alertContext.setAlert("Klienti nuk u ndryshua", "info");
+                  }}
+                >
+                  Anullo
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {userDetailsPop && (
         <div className="user-details-pop">
           <div
@@ -297,6 +530,22 @@ export default function Klient() {
                         />
                       )}
                   </TableCell>
+                  <TableCell
+                    align="left"
+                    onClick={() => requestSort("status_user")}
+                  >
+                    Status
+                    {propertyName.key === "status_user" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "status_user" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
+                  </TableCell>
                   <TableCell align="center">Veprimet</TableCell>
                 </TableRow>
               </TableHead>
@@ -308,7 +557,21 @@ export default function Klient() {
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.zona}</TableCell>
                     <TableCell>{row.kategoria}</TableCell>
-
+                    <TableCell>
+                      <Button
+                        size="medium"
+                        style={{
+                          backgroundColor: renderButtonColorsStatus(
+                            row.status_user
+                          ),
+                          color: "white",
+                          width: "100px",
+                        }}
+                      >
+                        {" "}
+                        {renderButtonStatus(row.status_user)}{" "}
+                      </Button>
+                    </TableCell>
                     <TableCell align="center">
                       <div className="veprime" style={{ cursor: "pointer" }}>
                         <VisibilityOutlinedIcon
@@ -317,7 +580,20 @@ export default function Klient() {
                             showUserDetailsPop(true);
                           }}
                         />
-                        <EditOutlinedIcon />
+                        <EditOutlinedIcon
+                          onClick={() => {
+                            setUserEditPop(true);
+                            setEditID(row.id);
+                            setEditEmri(row.name);
+                            setEditEmail(row.email);
+                            setEditPassword(row.password);
+                            setEditStatus(row.status_user);
+                            setEditZona(row.zona);
+                            setEditKategoria(row.kategoria);
+                            setEditFile(row.image_profile);
+                            setEditImage(row.image_profile);
+                          }}
+                        />
                         <DeleteOutlineOutlinedIcon />
                       </div>
                     </TableCell>

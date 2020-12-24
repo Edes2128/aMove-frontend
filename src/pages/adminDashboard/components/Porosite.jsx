@@ -96,13 +96,13 @@ export default function Porosite() {
 
   const renderButtonColorsStatus = (status) => {
     if (status == 1) {
-      return "green";
+      return "#3ccc38";
     } else if (status == 2) {
       return "#FECD2F";
     } else if (status == 3) {
-      return "red";
+      return "#fd3259";
     } else {
-      return "purple";
+      return "#6569df";
     }
   };
 

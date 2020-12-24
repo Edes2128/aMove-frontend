@@ -23,10 +23,7 @@ tr:nth-child(even) {
 .nav-home {
   padding: 20px;
 }
-.veprime{
-  display: flex;
-  
-}
+
 .form-login-home {
   height: 500px;
   width: 500px;
@@ -508,6 +505,20 @@ tr:nth-child(even) {
   outline-style: dotted;
   height: 80%;
   position: relative;
+}
+.image-2 {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline-style: dotted;
+  height: 20%;
+  position: relative;
+}
+
+.image-2 img{
+  width: 100%;
+  height: 100%;
 }
 .outlinestyle-none {
   outline: none;
@@ -1574,4 +1585,85 @@ padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+.produkt-details-pop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.produkt-details-pop-opa{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: .4;
+}
+.produkt-details-pop-container{
+  z-index: 101;
+  width: 700px;
+  height: 800px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.user-edit-pop{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-edit-pop-opa{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  opacity: .4;
+}
+.user-edit-pop-container{
+width: 600px;
+height: 800px;
+background-color: white;
+z-index: 101;
+border-radius: 20px;
+box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-evenly;
+}
+.user-edit-pop-container-form{
+  width: 95%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.edit-user-pop-buttons{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
