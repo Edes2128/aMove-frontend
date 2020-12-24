@@ -51,7 +51,6 @@ export default function ShtoProduktPopup({ closePopup }) {
         fd
       )
       .then((res) => {
-        console.log(res.data.status);
         if (res.data.status === 0) {
           alertContext.setAlert(
             "Plotesoni fushat,produkti nuk u shtua",
@@ -138,7 +137,7 @@ export default function ShtoProduktPopup({ closePopup }) {
                 ></textarea>
               </div>
               <div
-                className={image === "" ? "image" : "image outlinestyle-none"}
+              className={image === "" ? "image" : "image outlinestyle-none"}
               >
                 {image === "" ? (
                   <>

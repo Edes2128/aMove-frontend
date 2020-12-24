@@ -21,9 +21,27 @@ import DepoContext from "../../../context/depoContext/DepoContext";
 import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 import AlertContext from "../../../context/alertContext/AlertContext";
+import AddIcon from "@material-ui/icons/Add";
+import Input from "@material-ui/core/Input";
+import FormControl from "@material-ui/core/FormControl";
+import axios from "axios";
 
 export default function Produkte() {
+  const [produktDetails, setProduktDetails] = useState({});
+  const [editID, setEditID] = useState(1);
+  const [editTitulli, setEditTitulli] = useState("");
+  const [editSku, setEditSku] = useState("");
+  const [editPershkrimi, setEditPershkrimi] = useState("");
+  const [editKategoria, setEditKategoria] = useState("");
+  const [editCmimi, setEditCmimi] = useState("");
+  const [editSasia, setEditSasia] = useState("");
+  const [editStatus, setEditStatus] = useState("");
+  const [editNjesia, setEditNjesia] = useState("");
+  const [fileEdit, setEditFile] = useState("");
+  const [imageEdit, setEditImage] = useState("");
+  const [deletedImage, setDeletedImage] = useState(false);
   const [kategoria, setKategoria] = useState("");
+  const [produktDetailsPop, showPorduktDetailsPop] = useState(false);
   const [produktPopup, showProduktPopup] = useState(false);
   const [page, setPage] = useState(1);
   const [idDelete, setDeleteId] = useState("");
@@ -39,6 +57,53 @@ export default function Produkte() {
     direction: "descending",
   });
   const [deletePop, showDeletePop] = useState(false);
+
+  const renderButtonStatus = (status) => {
+    if (status === 1) {
+      return "Aktive";
+    } else if (status === 0) {
+      return "Joaktive";
+    }
+  };
+
+  const renderButtonColorsStatus = (status) => {
+    if (status === 1) {
+      return "green";
+    } else if (status === 0) {
+      return "red";
+    }
+  };
+
+  const onEditProducts = (e) => {
+    e.preventDefault();
+
+    let fd = new FormData();
+    fd.append("titulli", editTitulli);
+    fd.append("sku", editSku);
+    fd.append("pershkrimi", editPershkrimi);
+    fd.append("kategoria", editKategoria);
+    fd.append("cmimi", editCmimi);
+    fd.append("sasia", editSasia);
+    fd.append("njesia", editNjesia);
+    fd.append("image", imageEdit);
+    fd.append("status", editStatus);
+
+    axios
+      .post(
+        `https://192.168.88.250/demo_react_server/api/config/edit_product.php?produkt_id=${editID}`,
+        fd
+      )
+      .then((res) => {
+        if (res.data.status === 0) {
+          alertContext.setAlert(`${res.data.message}`, "error");
+        } else if (res.data.status === 1) {
+          alertContext.setAlert(`${res.data.message}`, "success");
+          showPorduktDetailsPop(false);
+          setDeletedImage(false);
+          depoContext.getAllProducts();
+        }
+      });
+  };
 
   const filteredProducts = produktet.filter(
     (order) =>
@@ -95,6 +160,183 @@ export default function Produkte() {
   };
   return (
     <>
+      {produktDetailsPop && (
+        <div className="produkt-edit-pop">
+          <div
+            className="produkt-edit-pop-opa"
+            onClick={() => {
+              showPorduktDetailsPop(false);
+              setDeletedImage(false);
+            }}
+          ></div>
+
+          <div className="produkt-edit-pop-container">
+            <form className="form-edit-produkt" onSubmit={onEditProducts}>
+              <div className="produkt-edit-pop-container-titulli">
+                <FormControl variant="outlined">
+                  <InputLabel htmlFor="njesia-label">Status</InputLabel>
+                  <Select
+                    value={editStatus}
+                    onChange={(e) => setEditStatus(e.target.value)}
+                    style={{ width: "150px" }}
+                    label="Status"
+                    inputProps={{
+                      name: "status",
+                      id: "njesia-label",
+                    }}
+                  >
+                    <MenuItem value={1}>Aktive</MenuItem>
+                    <MenuItem value={0}>Joaktive</MenuItem>
+                  </Select>
+                </FormControl>
+                <TextField
+                  value={editTitulli}
+                  label="Titulli"
+                  variant="outlined"
+                  onChange={(e) => setEditTitulli(e.target.value)}
+                />
+                <TextField
+                  value={editSku}
+                  label="Sku"
+                  variant="outlined"
+                  onChange={(e) => setEditSku(e.target.value)}
+                />
+              </div>
+
+              <div className="produkt-edit-pop-container-pershkrimi">
+                <textarea
+                  value={editPershkrimi}
+                  onChange={(e) => setEditPershkrimi(e.target.value)}
+                />
+                <div
+                  className={
+                    imageEdit === "" ? "image" : "image outlinestyle-none"
+                  }
+                >
+                  {imageEdit === "" ? (
+                    <>
+                      <InputLabel
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          cursor: "pointer",
+                        }}
+                        htmlFor="image"
+                      >
+                        <AddIcon style={{ fontSize: "70px" }} /> upload{" "}
+                      </InputLabel>
+                      <Input
+                        onChange={(e) => {
+                          setEditImage(e.target.files[0]);
+                          setEditFile(URL.createObjectURL(e.target.files[0]));
+                        }}
+                        id="image"
+                        type="file"
+                        style={{ display: "none" }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      {deletedImage === true ? (
+                        <>
+                          <DeleteOutlineOutlinedIcon
+                            onClick={() => {
+                              setEditImage("");
+                              setEditFile("");
+                              setDeletedImage(true);
+                            }}
+                            className="delete-icon-image"
+                          />
+                          <img src={fileEdit} alt="" />
+                        </>
+                      ) : (
+                        <>
+                          <DeleteOutlineOutlinedIcon
+                            onClick={() => {
+                              setEditImage("");
+                              setEditFile("");
+                              setDeletedImage(true);
+                            }}
+                            className="delete-icon-image"
+                          />
+                          <img
+                            src={`https://192.168.88.250/demo_react_server/images/${fileEdit}`}
+                            alt=""
+                          />
+                        </>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="produkt-edit-pop-container-kategoria">
+                <FormControl variant="outlined">
+                  <InputLabel htmlFor="kategoria-label">Kategoria</InputLabel>
+                  <Select
+                    onChange={(e) => setEditKategoria(e.target.value)}
+                    style={{ width: "150px" }}
+                    value={editKategoria}
+                    label="Kategoria"
+                    inputProps={{
+                      name: "kategoria",
+                      id: "kategoria-label",
+                    }}
+                  >
+                    <MenuItem value="kategoria1">Kategoria1</MenuItem>
+                    <MenuItem value="kategoria2">Kategoria2</MenuItem>
+                    <MenuItem value="kategoria3">Kategoria3</MenuItem>
+                    <MenuItem value="kategoria4">Kategoria4</MenuItem>
+                  </Select>
+                </FormControl>
+                <TextField
+                  value={editCmimi}
+                  label="Cmimi"
+                  type="number"
+                  variant="outlined"
+                  onChange={(e) => setEditCmimi(e.target.value)}
+                />
+                <TextField
+                  value={editSasia}
+                  label="Sasia"
+                  type="number"
+                  variant="outlined"
+                  onChange={(e) => setEditSasia(e.target.value)}
+                />
+
+                <FormControl variant="outlined">
+                  <InputLabel htmlFor="njesia-label">Njesia</InputLabel>
+                  <Select
+                    value={editNjesia}
+                    onChange={(e) => setEditNjesia(e.target.value)}
+                    style={{ width: "150px" }}
+                    label="Njesia"
+                    inputProps={{
+                      name: "njesia",
+                      id: "njesia-label",
+                    }}
+                  >
+                    <MenuItem value="cop">Cop</MenuItem>
+                    <MenuItem value="kuti">Kuti</MenuItem>
+                    <MenuItem value="pako">Pako</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+
+              <div className="produkt-edit-pop-container-buttons">
+                <Button color="primary" variant="outlined" type="submit">
+                  Edit
+                </Button>
+                <Button color="secondary" variant="outlined">
+                  Anullo
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {deletePop && (
         <div className="delete-pop">
           <div
@@ -299,6 +541,17 @@ export default function Produkte() {
                     <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
                   )}
               </TableCell>
+              <TableCell align="left" onClick={() => requestSort("status")}>
+                Status
+                {propertyName.key === "status" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "status" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
               <TableCell align="center">Veprimet</TableCell>
             </TableRow>
           </TableHead>
@@ -325,15 +578,44 @@ export default function Produkte() {
                   {produkt.sasia == 0 ? "Ska stok" : produkt.sasia}
                 </TableCell>
                 <TableCell>{produkt.cmimi}</TableCell>
+                <TableCell>
+                  <Button
+                    size="medium"
+                    style={{
+                      backgroundColor: renderButtonColorsStatus(produkt.status),
+                      color: "white",
+                      width: "100px",
+                    }}
+                  >
+                    {" "}
+                    {renderButtonStatus(produkt.status)}{" "}
+                  </Button>
+                </TableCell>
                 <TableCell align="center">
                   <div className="veprime" style={{ cursor: "pointer" }}>
                     <VisibilityOutlinedIcon />
-                    <EditOutlinedIcon />
+                    <EditOutlinedIcon
+                      onClick={() => {
+                        showPorduktDetailsPop(true);
+                        setEditTitulli(produkt.titulli);
+                        setEditSku(produkt.sku);
+                        setEditPershkrimi(produkt.pershkrimi);
+                        setEditKategoria(produkt.kategoria);
+                        setEditCmimi(produkt.cmimi);
+                        setEditSasia(produkt.sasia);
+                        setEditNjesia(produkt.njesia);
+                        setEditStatus(produkt.status);
+                        setEditFile(produkt.image);
+                        setEditImage(produkt.image);
+                        setEditID(produkt.id);
+                      }}
+                    />
                     <DeleteOutlineOutlinedIcon
                       onClick={() => {
                         showDeletePop(true);
                         setDeleteId(produkt.id);
                       }}
+                      style={{ display: produkt.status === 0 ? "none" : "" }}
                     />
                   </div>
                 </TableCell>

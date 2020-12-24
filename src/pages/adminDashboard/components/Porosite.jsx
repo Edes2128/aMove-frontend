@@ -374,6 +374,7 @@ export default function Porosite() {
                           order.order_status
                         ),
                         color: "white",
+                        width:"100px"
                       }}
                     >
                       {" "}

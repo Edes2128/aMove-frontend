@@ -23,6 +23,10 @@ tr:nth-child(even) {
 .nav-home {
   padding: 20px;
 }
+.veprime{
+  display: flex;
+  
+}
 .form-login-home {
   height: 500px;
   width: 500px;
@@ -1488,4 +1492,86 @@ padding: 0 20px;
   align-items: center;
   justify-content: space-around;
 
+}
+.produkt-edit-pop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.produkt-edit-pop-opa{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: black;
+  z-index: 101;
+  opacity: .4;
+  top: 0;
+  left: 0;
+}
+
+.produkt-edit-pop-container{
+  width: 1000px;
+  height: 900px;
+  background-color: white;
+  z-index: 102;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-edit-produkt{
+  width: 95%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.produkt-edit-pop-container-titulli{
+  width: 100%;
+  height: 14%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+}
+.produkt-edit-pop-container-pershkrimi{
+  width: 100%;
+  display: flex;
+  height: 30%;
+  align-items: center;
+  justify-content: space-around;
+
+}
+
+.produkt-edit-pop-container-pershkrimi textarea {
+  padding-left: 20px;
+  padding-top: 20px;
+  resize: none;
+  height: 80%;
+  width: 50%;
+  outline: none;
+}
+
+.produkt-edit-pop-container-kategoria{
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+}
+.produkt-edit-pop-container-buttons{
+  width: 100%;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }

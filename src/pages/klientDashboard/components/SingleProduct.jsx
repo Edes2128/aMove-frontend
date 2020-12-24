@@ -16,7 +16,7 @@ export default function SingleProduct({ match }) {
       .then((res) => setProducts(res.data));
   }, []);
 
-  const produkt = products.filter((produkt) => produkt.id === match.params.id);
+  const produkt = products.filter((produkt) => produkt.id == match.params.id);
   const klientContext = useContext(KlientContext);
   const { cartProducts, wishlistProducts } = klientContext;
 
