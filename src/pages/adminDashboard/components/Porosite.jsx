@@ -20,12 +20,13 @@ import DepoContext from "../../../context/depoContext/DepoContext";
 import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 import AlertContext from "../../../context/alertContext/AlertContext";
+import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
 export default function Porosite() {
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
-  const { porosite , orderDetails , produktet } = depoContext;
-  const totali = orderDetails.map(order => order.totali);
+  const { porosite, orderDetails, produktet } = depoContext;
+  const totali = orderDetails.map((order) => order.totali);
   const [editOrderPop, setEditOrderPop] = useState(false);
   const [orderDetailss, showOrderDetails] = useState(false);
   const [deletePop, showDeletePop] = useState(false);
@@ -55,6 +56,7 @@ export default function Porosite() {
 
   useEffect(() => {
     depoContext.getAllOrders();
+    depoContext.getAllProducts();
   }, []);
 
   if (propertyName !== null) {
@@ -109,7 +111,6 @@ export default function Porosite() {
     }
   };
 
-
   return (
     <>
       {editOrderPop && (
@@ -118,7 +119,7 @@ export default function Porosite() {
             className="edit-order-pop-opa"
             onClick={() => {
               setEditOrderPop(false);
-              depoContext.emptyOrderDetails()
+              depoContext.emptyOrderDetails();
             }}
           ></div>
 
@@ -126,66 +127,108 @@ export default function Porosite() {
             <div className="edit-order-pop-container-left">
               <h3>Produktet e porosise</h3>
               <div className="edit-order-pop-container-left-items">
-            {orderDetails.map((order) => (
-              <div className="edit-order-pop-container-item" key={order.titulli}>
-                <div className="edit-order-pop-container-item-image">
-                  <img
-                    src={`https://192.168.88.250/demo_react_server/images/${order.image}`}
-                    alt=""
-                  />
-                </div>
-                <div className="edit-order-pop-cotainer-item-titulli-buttons">
-                  <div className="edit-order-pop-item-titulli">
-                    <h4> {order.titulli} </h4>
-                    <h5> Cmimi fillestar : {order.cmimiProduktit} Leke </h5>
-                  </div>
-                  <div className="edit-order-pop-item-buttons">
-                    <Button
-                      color="primary"
-                      size="small"
-                      variant="contained"
-                      disabled={order.qty === 1 ? true : false}
-                      onClick={() => {
-                        depoContext.decreaseOrderQty(order)
-                        alertContext.setAlert(`Sasia e produktit ${order.titulli} u ul`, 'success')
-                      }}
-                    >
-                      {" "}
-                      -{" "}
-                    </Button>
-                    <p> {order.qty} </p>
+                {orderDetails.map((order) => (
+                  <div
+                    className="edit-order-pop-container-item"
+                    key={order.titulli}
+                  >
+                    <div className="edit-order-pop-container-item-image">
+                      <img
+                        src={`https://192.168.88.250/demo_react_server/images/${order.image}`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="edit-order-pop-cotainer-item-titulli-buttons">
+                      <div className="edit-order-pop-item-titulli">
+                        <h4> {order.titulli} </h4>
+                        <h5> Cmimi fillestar : {order.cmimiProduktit} Leke </h5>
+                      </div>
+                      <div className="edit-order-pop-item-buttons">
+                        <Button
+                          color="primary"
+                          size="small"
+                          variant="contained"
+                          disabled={order.qty === 1 ? true : false}
+                          onClick={() => {
+                            depoContext.decreaseOrderQty(order);
+                            alertContext.setAlert(
+                              `Sasia e produktit ${order.titulli} u ul`,
+                              "success"
+                            );
+                          }}
+                        >
+                          {" "}
+                          -{" "}
+                        </Button>
+                        <p> {order.qty} </p>
 
-                    <Button
-                      color="primary"
-                      size="small"
-                      variant="contained"
-                      disabled={order.qty === order.sasia ? true : false}
-                      onClick={() => {
-       
-                        depoContext.increaseOrderQty(order);
-                        alertContext.setAlert(`Sasia e produktit ${order.titulli} u rrit`, 'success')
-                      }}
-                    >
-                      {" "}
-                      +{" "}
-                    </Button>
+                        <Button
+                          color="primary"
+                          size="small"
+                          variant="contained"
+                          disabled={order.qty === order.sasia ? true : false}
+                          onClick={() => {
+                            depoContext.increaseOrderQty(order);
+                            alertContext.setAlert(
+                              `Sasia e produktit ${order.titulli} u rrit`,
+                              "success"
+                            );
+                          }}
+                        >
+                          {" "}
+                          +{" "}
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="edit-order-pop-container-item-cmimi">
+                      <h5> Totali : {order.qty * order.cmimiProduktit} </h5>
+                    </div>
                   </div>
-                </div>
-                <div className="edit-order-pop-container-item-cmimi">
-                  <h5> Totali : {order.qty * order.cmimiProduktit} </h5>
-                </div>
+                ))}
               </div>
-            ))}
-            </div>
-            <div className="edit-order-pop-container-left-totali">
-              <h2> Totali i porosise: {totali[0]} </h2>  
-            </div>
+              <div className="edit-order-pop-container-left-totali">
+                <h2> Totali i porosise: {totali[0]} </h2>
+              </div>
             </div>
             <div className="edit-order-pop-container-right">
               <h3>Produktet</h3>
-                        <div className="edit-order-pop-container-right-items">
+              <div className="edit-order-pop-container-right-items">
+                {produktet.map((produkt) => (
+                  <div
+                    className="edit-order-pop-container-right-items-item"
+                    key={produkt.id}
+                  >
+                    <div className="edit-order-pop-container-right-items-item-image">
+                      <img
+                        src={`https://192.168.88.250/demo_react_server/images/${produkt.image}`}
+                        alt=""
+                      />
+                    </div>
 
-                        </div>
+                    <div className="edit-order-pop-container-right-items-item-titulli-buttons">
+                      <div className="edit-order-pop-container-right-items-item-titulli">
+                        <h3>{produkt.titulli}</h3>
+                        <p> {produkt.pershkrimi} </p>
+                      </div>
+                      <div className="edit-order-pop-container-right-items-item-buttons">
+                        <Button
+                          startIcon={<AddShoppingCartIcon />}
+                          size="medium"
+                          color="primary"
+                          variant="contained"
+                        >
+                          {" "}
+                          Shto tek porosite{" "}
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="edit-order-right-items-item-cmimi">
+                      <h4>Cmimi: {produkt.cmimi} Leke</h4>
+                      <h4>Stock: {produkt.sasia} </h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -449,7 +492,7 @@ export default function Porosite() {
                 <TableCell> {order.total_price} Leke </TableCell>
                 <TableCell>
                   <Button
-                    size="medium"
+                    size="small"
                     style={{
                       backgroundColor: renderButtonColorsStatus(
                         order.order_status
@@ -473,14 +516,12 @@ export default function Porosite() {
                             `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
                           )
                           .then((res) => setOrderDetailsContent(res.data));
-
                       }}
                     />
                     <EditOutlinedIcon
                       onClick={() => {
                         setEditOrderPop(true);
                         depoContext.getOrderDetails(order);
-
                       }}
                     />
                     <DeleteOutlineOutlinedIcon
