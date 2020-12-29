@@ -7,6 +7,8 @@ import {
   GET_ALL_ORDERS,
   GET_USER,
   GET_ALL_PRODUCTS,
+  GET_ORDER_DETAILS,
+  EMPTY_ORDER_DETAILS
 } from "./types";
 
 export default function DepoState({ children }) {
@@ -15,6 +17,7 @@ export default function DepoState({ children }) {
     klientet: [],
     produktet: [],
     porosite: [],
+    orderDetails : []
   };
 
   const [state, dispatch] = useReducer(DepoReducer, initialState);
@@ -30,6 +33,26 @@ export default function DepoState({ children }) {
       payload: res.data.user,
     });
   };
+
+  const getOrderDetails = async (order) => {
+
+    const res = await axios.get(`https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`)
+
+    dispatch({
+
+      type : GET_ORDER_DETAILS,
+      payload : res.data
+
+    });
+  }
+
+  const emptyOrderDetails = async () => {
+
+      dispatch({
+        type: EMPTY_ORDER_DETAILS
+      })
+
+  }
 
   const getAllClients = async () => {
     const res = await axios.get(
@@ -66,7 +89,7 @@ export default function DepoState({ children }) {
 
   const cancelOrder = async (order_id) => {
     await axios.post(
-      `http://localhost/demo_react_server/api/config/cancel_order.php?order_id=${order_id}`
+      `https://192.168.88.250/demo_react_server/api/config/cancel_order.php?order_id=${order_id}`
     );
 
     setTimeout(() => getAllOrders(), 100);
@@ -74,11 +97,35 @@ export default function DepoState({ children }) {
 
   const deleteProduct = async (product_id) => {
     await axios.post(
-      `http://localhost/demo_react_server/api/config/delete_product.php?product_id=${product_id}`
+      `https://192.168.88.250/demo_react_server/api/config/delete_product.php?product_id=${product_id}`
     );
 
     setTimeout(() => getAllProducts(), 100);
   };
+
+
+  const deleteUser = async (user_id) => {
+
+      await axios.post(`https://192.168.88.250/demo_react_server/api/config/delete_user.php?user_id=${user_id}`)
+
+      setTimeout(() => getAllClients(),100);
+  }
+
+  const increaseOrderQty = async (order) => {
+
+    await axios.post(`https://192.168.88.250/demo_react_server/api/config/increase_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`)
+    setTimeout(() => getOrderDetails(order),100)
+    setTimeout(() => getAllOrders(),100)
+  }
+
+  const decreaseOrderQty = async (order) => {
+
+    await axios.post(`https://192.168.88.250/demo_react_server/api/config/decrease_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`)
+    setTimeout(() => getOrderDetails(order),100)
+    setTimeout(() => getAllOrders(),100)
+
+  }
+
 
   return (
     <DepoContext.Provider
@@ -87,12 +134,18 @@ export default function DepoState({ children }) {
         klientet: state.klientet,
         produktet: state.produktet,
         porosite: state.porosite,
+        orderDetails : state.orderDetails,
         getUser,
         getAllClients,
         getAllProducts,
         getAllOrders,
         cancelOrder,
         deleteProduct,
+        deleteUser,
+        increaseOrderQty,
+        getOrderDetails,
+        emptyOrderDetails,
+        decreaseOrderQty
       }}
     >
       {children}

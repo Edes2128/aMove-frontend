@@ -1667,3 +1667,190 @@ justify-content: space-evenly;
   justify-content: space-around;
   align-items: center;
 }
+.user-delete-pop{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-delete-pop-opa{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  opacity: .4;
+  background-color: black;
+}
+.user-delete-pop-container{
+  height: 400px;
+  width: 500px;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow:  0 10px 20px rgba(0, 0, 0, 0.3);
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.user-delete-pop-buttons{
+  width: 100%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.edit-order-pop{
+  position: fixed;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+   z-index: 100;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.edit-order-pop-opa{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .4;
+  background-color: black; 
+}
+.edit-order-pop-container{
+  width: 80%;
+  height: 95%;
+  border-radius: 20px;
+  z-index: 101;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  background-color: white;
+  display: flex;
+  overflow: hidden;
+}
+.edit-order-pop-container-left{
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.edit-order-pop-container-left h3{
+
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+}
+.edit-order-pop-container-left::after{
+
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  background-color: #2d2d2d28;
+  right: 0;
+  top: 0;
+
+}
+.edit-order-pop-container-left-items{
+  width: 100%;
+  height: 100%;
+  max-height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  overflow: auto ;
+
+}
+.edit-order-pop-container-left-totali{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.edit-order-pop-container-left-totali::after{
+  content: '';
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  background-color: #2d2d2d28;
+  left: 0;
+  top: 0;
+}
+.edit-order-pop-container-item{
+  width: 90%;
+  height: 140px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 40px;
+  display: flex;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.edit-order-pop-container-item-image{
+height: 100%;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.edit-order-pop-container-item-image img{
+  height: auto;
+  width: 50%;
+}
+.edit-order-pop-cotainer-item-titulli-buttons{
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.edit-order-pop-item-titulli{
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+  justify-content: space-evenly;
+}
+.edit-order-pop-item-buttons{
+  width: 100%;
+  height: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.edit-order-pop-container-item-cmimi{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-order-pop-container-right{
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.edit-order-pop-container-right-items{
+  width: 95%;
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}

@@ -29,6 +29,8 @@ import Input from "@material-ui/core/Input";
 import axios from "axios";
 
 export default function Klient() {
+  const [deletedID, setDeletedID] = useState("");
+  const [deletePop, setDeletePop] = useState(false);
   const [editID, setEditID] = useState("");
   const [editEmri, setEditEmri] = useState("");
   const [editEmail, setEditEmail] = useState("");
@@ -143,6 +145,46 @@ export default function Klient() {
   };
   return (
     <>
+      {deletePop && (
+        <div className="user-delete-pop">
+          <div
+            className="user-delete-pop-opa"
+            onClick={() => {
+              alertContext.setAlert("Klienti nuk u fshi", "info");
+              setDeletePop(false);
+            }}
+          ></div>
+          <div className="user-delete-pop-container">
+            <h3>Jeni te sigurt qe doni te fshini klientin?</h3>
+            <div className="user-delete-pop-buttons">
+              <Button
+                style={{ backgroundColor: "red", color: "white", width: "30%" }}
+                onClick={() => {
+                  depoContext.deleteUser(deletedID);
+                  setDeletePop(false);
+                  alertContext.setAlert("Klienti u fshi", "warning");
+                }}
+              >
+                Po
+              </Button>
+              <Button
+                style={{
+                  backgroundColor: "green",
+                  color: "white",
+                  width: "30%",
+                }}
+                onClick={() => {
+                  setDeletePop(false);
+                  alertContext.setAlert("Klienti nuk u fshi", "info");
+                }}
+              >
+                Jo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {userEditPop && (
         <div className="user-edit-pop">
           <div
@@ -150,6 +192,7 @@ export default function Klient() {
             onClick={() => {
               setUserEditPop(false);
               alertContext.setAlert("Klienti nuk u ndryshua", "info");
+              setDeletedImage(false);
             }}
           ></div>
 
@@ -299,7 +342,12 @@ export default function Klient() {
                 )}
               </div>
               <div className="edit-user-pop-buttons">
-                <Button color="primary" variant="outlined" type="submit">
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  type="submit"
+                  onClick={() => setDeletedImage(false)}
+                >
                   {" "}
                   Edit{" "}
                 </Button>
@@ -594,7 +642,15 @@ export default function Klient() {
                             setEditImage(row.image_profile);
                           }}
                         />
-                        <DeleteOutlineOutlinedIcon />
+                        <DeleteOutlineOutlinedIcon
+                          style={{
+                            display: row.status_user === 0 ? "none" : "",
+                          }}
+                          onClick={() => {
+                            setDeletedID(row.id);
+                            setDeletePop(true);
+                          }}
+                        />
                       </div>
                     </TableCell>
                   </TableRow>

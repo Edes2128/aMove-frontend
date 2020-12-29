@@ -22,7 +22,12 @@ import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined"
 import AlertContext from "../../../context/alertContext/AlertContext";
 
 export default function Porosite() {
-  const [orderDetails, showOrderDetails] = useState(false);
+  const depoContext = useContext(DepoContext);
+  const alertContext = useContext(AlertContext);
+  const { porosite , orderDetails , produktet } = depoContext;
+  const totali = orderDetails.map(order => order.totali);
+  const [editOrderPop, setEditOrderPop] = useState(false);
+  const [orderDetailss, showOrderDetails] = useState(false);
   const [deletePop, showDeletePop] = useState(false);
   const [idDelete, setDeleteId] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
@@ -30,13 +35,11 @@ export default function Porosite() {
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
-  const depoContext = useContext(DepoContext);
-  const alertContext = useContext(AlertContext);
-  const { porosite } = depoContext;
   const [propertyName, setProperty] = useState({
     key: "order_date",
     direction: "descending",
   });
+
   const [searchFilter, setSearchFilter] = useState("");
   const filteredOrder = porosite.filter(
     (order) =>
@@ -83,11 +86,11 @@ export default function Porosite() {
   };
 
   const renderButtonStatus = (status) => {
-    if (status == 1) {
+    if (status === 1) {
       return "Aktive";
-    } else if (status == 2) {
+    } else if (status === 2) {
       return "Ne Pritje";
-    } else if (status == 3) {
+    } else if (status === 3) {
       return "Anulluar";
     } else {
       return "Perfunduar";
@@ -95,19 +98,99 @@ export default function Porosite() {
   };
 
   const renderButtonColorsStatus = (status) => {
-    if (status == 1) {
+    if (status === 1) {
       return "#3ccc38";
-    } else if (status == 2) {
+    } else if (status === 2) {
       return "#FECD2F";
-    } else if (status == 3) {
+    } else if (status === 3) {
       return "#fd3259";
     } else {
       return "#6569df";
     }
   };
 
+
   return (
     <>
+      {editOrderPop && (
+        <div className="edit-order-pop">
+          <div
+            className="edit-order-pop-opa"
+            onClick={() => {
+              setEditOrderPop(false);
+              depoContext.emptyOrderDetails()
+            }}
+          ></div>
+
+          <div className="edit-order-pop-container">
+            <div className="edit-order-pop-container-left">
+              <h3>Produktet e porosise</h3>
+              <div className="edit-order-pop-container-left-items">
+            {orderDetails.map((order) => (
+              <div className="edit-order-pop-container-item" key={order.titulli}>
+                <div className="edit-order-pop-container-item-image">
+                  <img
+                    src={`https://192.168.88.250/demo_react_server/images/${order.image}`}
+                    alt=""
+                  />
+                </div>
+                <div className="edit-order-pop-cotainer-item-titulli-buttons">
+                  <div className="edit-order-pop-item-titulli">
+                    <h4> {order.titulli} </h4>
+                    <h5> Cmimi fillestar : {order.cmimiProduktit} Leke </h5>
+                  </div>
+                  <div className="edit-order-pop-item-buttons">
+                    <Button
+                      color="primary"
+                      size="small"
+                      variant="contained"
+                      disabled={order.qty === 1 ? true : false}
+                      onClick={() => {
+                        depoContext.decreaseOrderQty(order)
+                        alertContext.setAlert(`Sasia e produktit ${order.titulli} u ul`, 'success')
+                      }}
+                    >
+                      {" "}
+                      -{" "}
+                    </Button>
+                    <p> {order.qty} </p>
+
+                    <Button
+                      color="primary"
+                      size="small"
+                      variant="contained"
+                      disabled={order.qty === order.sasia ? true : false}
+                      onClick={() => {
+       
+                        depoContext.increaseOrderQty(order);
+                        alertContext.setAlert(`Sasia e produktit ${order.titulli} u rrit`, 'success')
+                      }}
+                    >
+                      {" "}
+                      +{" "}
+                    </Button>
+                  </div>
+                </div>
+                <div className="edit-order-pop-container-item-cmimi">
+                  <h5> Totali : {order.qty * order.cmimiProduktit} </h5>
+                </div>
+              </div>
+            ))}
+            </div>
+            <div className="edit-order-pop-container-left-totali">
+              <h2> Totali i porosise: {totali[0]} </h2>  
+            </div>
+            </div>
+            <div className="edit-order-pop-container-right">
+              <h3>Produktet</h3>
+                        <div className="edit-order-pop-container-right-items">
+
+                        </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {deletePop && (
         <div className="delete-pop">
           <div
@@ -145,7 +228,7 @@ export default function Porosite() {
           </div>
         </div>
       )}
-      {orderDetails && (
+      {orderDetailss && (
         <div className="order-details-pop">
           <div
             className="order-details-pop-opa"
@@ -357,57 +440,62 @@ export default function Porosite() {
           </TableHead>
 
           <TableBody>
-            {filteredOrder
-              .slice(start, end)
-              .map((order) => (
-                <TableRow key={order.ID}>
-                  <TableCell> {order.ID} </TableCell>
-                  <TableCell> {order.klient_emer} </TableCell>
-                  <TableCell> {order.order_date} </TableCell>
-                  <TableCell> {order.klient_zona} </TableCell>
-                  <TableCell> {order.total_price} Leke </TableCell>
-                  <TableCell>
-                    <Button
-                      size="medium"
-                      style={{
-                        backgroundColor: renderButtonColorsStatus(
-                          order.order_status
-                        ),
-                        color: "white",
-                        width:"100px"
-                      }}
-                    >
-                      {" "}
-                      {renderButtonStatus(order.order_status)}{" "}
-                    </Button>
-                  </TableCell>
+            {filteredOrder.slice(start, end).map((order) => (
+              <TableRow key={order.ID}>
+                <TableCell> {order.ID} </TableCell>
+                <TableCell> {order.klient_emer} </TableCell>
+                <TableCell> {order.order_date} </TableCell>
+                <TableCell> {order.klient_zona} </TableCell>
+                <TableCell> {order.total_price} Leke </TableCell>
+                <TableCell>
+                  <Button
+                    size="medium"
+                    style={{
+                      backgroundColor: renderButtonColorsStatus(
+                        order.order_status
+                      ),
+                      color: "white",
+                      width: "100px",
+                    }}
+                  >
+                    {" "}
+                    {renderButtonStatus(order.order_status)}{" "}
+                  </Button>
+                </TableCell>
 
-                  <TableCell align="center">
-                    <div className="veprime" style={{ cursor: "pointer" }}>
-                      <VisibilityOutlinedIcon
-                        onClick={() => {
-                          showOrderDetails(true);
-                          axios
-                            .get(
-                              `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klient_id}&order_id=${order.ID}`
-                            )
-                            .then((res) => setOrderDetailsContent(res.data));
-                        }}
-                      />
-                      <EditOutlinedIcon />
-                      <DeleteOutlineOutlinedIcon
-                        onClick={() => {
-                          showDeletePop(true);
-                          setDeleteId(order.ID);
-                        }}
-                        style={{
-                          display: order.order_status === 3 ? "none" : "",
-                        }}
-                      />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+                <TableCell align="center">
+                  <div className="veprime" style={{ cursor: "pointer" }}>
+                    <VisibilityOutlinedIcon
+                      onClick={() => {
+                        showOrderDetails(true);
+                        axios
+                          .get(
+                            `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
+                          )
+                          .then((res) => setOrderDetailsContent(res.data));
+
+                      }}
+                    />
+                    <EditOutlinedIcon
+                      onClick={() => {
+                        setEditOrderPop(true);
+                        depoContext.getOrderDetails(order);
+
+                      }}
+                    />
+                    <DeleteOutlineOutlinedIcon
+                      onClick={() => {
+                        showDeletePop(true);
+                        setDeleteId(order.ID);
+                      }}
+                      style={{
+                        display: order.order_status === 3 ? "none" : "",
+                      }}
+                    />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
 
