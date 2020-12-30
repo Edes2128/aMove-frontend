@@ -8,7 +8,7 @@ import {
   GET_USER,
   GET_ALL_PRODUCTS,
   GET_ORDER_DETAILS,
-  EMPTY_ORDER_DETAILS
+  EMPTY_ORDER_DETAILS,
 } from "./types";
 
 export default function DepoState({ children }) {
@@ -17,7 +17,7 @@ export default function DepoState({ children }) {
     klientet: [],
     produktet: [],
     porosite: [],
-    orderDetails : []
+    orderDetails: [],
   };
 
   const [state, dispatch] = useReducer(DepoReducer, initialState);
@@ -35,24 +35,21 @@ export default function DepoState({ children }) {
   };
 
   const getOrderDetails = async (order) => {
-
-    const res = await axios.get(`https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`)
+    const res = await axios.get(
+      `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
+    );
 
     dispatch({
-
-      type : GET_ORDER_DETAILS,
-      payload : res.data
-
+      type: GET_ORDER_DETAILS,
+      payload: res.data,
     });
-  }
+  };
 
   const emptyOrderDetails = async () => {
-
-      dispatch({
-        type: EMPTY_ORDER_DETAILS
-      })
-
-  }
+    dispatch({
+      type: EMPTY_ORDER_DETAILS,
+    });
+  };
 
   const getAllClients = async () => {
     const res = await axios.get(
@@ -103,38 +100,54 @@ export default function DepoState({ children }) {
     setTimeout(() => getAllProducts(), 100);
   };
 
-
   const deleteUser = async (user_id) => {
+    await axios.post(
+      `https://192.168.88.250/demo_react_server/api/config/delete_user.php?user_id=${user_id}`
+    );
 
-      await axios.post(`https://192.168.88.250/demo_react_server/api/config/delete_user.php?user_id=${user_id}`)
-
-      setTimeout(() => getAllClients(),100);
-  }
+    setTimeout(() => getAllClients(), 100);
+  };
 
   const increaseOrderQty = async (order) => {
-
-    await axios.post(`https://192.168.88.250/demo_react_server/api/config/increase_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`)
-    setTimeout(() => getOrderDetails(order),100)
-    setTimeout(() => getAllOrders(),100)
-  }
+    await axios.post(
+      `https://192.168.88.250/demo_react_server/api/config/increase_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
+    );
+    setTimeout(() => getOrderDetails(order), 100);
+    setTimeout(() => getAllOrders(), 100);
+  };
 
   const decreaseOrderQty = async (order) => {
+    await axios.post(
+      `https://192.168.88.250/demo_react_server/api/config/decrease_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
+    );
+    setTimeout(() => getOrderDetails(order), 100);
+    setTimeout(() => getAllOrders(), 100);
+  };
 
-    await axios.post(`https://192.168.88.250/demo_react_server/api/config/decrease_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`)
-    setTimeout(() => getOrderDetails(order),100)
-    setTimeout(() => getAllOrders(),100)
+  const deleteProductFromOrder = async (orderID, productID, order) => {
+    await axios.post(
+      `https://192.168.88.250/demo_react_server/api/config/delete_product_from_order.php?order_id=${orderID}&produkt_id=${productID}`
+    );
 
-  }
+    setTimeout(() => getOrderDetails(order), 100);
+    setTimeout(() => getAllOrders(), 100);
+    setTimeout(() => getAllProducts(), 100);
+  };
 
-  const deleteProductFromOrder = async (orderID,productID,order) => {
+  const addProductToOrder = async (data,orderID) =>{
 
-    await axios.post(`https://192.168.88.250/demo_react_server/api/config/delete_product_from_order.php?order_id=${orderID}&produkt_id=${productID}`);
+    const payload = {
 
-    setTimeout(() => getOrderDetails(order),100)
-    setTimeout(() => getAllOrders(),100)
+      cmimi : data.cmimi,
+      produktID :data.id
+
+    }
+
+    await axios.post(`https://192.168.88.250/demo_react_server/api/config/add_product_to_order.php?order_id=${orderID}`,payload)
+
+    setTimeout(() => getAllOrders(), 100);
     setTimeout(() => getAllProducts(), 100);
   }
-
 
   return (
     <DepoContext.Provider
@@ -143,7 +156,7 @@ export default function DepoState({ children }) {
         klientet: state.klientet,
         produktet: state.produktet,
         porosite: state.porosite,
-        orderDetails : state.orderDetails,
+        orderDetails: state.orderDetails,
         getUser,
         getAllClients,
         getAllProducts,
@@ -155,7 +168,8 @@ export default function DepoState({ children }) {
         getOrderDetails,
         emptyOrderDetails,
         decreaseOrderQty,
-        deleteProductFromOrder
+        deleteProductFromOrder,
+        addProductToOrder
       }}
     >
       {children}
