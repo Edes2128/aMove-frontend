@@ -21,12 +21,15 @@ import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 import AlertContext from "../../../context/alertContext/AlertContext";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export default function Porosite() {
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
   const { porosite, orderDetails, produktet } = depoContext;
   const totali = orderDetails.map((order) => order.totali);
+  const orderDetailsProduktID = orderDetails.map((order) => order.produkt_id);
   const [editOrderPop, setEditOrderPop] = useState(false);
   const [orderDetailss, showOrderDetails] = useState(false);
   const [deletePop, showDeletePop] = useState(false);
@@ -40,6 +43,18 @@ export default function Porosite() {
     key: "order_date",
     direction: "descending",
   });
+
+  const findSamePrice = (produktID, produktCmimi, orderID, order) => {
+    const produktObjectFound = produktet.find(
+      (produkt) => produkt.id === produktID
+    );
+
+    if (produktObjectFound.cmimi === produktCmimi) {
+      depoContext.deleteProductFromOrder(orderID, produktID, order);
+    } else {
+      alert("No");
+    }
+  };
 
   const [searchFilter, setSearchFilter] = useState("");
   const filteredOrder = porosite.filter(
@@ -144,43 +159,64 @@ export default function Porosite() {
                         <h5> Cmimi fillestar : {order.cmimiProduktit} Leke </h5>
                       </div>
                       <div className="edit-order-pop-item-buttons">
-                        <Button
-                          color="primary"
-                          size="small"
-                          variant="contained"
-                          disabled={order.qty === 1 ? true : false}
-                          onClick={() => {
-                            depoContext.decreaseOrderQty(order);
-                            alertContext.setAlert(
-                              `Sasia e produktit ${order.titulli} u ul`,
-                              "success"
-                            );
-                          }}
-                        >
-                          {" "}
-                          -{" "}
-                        </Button>
+                        <Tooltip title="Zbrit">
+                          <Button
+                            color="primary"
+                            size="small"
+                            variant="contained"
+                            disabled={order.qty === 1 ? true : false}
+                            onClick={() => {
+                              depoContext.decreaseOrderQty(order);
+                              alertContext.setAlert(
+                                `Sasia e produktit ${order.titulli} u ul`,
+                                "success"
+                              );
+                            }}
+                          >
+                            {" "}
+                            -{" "}
+                          </Button>
+                        </Tooltip>
                         <p> {order.qty} </p>
-
-                        <Button
-                          color="primary"
-                          size="small"
-                          variant="contained"
-                          disabled={order.qty === order.sasia ? true : false}
-                          onClick={() => {
-                            depoContext.increaseOrderQty(order);
-                            alertContext.setAlert(
-                              `Sasia e produktit ${order.titulli} u rrit`,
-                              "success"
-                            );
-                          }}
-                        >
-                          {" "}
-                          +{" "}
-                        </Button>
+                        <Tooltip title="Rrit">
+                          <Button
+                            color="primary"
+                            size="small"
+                            variant="contained"
+                            disabled={order.qty === order.sasia ? true : false}
+                            onClick={() => {
+                              depoContext.increaseOrderQty(order);
+                              alertContext.setAlert(
+                                `Sasia e produktit ${order.titulli} u rrit`,
+                                "success"
+                              );
+                            }}
+                          >
+                            {" "}
+                            +{" "}
+                          </Button>
+                        </Tooltip>
                       </div>
                     </div>
                     <div className="edit-order-pop-container-item-cmimi">
+                      <Tooltip title="Delete">
+                        <CloseOutlinedIcon
+                          style={{
+                            color: "red",
+                            alignSelf: "flex-end",
+                            justifySelf: "flex-end",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            findSamePrice(
+                              order.produkt_id,
+                              order.cmimiProduktit,
+                              order.ID,
+                              order
+                            );
+                          }}
+                        />
+                      </Tooltip>
                       <h5> Totali : {order.qty * order.cmimiProduktit} </h5>
                     </div>
                   </div>
@@ -194,39 +230,49 @@ export default function Porosite() {
               <h3>Produktet</h3>
               <div className="edit-order-pop-container-right-items">
                 {produktet.map((produkt) => (
-                  <div
-                    className="edit-order-pop-container-right-items-item"
-                    key={produkt.id}
-                  >
-                    <div className="edit-order-pop-container-right-items-item-image">
-                      <img
-                        src={`https://192.168.88.250/demo_react_server/images/${produkt.image}`}
-                        alt=""
-                      />
-                    </div>
+                  <>
+                    <div
+                      className="edit-order-pop-container-right-items-item"
+                      key={produkt.titulli}
+                      style={{
+                        display:
+                          orderDetailsProduktID.some(
+                            (order) => order === produkt.id
+                          ) === true
+                            ? "none"
+                            : "",
+                      }}
+                    >
+                      <div className="edit-order-pop-container-right-items-item-image">
+                        <img
+                          src={`https://192.168.88.250/demo_react_server/images/${produkt.image}`}
+                          alt=""
+                        />
+                      </div>
 
-                    <div className="edit-order-pop-container-right-items-item-titulli-buttons">
-                      <div className="edit-order-pop-container-right-items-item-titulli">
-                        <h3>{produkt.titulli}</h3>
-                        <p> {produkt.pershkrimi} </p>
+                      <div className="edit-order-pop-container-right-items-item-titulli-buttons">
+                        <div className="edit-order-pop-container-right-items-item-titulli">
+                          <h3>{produkt.titulli}</h3>
+                          <p> {produkt.pershkrimi} </p>
+                        </div>
+                        <div className="edit-order-pop-container-right-items-item-buttons">
+                          <Button
+                            startIcon={<AddShoppingCartIcon />}
+                            size="medium"
+                            color="primary"
+                            variant="contained"
+                          >
+                            {" "}
+                            Shto tek porosite{" "}
+                          </Button>
+                        </div>
                       </div>
-                      <div className="edit-order-pop-container-right-items-item-buttons">
-                        <Button
-                          startIcon={<AddShoppingCartIcon />}
-                          size="medium"
-                          color="primary"
-                          variant="contained"
-                        >
-                          {" "}
-                          Shto tek porosite{" "}
-                        </Button>
+                      <div className="edit-order-right-items-item-cmimi">
+                        <h4>Cmimi: {produkt.cmimi} Leke</h4>
+                        <h4>Stock: {produkt.sasia} </h4>
                       </div>
                     </div>
-                    <div className="edit-order-right-items-item-cmimi">
-                      <h4>Cmimi: {produkt.cmimi} Leke</h4>
-                      <h4>Stock: {produkt.sasia} </h4>
-                    </div>
-                  </div>
+                  </>
                 ))}
               </div>
             </div>

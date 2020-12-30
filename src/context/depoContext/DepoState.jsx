@@ -126,6 +126,15 @@ export default function DepoState({ children }) {
 
   }
 
+  const deleteProductFromOrder = async (orderID,productID,order) => {
+
+    await axios.post(`https://192.168.88.250/demo_react_server/api/config/delete_product_from_order.php?order_id=${orderID}&produkt_id=${productID}`);
+
+    setTimeout(() => getOrderDetails(order),100)
+    setTimeout(() => getAllOrders(),100)
+    setTimeout(() => getAllProducts(), 100);
+  }
+
 
   return (
     <DepoContext.Provider
@@ -145,7 +154,8 @@ export default function DepoState({ children }) {
         increaseOrderQty,
         getOrderDetails,
         emptyOrderDetails,
-        decreaseOrderQty
+        decreaseOrderQty,
+        deleteProductFromOrder
       }}
     >
       {children}
