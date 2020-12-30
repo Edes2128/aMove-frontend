@@ -11,7 +11,7 @@ body {
   background-color: #ededed;
 }
 tr:nth-child(even) {
-  background-color: #FCFCFC;
+  background-color: #fcfcfc;
 }
 .App {
   height: 90vh;
@@ -23,7 +23,6 @@ tr:nth-child(even) {
 .nav-home {
   padding: 20px;
 }
-
 .form-login-home {
   height: 500px;
   width: 500px;
@@ -74,7 +73,6 @@ tr:nth-child(even) {
 .logo-move {
   width: 90px;
 }
-
 .user-move-admin {
   display: flex;
   width: 20%;
@@ -82,7 +80,6 @@ tr:nth-child(even) {
   align-items: center;
   position: relative;
 }
-
 .hover-logout {
   width: 300px;
   height: 100px;
@@ -104,14 +101,12 @@ tr:nth-child(even) {
   cursor: pointer;
   font-size: 20px;
 }
-
 .display-block {
   display: flex;
   justify-content: center;
   padding: 10px;
   transition: all 1s ease-in;
 }
-
 .logo-user-loggedin {
   box-shadow: 0 5px 7px rgba(1, 1, 1, 0.4);
   background-position: center;
@@ -122,7 +117,6 @@ tr:nth-child(even) {
   font-weight: bold;
   cursor: pointer;
 }
-
 .sidebar {
   width: 100%;
   display: flex;
@@ -139,7 +133,6 @@ tr:nth-child(even) {
   justify-content: center;
   align-items: center;
 }
-
 .sidebar-dashboard-image img {
   width: 120px;
   height: 120px;
@@ -187,32 +180,27 @@ tr:nth-child(even) {
   justify-content: space-between;
   padding: 10px;
 }
-
 .admin-klient-cat-content {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   height: 100%;
 }
-
 .data-table-klient {
   width: 98%;
   margin: 0 auto;
   background-color: white;
 }
-
 .klient {
   display: flex;
   flex-direction: column;
 }
-
 .table-first-div {
   display: flex;
   width: 100%;
   justify-content: space-between;
   padding: 10px 10px;
 }
-
 .table-search-add {
   display: flex;
   align-items: center;
@@ -225,10 +213,9 @@ tr:nth-child(even) {
   justify-content: space-between;
   padding: 10px;
 }
-
 .shtoklient-popup {
   position: fixed;
-  z-index:22;
+  z-index: 22;
   top: 0;
   left: 0;
   width: 100%;
@@ -237,7 +224,6 @@ tr:nth-child(even) {
   justify-content: center;
   align-items: center;
 }
-
 .shtoklient-popup-opa {
   position: fixed;
   z-index: 23;
@@ -261,16 +247,16 @@ tr:nth-child(even) {
   align-items: center;
   margin-top: 30px;
 }
-.image-klient-form{
+.image-klient-form {
   width: 60%;
   height: 170px;
   position: relative;
 }
-.image-klient-form img{
+.image-klient-form img {
   width: 100%;
   height: 100%;
 }
-.delete-icon-image{
+.delete-icon-image {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -278,8 +264,7 @@ tr:nth-child(even) {
   color: red;
   font-size: 30px !important;
 }
-.delete-icon-image:hover{
-
+.delete-icon-image:hover {
   background-color: rgb(190, 180, 180);
   color: red;
   cursor: pointer;
@@ -289,7 +274,6 @@ tr:nth-child(even) {
   width: 60%;
   margin-bottom: 40px !important;
 }
-
 .select-group {
   width: 60%;
   display: flex;
@@ -406,7 +390,6 @@ tr:nth-child(even) {
   justify-content: flex-end;
   padding-right: 20px;
 }
-
 .shtoprodukt-popup {
   display: flex;
   justify-content: center;
@@ -418,7 +401,6 @@ tr:nth-child(even) {
   height: 100%;
   z-index: 100;
 }
-
 .shtoprodukt-popup-opa {
   width: 100%;
   height: 100%;
@@ -515,20 +497,17 @@ tr:nth-child(even) {
   height: 20%;
   position: relative;
 }
-
-.image-2 img{
+.image-2 img {
   width: 100%;
   height: 100%;
 }
 .outlinestyle-none {
   outline: none;
 }
-
-.image img{
+.image img {
   width: 100%;
   height: 100%;
 }
-
 .kategori-cmimi-stock {
   width: 100%;
   height: 12%;
@@ -689,7 +668,6 @@ tr:nth-child(even) {
   top: 0;
   z-index: 21;
 }
-
 .sidebar-logo {
   width: 100%;
   height: 90px;
@@ -1398,19 +1376,19 @@ tr:nth-child(even) {
   padding-right: 20px;
 }
 
-.produkte-pagination{
+.produkte-pagination {
   width: 98%;
   margin: 0 auto;
   border-radius: 20px;
   height: 100px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-background-color: white;
-padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 0 20px;
 }
 
-.delete-pop{
+.delete-pop {
   position: fixed;
   top: 0;
   left: 0;
@@ -1421,14 +1399,14 @@ padding: 0 20px;
   justify-content: center;
   align-items: center;
 }
-.delete-pop-opa{
+.delete-pop-opa {
   position: fixed;
   width: 100%;
   height: 100%;
-  opacity: .4;
+  opacity: 0.4;
   background-color: black;
 }
-.delete-pop-container{
+.delete-pop-container {
   width: 500px;
   height: 400px;
   z-index: 101;
@@ -1440,29 +1418,29 @@ padding: 0 20px;
   align-items: center;
   justify-content: space-around;
 }
-.delete-pop-buttons{
+.delete-pop-buttons {
   width: 95%;
   height: 20%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.btn-delete-opa{
+.btn-delete-opa {
   width: 40%;
   height: 40px;
 }
 
-.btn-delete-opa:nth-child(1){
+.btn-delete-opa:nth-child(1) {
   background-color: green;
   color: white;
 }
 
-.btn-delete-opa:nth-child(2){
+.btn-delete-opa:nth-child(2) {
   background-color: red;
   color: white;
 }
 
-.user-details-pop{
+.user-details-pop {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -1473,15 +1451,15 @@ padding: 0 20px;
   justify-content: center;
   align-items: center;
 }
-.user-details-pop-opa{
+.user-details-pop-opa {
   width: 100%;
   height: 100%;
   position: fixed;
   background-color: black;
   z-index: 101;
-  opacity: .4;
+  opacity: 0.4;
 }
-.user-details-pop-container{
+.user-details-pop-container {
   width: 500px;
   height: 600px;
   background-color: white;
@@ -1494,17 +1472,15 @@ padding: 0 20px;
   justify-content: space-between;
 }
 
-
-.user-pop-details-content{
+.user-pop-details-content {
   width: 95%;
   height: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-
 }
-.produkt-edit-pop{
+.produkt-edit-pop {
   position: fixed;
   top: 0;
   left: 0;
@@ -1516,18 +1492,18 @@ padding: 0 20px;
   align-items: center;
 }
 
-.produkt-edit-pop-opa{
+.produkt-edit-pop-opa {
   height: 100%;
   width: 100%;
   position: fixed;
   background-color: black;
   z-index: 101;
-  opacity: .4;
+  opacity: 0.4;
   top: 0;
   left: 0;
 }
 
-.produkt-edit-pop-container{
+.produkt-edit-pop-container {
   width: 1000px;
   height: 900px;
   background-color: white;
@@ -1538,28 +1514,26 @@ padding: 0 20px;
   flex-direction: column;
   align-items: center;
 }
-.form-edit-produkt{
+.form-edit-produkt {
   width: 95%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.produkt-edit-pop-container-titulli{
+.produkt-edit-pop-container-titulli {
   width: 100%;
   height: 14%;
   display: flex;
   align-items: center;
   justify-content: space-around;
-
 }
-.produkt-edit-pop-container-pershkrimi{
+.produkt-edit-pop-container-pershkrimi {
   width: 100%;
   display: flex;
   height: 30%;
   align-items: center;
   justify-content: space-around;
-
 }
 
 .produkt-edit-pop-container-pershkrimi textarea {
@@ -1571,22 +1545,21 @@ padding: 0 20px;
   outline: none;
 }
 
-.produkt-edit-pop-container-kategoria{
+.produkt-edit-pop-container-kategoria {
   width: 100%;
   height: 15%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-
 }
-.produkt-edit-pop-container-buttons{
+.produkt-edit-pop-container-buttons {
   width: 100%;
   height: 140px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
-.produkt-details-pop{
+.produkt-details-pop {
   position: fixed;
   top: 0;
   left: 0;
@@ -1597,16 +1570,16 @@ padding: 0 20px;
   justify-content: center;
   align-items: center;
 }
-.produkt-details-pop-opa{
+.produkt-details-pop-opa {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: black;
-  opacity: .4;
+  opacity: 0.4;
 }
-.produkt-details-pop-container{
+.produkt-details-pop-container {
   z-index: 101;
   width: 700px;
   height: 800px;
@@ -1619,7 +1592,7 @@ padding: 0 20px;
   justify-content: space-around;
 }
 
-.user-edit-pop{
+.user-edit-pop {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -1631,28 +1604,28 @@ padding: 0 20px;
   align-items: center;
 }
 
-.user-edit-pop-opa{
+.user-edit-pop-opa {
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
   background-color: black;
-  opacity: .4;
+  opacity: 0.4;
 }
-.user-edit-pop-container{
-width: 600px;
-height: 800px;
-background-color: white;
-z-index: 101;
-border-radius: 20px;
-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-evenly;
+.user-edit-pop-container {
+  width: 600px;
+  height: 800px;
+  background-color: white;
+  z-index: 101;
+  border-radius: 20px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
-.user-edit-pop-container-form{
+.user-edit-pop-container-form {
   width: 95%;
   height: 100%;
   display: flex;
@@ -1660,14 +1633,14 @@ justify-content: space-evenly;
   align-items: center;
   justify-content: space-evenly;
 }
-.edit-user-pop-buttons{
+.edit-user-pop-buttons {
   width: 100%;
   height: 10%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.user-delete-pop{
+.user-delete-pop {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -1678,19 +1651,19 @@ justify-content: space-evenly;
   justify-content: center;
   align-items: center;
 }
-.user-delete-pop-opa{
+.user-delete-pop-opa {
   position: fixed;
   width: 100%;
   height: 100%;
-  opacity: .4;
+  opacity: 0.4;
   background-color: black;
 }
-.user-delete-pop-container{
+.user-delete-pop-container {
   height: 400px;
   width: 500px;
   border-radius: 20px;
   background-color: white;
-  box-shadow:  0 10px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   z-index: 101;
   display: flex;
   flex-direction: column;
@@ -1698,34 +1671,34 @@ justify-content: space-evenly;
   justify-content: space-around;
 }
 
-.user-delete-pop-buttons{
+.user-delete-pop-buttons {
   width: 100%;
   height: 30%;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-.edit-order-pop{
+.edit-order-pop {
   position: fixed;
-   height: 100%;
-   width: 100%;
-   top: 0;
-   left: 0;
-   z-index: 100;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.edit-order-pop-opa{
+.edit-order-pop-opa {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: .4;
-  background-color: black; 
+  opacity: 0.4;
+  background-color: black;
 }
-.edit-order-pop-container{
+.edit-order-pop-container {
   width: 80%;
   height: 95%;
   border-radius: 20px;
@@ -1733,9 +1706,8 @@ justify-content: space-evenly;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
   background-color: white;
   display: flex;
- 
 }
-.edit-order-pop-container-left{
+.edit-order-pop-container-left {
   width: 50%;
   height: 100%;
   display: flex;
@@ -1743,24 +1715,20 @@ justify-content: space-evenly;
   align-items: center;
   position: relative;
 }
-.edit-order-pop-container-left h3{
-
+.edit-order-pop-container-left h3 {
   margin-bottom: 20px;
   margin-top: 20px;
-
 }
-.edit-order-pop-container-left::after{
-
-  content: '';
+.edit-order-pop-container-left::after {
+  content: "";
   position: absolute;
   height: 100%;
   width: 1px;
   background-color: #2d2d2d28;
   right: 0;
   top: 0;
-
 }
-.edit-order-pop-container-left-items{
+.edit-order-pop-container-left-items {
   width: 100%;
   height: 100%;
   max-height: 80%;
@@ -1768,10 +1736,9 @@ justify-content: space-evenly;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
-  overflow: auto ;
-
+  overflow: auto;
 }
-.edit-order-pop-container-left-totali{
+.edit-order-pop-container-left-totali {
   width: 100%;
   height: 20%;
   display: flex;
@@ -1779,8 +1746,8 @@ justify-content: space-evenly;
   justify-content: center;
   position: relative;
 }
-.edit-order-pop-container-left-totali::after{
-  content: '';
+.edit-order-pop-container-left-totali::after {
+  content: "";
   position: absolute;
   height: 1px;
   width: 100%;
@@ -1788,7 +1755,7 @@ justify-content: space-evenly;
   left: 0;
   top: 0;
 }
-.edit-order-pop-container-item{
+.edit-order-pop-container-item {
   width: 90%;
   height: 140px;
   background-color: rgb(255, 255, 255);
@@ -1796,27 +1763,26 @@ justify-content: space-evenly;
   display: flex;
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-
 }
 
-.edit-order-pop-container-item-image{
-height: 100%;
+.edit-order-pop-container-item-image {
+  height: 100%;
   width: 25%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.edit-order-pop-container-item-image img{
+.edit-order-pop-container-item-image img {
   height: auto;
   width: 50%;
 }
-.edit-order-pop-cotainer-item-titulli-buttons{
+.edit-order-pop-cotainer-item-titulli-buttons {
   width: 45%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.edit-order-pop-item-titulli{
+.edit-order-pop-item-titulli {
   width: 100%;
   height: 60%;
   display: flex;
@@ -1824,21 +1790,21 @@ height: 100%;
   padding-left: 50px;
   justify-content: space-evenly;
 }
-.edit-order-pop-item-buttons{
+.edit-order-pop-item-buttons {
   width: 100%;
   height: 40%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
-.edit-order-pop-container-item-cmimi{
+.edit-order-pop-container-item-cmimi {
   width: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.edit-order-pop-container-right{
+.edit-order-pop-container-right {
   width: 50%;
   height: 100%;
   display: flex;
@@ -1846,7 +1812,7 @@ height: 100%;
   align-items: center;
   justify-content: space-between;
 }
-.edit-order-pop-container-right-items{
+.edit-order-pop-container-right-items {
   width: 100%;
   max-height: 95%;
   overflow: auto;
@@ -1856,9 +1822,9 @@ height: 100%;
   position: relative;
 }
 
-.edit-order-pop-container-right-items-item{
+.edit-order-pop-container-right-items-item {
   width: 95%;
-  height: 140px ;
+  height: 140px;
   background-color: white;
   margin: 20px 0;
   border-radius: 20px;
@@ -1866,7 +1832,7 @@ height: 100%;
   position: relative;
   display: flex;
 }
-.edit-order-pop-container-right-items-item-image{
+.edit-order-pop-container-right-items-item-image {
   width: 25%;
   height: 100%;
 
@@ -1874,20 +1840,18 @@ height: 100%;
   justify-content: center;
   align-items: center;
 }
-.edit-order-pop-container-right-items-item-image img{
-
+.edit-order-pop-container-right-items-item-image img {
   width: 40%;
   height: auto;
-
 }
-.edit-order-pop-container-right-items-item-titulli-buttons{
+.edit-order-pop-container-right-items-item-titulli-buttons {
   width: 50%;
   height: 100%;
 
   display: flex;
   flex-direction: column;
 }
-.edit-order-pop-container-right-items-item-titulli{
+.edit-order-pop-container-right-items-item-titulli {
   width: 100%;
   height: 50%;
 
@@ -1896,14 +1860,14 @@ height: 100%;
   justify-content: space-evenly;
   padding-left: 10px;
 }
-.edit-order-pop-container-right-items-item-buttons{
+.edit-order-pop-container-right-items-item-buttons {
   width: 100%;
   height: 50%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
-.edit-order-right-items-item-cmimi{
+.edit-order-right-items-item-cmimi {
   width: 25%;
   height: 100%;
   display: flex;
