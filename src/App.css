@@ -1429,17 +1429,14 @@ tr:nth-child(even) {
   width: 40%;
   height: 40px;
 }
-
 .btn-delete-opa:nth-child(1) {
   background-color: green;
   color: white;
 }
-
 .btn-delete-opa:nth-child(2) {
   background-color: red;
   color: white;
 }
-
 .user-details-pop {
   position: fixed;
   width: 100%;
@@ -1471,7 +1468,6 @@ tr:nth-child(even) {
   align-items: center;
   justify-content: space-between;
 }
-
 .user-pop-details-content {
   width: 95%;
   height: 80%;
@@ -1491,7 +1487,6 @@ tr:nth-child(even) {
   justify-content: center;
   align-items: center;
 }
-
 .produkt-edit-pop-opa {
   height: 100%;
   width: 100%;
@@ -1502,7 +1497,6 @@ tr:nth-child(even) {
   top: 0;
   left: 0;
 }
-
 .produkt-edit-pop-container {
   width: 1000px;
   height: 900px;
@@ -1535,7 +1529,6 @@ tr:nth-child(even) {
   align-items: center;
   justify-content: space-around;
 }
-
 .produkt-edit-pop-container-pershkrimi textarea {
   padding-left: 20px;
   padding-top: 20px;
@@ -1544,7 +1537,6 @@ tr:nth-child(even) {
   width: 50%;
   outline: none;
 }
-
 .produkt-edit-pop-container-kategoria {
   width: 100%;
   height: 15%;
@@ -1591,7 +1583,6 @@ tr:nth-child(even) {
   align-items: center;
   justify-content: space-around;
 }
-
 .user-edit-pop {
   position: fixed;
   width: 100%;
@@ -1603,7 +1594,6 @@ tr:nth-child(even) {
   justify-content: center;
   align-items: center;
 }
-
 .user-edit-pop-opa {
   width: 100%;
   height: 100%;
@@ -1670,7 +1660,6 @@ tr:nth-child(even) {
   align-items: center;
   justify-content: space-around;
 }
-
 .user-delete-pop-buttons {
   width: 100%;
   height: 30%;
@@ -1765,7 +1754,6 @@ tr:nth-child(even) {
   box-shadow: 0 2px 7px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
 }
-
 .edit-order-pop-container-item-image {
   height: 100%;
   width: 25%;
@@ -1806,7 +1794,6 @@ tr:nth-child(even) {
   padding-right: 10px;
   padding-top: 5px;
 }
-
 .edit-order-pop-container-right {
   width: 50%;
   height: 100%;
@@ -1823,7 +1810,6 @@ tr:nth-child(even) {
   position: relative;
   flex-wrap: wrap;
 }
-
 .edit-order-pop-container-right-items-item {
   width: 43%;
   height: 400px;
@@ -1958,7 +1944,6 @@ tr:nth-child(even) {
   background-color: black;
   opacity: 0.4;
 }
-
 .shto-attributes-values-pop-container {
   width: 700px;
   height: 400px;
@@ -1978,4 +1963,34 @@ tr:nth-child(even) {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+.see-attr-names-pop{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.see-attr-names-pop-opa{
+  width: 100%;
+  height: 100%;
+  opacity: .4;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+}
+.see-attr-names-pop-container{
+  width: 600px;
+  background-color: white;
+  z-index: 101;
+  border-radius: 15px;
+  box-shadow:  0 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 20px 10px;
+  display: flex;
+  position: relative;
 }

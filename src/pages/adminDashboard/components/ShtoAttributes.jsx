@@ -14,6 +14,10 @@ import axios from "axios";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import Chip from "@material-ui/core/Chip";
+import RemoveRedEyeOutlinedIcon from "@material-ui/icons/RemoveRedEyeOutlined";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import Pagination from "@material-ui/lab/Pagination";
 
 export default function ShtoAttributes() {
   const [shtoAttrPop, showAttrPop] = useState(false);
@@ -24,6 +28,11 @@ export default function ShtoAttributes() {
   const alertContext = useContext(AlertContext);
   const [allAttrNames, setAllAttrNames] = useState([]);
   const [allValueNameAttrAll, setValueNameAttrAll] = useState([]);
+  const [seeAttrNames, showAllAttrNames] = useState(false);
+  const [itemPage, setItempage] = useState(5);
+  const [page, setPage] = useState(1);
+  const start = (page - 1) * itemPage;
+  const end = page * itemPage;
 
   useEffect(() => {
     axios
@@ -42,8 +51,82 @@ export default function ShtoAttributes() {
       });
   }, []);
 
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
   return (
     <>
+      {seeAttrNames && (
+        <div className="see-attr-names-pop">
+          <div
+            className="see-attr-names-pop-opa"
+            onClick={() => showAllAttrNames(false)}
+          ></div>
+          <div className="see-attr-names-pop-container">
+            <CloseOutlinedIcon
+              style={{
+                top: "5px",
+                right: "5px",
+                cursor: "pointer",
+                position: "absolute",
+              }}
+              onClick={() => showAllAttrNames(false)}
+            />
+
+            {allAttrNames.length > 0 ? (
+              <>
+                {allAttrNames.map((attr) => (
+                  <Chip
+                    style={{ marginRight: "20px" }}
+                    variant="outlined"
+                    color="primary"
+                    label={attr.name}
+                    size="medium"
+                    clickable
+                    onDelete={() => {
+                      axios
+                        .post(
+                          "https://192.168.88.250/demo_react_server/api/config/delete_attr.php",
+                          { id: attr.id_name }
+                        )
+                        .then((res) => {
+                          if (res.data.status === 1) {
+                            axios
+                              .get(
+                                "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
+                              )
+                              .then((res) => {
+                                setAllAttrNames(res.data);
+                              });
+                            axios
+                              .get(
+                                "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
+                              )
+                              .then((res) => {
+                                setValueNameAttrAll(res.data);
+                              });
+                            alertContext.setAlert(
+                              `${res.data.message}`,
+                              "success"
+                            );
+                          } else {
+                            alertContext.setAlert(
+                              `${res.data.message}`,
+                              "error"
+                            );
+                          }
+                        });
+                    }}
+                  />
+                ))}
+              </>
+            ) : (
+              <p>Ska atribute</p>
+            )}
+          </div>
+        </div>
+      )}
+
       {shtoValueAttrPop && (
         <div className="shto-attributes-values-pop">
           <div
@@ -97,9 +180,13 @@ export default function ShtoAttributes() {
                         alertContext.setAlert(`${res.data.message}`, "success");
                         getAttrFromSelect("");
                         setAttrNameValue("");
-                        axios.get(
-                          "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
-                        );
+                        axios
+                          .get(
+                            "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
+                          )
+                          .then((res) => {
+                            setValueNameAttrAll(res.data);
+                          });
                       } else {
                         alertContext.setAlert(`${res.data.message}`, "error");
                       }
@@ -178,9 +265,13 @@ export default function ShtoAttributes() {
                           `${res.data.messagge}`,
                           "success"
                         );
-                        axios.get(
-                          "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
-                        );
+                        axios
+                          .get(
+                            "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
+                          )
+                          .then((res) => {
+                            setAllAttrNames(res.data);
+                          });
                       } else {
                         alertContext.setAlert(`${res.data.messagge}`, "error");
                       }
@@ -222,12 +313,22 @@ export default function ShtoAttributes() {
           </div>
         </div>
       )}
+
       <div className="shto-attributes">
         <div className="shto-attributes-header">
           <h3>Attributet</h3>
           <div className="shto-attributes-header-buttons">
-              <Button color="primary" variant="outlined" > Shiko atrtibutet </Button>
             <Button
+              startIcon={<RemoveRedEyeOutlinedIcon />}
+              color="primary"
+              variant="outlined"
+              onClick={() => showAllAttrNames(true)}
+            >
+              {" "}
+              Shiko atributet{" "}
+            </Button>
+            <Button
+              startIcon={<AddCircleOutlineOutlinedIcon />}
               color="primary"
               variant="outlined"
               onClick={() => {
@@ -237,6 +338,7 @@ export default function ShtoAttributes() {
               Shto atribut te ri
             </Button>
             <Button
+              startIcon={<AddCircleOutlineOutlinedIcon />}
               color="primary"
               variant="outlined"
               onClick={() => showAttrPopValue(true)}
@@ -255,7 +357,7 @@ export default function ShtoAttributes() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {allValueNameAttrAll.map((attr) => (
+            {allValueNameAttrAll.slice(start, end).map((attr) => (
               <TableRow>
                 <TableCell align="center"> {attr.id} </TableCell>
                 <TableCell align="center"> {attr.name} </TableCell>
@@ -268,6 +370,34 @@ export default function ShtoAttributes() {
             ))}
           </TableBody>
         </Table>
+
+        <div className="pagination">
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <InputLabel style={{ marginRight: "10px" }} id="row">
+              Attribute ne faqe
+            </InputLabel>
+            <Select
+              labelId="row"
+              onChange={(e) => {
+                setItempage(e.target.value);
+              }}
+              value={itemPage}
+            >
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={8}>8</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={15}>15</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+            </Select>
+          </div>
+          <Pagination
+            count={Math.ceil(allValueNameAttrAll.length / itemPage)}
+            color="primary"
+            page={page}
+            size="large"
+            onChange={handleChange}
+          />
+        </div>
       </div>
     </>
   );

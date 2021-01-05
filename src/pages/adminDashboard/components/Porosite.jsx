@@ -30,7 +30,7 @@ export default function Porosite() {
   const { porosite, orderDetails, produktet } = depoContext;
   const totali = orderDetails.map((order) => order.totali);
   const orderDetailsProduktID = orderDetails.map((order) => order.produkt_id);
-  const orderDetailsID = orderDetails.map(oder => oder.ID)
+  const orderDetailsID = orderDetails.map((oder) => oder.ID);
   const [editOrderPop, setEditOrderPop] = useState(false);
   const [orderDetailss, showOrderDetails] = useState(false);
   const [deletePop, showDeletePop] = useState(false);
@@ -263,7 +263,10 @@ export default function Porosite() {
                             color="primary"
                             variant="contained"
                             onClick={() => {
-                              depoContext.addProductToOrder(produkt,orderDetailsID[0]);
+                              depoContext.addProductToOrder(
+                                produkt,
+                                orderDetailsID[0]
+                              );
                             }}
                           >
                             {" "}
