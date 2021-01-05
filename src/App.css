@@ -13,28 +13,6 @@ body {
 tr:nth-child(even) {
   background-color: #fcfcfc;
 }
-/* ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-/* 
-/* Track */
-/* ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgb(0, 0, 0); 
-  border-radius: 10px;
-} */
-
-/* Handle */
-/* ::-webkit-scrollbar-thumb {
-  background: rgb(0, 174, 255); 
-  border-radius: 10px;
-} */
-
-/* Handle on hover */
-/* ::-webkit-scrollbar-thumb:hover {
-  background: #0048b3; 
-}  */
-
 .App {
   height: 90vh;
   width: 100%;
@@ -1896,4 +1874,108 @@ tr:nth-child(even) {
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
+}
+.shto-attributes {
+  width: 98%;
+  margin: 0 auto;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+.shto-attributes-header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+}
+.shto-attributes-header-buttons {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.shto-attributes-pop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.shto-attributes-pop-opa {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background-color: black;
+  top: 0;
+  left: 0;
+}
+.shto-attributes-pop-container {
+  width: 600px;
+  height: 300px;
+  z-index: 101;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.shto-attributes-pop-container-buttons {
+  width: 100%;
+  height: 80px;
+  justify-self: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.shto-attributes-values-pop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.shto-attributes-values-pop-opa {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.4;
+}
+
+.shto-attributes-values-pop-container {
+  width: 700px;
+  height: 400px;
+  background-color: white;
+  z-index: 101;
+  border-radius: 20px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0px;
+  justify-content: space-around;
+}
+.shto-attributes-values-pop-conatainer-buttons {
+  width: 50%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }

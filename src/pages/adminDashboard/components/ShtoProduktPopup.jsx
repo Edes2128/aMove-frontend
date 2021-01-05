@@ -27,8 +27,10 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [masat, setMasat] = useState([]);
   const [image, setImage] = useState("");
   const [file, setFile] = useState("");
+  const [productAttributes,setProductAtrributes] = useState([]);
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
+
 
   const submit = (e) => {
     e.preventDefault();
