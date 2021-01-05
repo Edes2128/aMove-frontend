@@ -18,6 +18,8 @@ import Chip from "@material-ui/core/Chip";
 import RemoveRedEyeOutlinedIcon from "@material-ui/icons/RemoveRedEyeOutlined";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import Pagination from "@material-ui/lab/Pagination";
+import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
+import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 
 export default function ShtoAttributes() {
   const [shtoAttrPop, showAttrPop] = useState(false);
@@ -33,6 +35,32 @@ export default function ShtoAttributes() {
   const [page, setPage] = useState(1);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
+  const [propertyName, setProperty] = useState({
+    key: "id",
+    direction: "descending",
+  });
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (
+      propertyName &&
+      propertyName.key === key &&
+      propertyName.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setProperty({ key, direction });
+  };
+  if (propertyName !== null) {
+    allValueNameAttrAll.sort((a, b) => {
+      if (a[propertyName.key] < b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? -1 : 1;
+      }
+      if (a[propertyName.key] > b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+  }
 
   useEffect(() => {
     axios
@@ -350,9 +378,39 @@ export default function ShtoAttributes() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align="center">ID</TableCell>
-              <TableCell align="center">Emri</TableCell>
-              <TableCell align="center">Vlera</TableCell>
+              <TableCell align="center" onClick={() => requestSort("id")}>
+                ID
+                {propertyName.key === "id" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "id" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell align="center" onClick={() => requestSort("name")}>
+                Emri
+                {propertyName.key === "name" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "name" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
+              <TableCell align="center" onClick={() => requestSort("value")}>
+                Vlera
+                {propertyName.key === "value" &&
+                  propertyName.direction === "ascending" && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+                {propertyName.key === "value" &&
+                  propertyName.direction === "descending" && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  )}
+              </TableCell>
               <TableCell align="center">Veprimet</TableCell>
             </TableRow>
           </TableHead>
