@@ -9,6 +9,8 @@ import {
   GET_ALL_PRODUCTS,
   GET_ORDER_DETAILS,
   EMPTY_ORDER_DETAILS,
+  GET_ATTR_NAMES,
+  GET_ATTR_VALUES,
 } from "./types";
 
 export default function DepoState({ children }) {
@@ -18,6 +20,8 @@ export default function DepoState({ children }) {
     produktet: [],
     porosite: [],
     orderDetails: [],
+    attrNames: [],
+    attrValues: [],
   };
 
   const [state, dispatch] = useReducer(DepoReducer, initialState);
@@ -134,19 +138,36 @@ export default function DepoState({ children }) {
     setTimeout(() => getAllProducts(), 100);
   };
 
-  const addProductToOrder = async (data,orderID) =>{
-
+  const addProductToOrder = async (data, orderID) => {
     const payload = {
-
-      cmimi : data.cmimi,
-      produktID :data.id
-
-    }
-
-    await axios.post(`https://192.168.88.250/demo_react_server/api/config/add_product_to_order.php?order_id=${orderID}`,payload)
-
+      cmimi: data.cmimi,
+      produktID: data.id,
+    };
+    await axios.post(
+      `https://192.168.88.250/demo_react_server/api/config/add_product_to_order.php?order_id=${orderID}`,
+      payload
+    );
     setTimeout(() => getAllOrders(), 100);
     setTimeout(() => getAllProducts(), 100);
+  };
+
+  const getAttrNames = async () => {
+    const res = await axios.get(
+      "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
+    );
+    dispatch({
+      type: GET_ATTR_NAMES,
+      payload: res.data,
+    });
+  };
+
+  const getAttrValues = async () => {
+
+      const res = await axios.get('https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php');
+      dispatch({
+        type : GET_ATTR_VALUES,
+        payload: res.data
+      })
   }
 
   return (
@@ -157,6 +178,8 @@ export default function DepoState({ children }) {
         produktet: state.produktet,
         porosite: state.porosite,
         orderDetails: state.orderDetails,
+        attrNames: state.attrNames,
+        attrValues: state.attrValues,
         getUser,
         getAllClients,
         getAllProducts,
@@ -169,7 +192,9 @@ export default function DepoState({ children }) {
         emptyOrderDetails,
         decreaseOrderQty,
         deleteProductFromOrder,
-        addProductToOrder
+        addProductToOrder,
+        getAttrNames,
+        getAttrValues,
       }}
     >
       {children}

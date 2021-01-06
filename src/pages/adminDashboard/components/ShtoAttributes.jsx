@@ -10,6 +10,7 @@ import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined"
 import TextField from "@material-ui/core/TextField";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import AlertContext from "../../../context/alertContext/AlertContext";
+import DepoContext from "../../../context/depoContext/DepoContext";
 import axios from "axios";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -28,17 +29,23 @@ export default function ShtoAttributes() {
   const [attrFromSelect, getAttrFromSelect] = useState("");
   const [attrnameValue, setAttrNameValue] = useState("");
   const alertContext = useContext(AlertContext);
-  const [allAttrNames, setAllAttrNames] = useState([]);
-  const [allValueNameAttrAll, setValueNameAttrAll] = useState([]);
+  const depoContext = useContext(DepoContext);
+  const { attrNames, attrValues } = depoContext;
   const [seeAttrNames, showAllAttrNames] = useState(false);
   const [itemPage, setItempage] = useState(5);
+  const [editPop, showEditPop] = useState(false);
   const [page, setPage] = useState(1);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
+  const [editValue, setEditvalue] = useState("");
+  const [editID, setEditID] = useState("");
+  const [deletePop, showDeletePop] = useState(false);
+  const [deleteID, setDeleteID] = useState("");
   const [propertyName, setProperty] = useState({
     key: "id",
     direction: "descending",
   });
+
   const requestSort = (key) => {
     let direction = "ascending";
     if (
@@ -51,7 +58,7 @@ export default function ShtoAttributes() {
     setProperty({ key, direction });
   };
   if (propertyName !== null) {
-    allValueNameAttrAll.sort((a, b) => {
+    attrValues.sort((a, b) => {
       if (a[propertyName.key] < b[propertyName.key]) {
         return propertyName.direction === "ascending" ? -1 : 1;
       }
@@ -63,20 +70,8 @@ export default function ShtoAttributes() {
   }
 
   useEffect(() => {
-    axios
-      .get(
-        "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
-      )
-      .then((res) => {
-        setAllAttrNames(res.data);
-      });
-    axios
-      .get(
-        "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
-      )
-      .then((res) => {
-        setValueNameAttrAll(res.data);
-      });
+    depoContext.getAttrNames();
+    depoContext.getAttrValues();
   }, []);
 
   const handleChange = (event, value) => {
@@ -84,6 +79,119 @@ export default function ShtoAttributes() {
   };
   return (
     <>
+      {deletePop && (
+        <div className="delete-attr-pop">
+          <div
+            className="delete-attr-pop-opa"
+            onClick={() => showDeletePop(false)}
+          ></div>
+
+          <div className="delete-attr-pop-container">
+            <CloseOutlinedIcon
+              style={{
+                alignSelf: "flex-end",
+                marginRight: "20px",
+                cursor: "pointer",
+              }}
+              onClick={() => showDeletePop(false)}
+            />
+            <p>Jeni te sigurt qe deshironi ta fshini?</p>
+            <div className="delete-attr-pop-container-buttons">
+              <Button
+                color="primary"
+                variant="outlined"
+                size="large"
+                onClick={() => {
+                  axios
+                    .post(
+                      "https://192.168.88.250/demo_react_server/api/config/delete_attr_value.php",
+                      { id: deleteID }
+                    )
+                    .then((res) => {
+                      if (res.data.status === 1) {
+                        alertContext.setAlert(`${res.data.message}`, "success");
+                        depoContext.getAttrValues();
+                        showDeletePop(false);
+                      } else {
+                        alertContext.setAlert(`${res.data.message}`, "error");
+                      }
+                    });
+                }}
+              >
+                PO
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                size="large"
+                onClick={() => showDeletePop(false)}
+              >
+                JO
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {editPop && (
+        <div className="edit-attr-pop">
+          <div
+            className="edit-attr-pop-opa"
+            onClick={() => showEditPop(false)}
+          ></div>
+          <div className="edit-attr-pop-container">
+            <CloseOutlinedIcon
+              style={{
+                alignSelf: "flex-end",
+                marginRight: "20px",
+                cursor: "pointer",
+              }}
+              onClick={() => showEditPop(false)}
+            />
+
+            <TextField
+              value={editValue}
+              variant="outlined"
+              onChange={(e) => setEditvalue(e.target.value)}
+              style={{ width: "50%" }}
+              type="text"
+            />
+
+            <div className="edit-attr-pop-container-buttons">
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => {
+                  axios
+                    .post(
+                      "https://192.168.88.250/demo_react_server/api/config/edit_attr_value.php",
+                      { name_id: editID, value: editValue }
+                    )
+                    .then((res) => {
+                      if (res.data.status === 1) {
+                        alertContext.setAlert(`${res.data.message}`, "success");
+                        showEditPop(false);
+                        depoContext.getAttrValues();
+                      } else {
+                        alertContext.setAlert(`${res.data.message}`, "error");
+                      }
+                    });
+                }}
+              >
+                Ruaj
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => showEditPop(false)}
+              >
+                Anullo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {seeAttrNames && (
         <div className="see-attr-names-pop">
           <div
@@ -101,9 +209,9 @@ export default function ShtoAttributes() {
               onClick={() => showAllAttrNames(false)}
             />
 
-            {allAttrNames.length > 0 ? (
+            {attrNames.length > 0 ? (
               <>
-                {allAttrNames.map((attr) => (
+                {attrNames.map((attr) => (
                   <Chip
                     style={{ marginRight: "20px" }}
                     variant="outlined"
@@ -119,20 +227,8 @@ export default function ShtoAttributes() {
                         )
                         .then((res) => {
                           if (res.data.status === 1) {
-                            axios
-                              .get(
-                                "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
-                              )
-                              .then((res) => {
-                                setAllAttrNames(res.data);
-                              });
-                            axios
-                              .get(
-                                "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
-                              )
-                              .then((res) => {
-                                setValueNameAttrAll(res.data);
-                              });
+                            depoContext.getAttrValues();
+                            depoContext.getAttrNames();
                             alertContext.setAlert(
                               `${res.data.message}`,
                               "success"
@@ -181,7 +277,7 @@ export default function ShtoAttributes() {
               >
                 <MenuItem value="None"></MenuItem>
 
-                {allAttrNames.map((attr) => (
+                {attrNames.map((attr) => (
                   <MenuItem value={attr.id_name}> {attr.name} </MenuItem>
                 ))}
               </Select>
@@ -208,13 +304,7 @@ export default function ShtoAttributes() {
                         alertContext.setAlert(`${res.data.message}`, "success");
                         getAttrFromSelect("");
                         setAttrNameValue("");
-                        axios
-                          .get(
-                            "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
-                          )
-                          .then((res) => {
-                            setValueNameAttrAll(res.data);
-                          });
+                        depoContext.getAttrValues();
                       } else {
                         alertContext.setAlert(`${res.data.message}`, "error");
                       }
@@ -293,13 +383,7 @@ export default function ShtoAttributes() {
                           `${res.data.messagge}`,
                           "success"
                         );
-                        axios
-                          .get(
-                            "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
-                          )
-                          .then((res) => {
-                            setAllAttrNames(res.data);
-                          });
+                        depoContext.getAttrNames();
                       } else {
                         alertContext.setAlert(`${res.data.messagge}`, "error");
                       }
@@ -324,9 +408,7 @@ export default function ShtoAttributes() {
                           `${res.data.messagge}`,
                           "success"
                         );
-                        axios.get(
-                          "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
-                        );
+                        depoContext.getAttrNames();
                         showAttrPop(false);
                       } else {
                         alertContext.setAlert(`${res.data.messagge}`, "error");
@@ -415,14 +497,27 @@ export default function ShtoAttributes() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {allValueNameAttrAll.slice(start, end).map((attr) => (
+            {attrValues.slice(start, end).map((attr) => (
               <TableRow>
                 <TableCell align="center"> {attr.id} </TableCell>
                 <TableCell align="center"> {attr.name} </TableCell>
                 <TableCell align="center"> {attr.value} </TableCell>
                 <TableCell align="center">
-                  <EditOutlinedIcon />
-                  <DeleteOutlineOutlinedIcon />
+                  <EditOutlinedIcon
+                    onClick={() => {
+                      showEditPop(true);
+                      setEditvalue(attr.value);
+                      setEditID(attr.id);
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                  <DeleteOutlineOutlinedIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      showDeletePop(true);
+                      setDeleteID(attr.id);
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -449,7 +544,7 @@ export default function ShtoAttributes() {
             </Select>
           </div>
           <Pagination
-            count={Math.ceil(allValueNameAttrAll.length / itemPage)}
+            count={Math.ceil(attrValues.length / itemPage)}
             color="primary"
             page={page}
             size="large"

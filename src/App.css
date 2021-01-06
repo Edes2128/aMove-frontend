@@ -1994,3 +1994,82 @@ tr:nth-child(even) {
   display: flex;
   position: relative;
 }
+.edit-attr-pop{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.edit-attr-pop-opa{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  opacity: .4;
+  left: 0;
+  top: 0;
+  background-color: black;
+}
+.edit-attr-pop-container{
+  z-index: 101;
+  width: 500px;
+  height: 300px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.edit-attr-pop-container-buttons{
+  width: 90%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.delete-attr-pop{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.delete-attr-pop-opa{
+  width: 100%;
+  height: 100%;
+  opacity: .4;
+  top: 0;
+  left: 0;
+  background-color: black;
+  position: fixed;
+}
+.delete-attr-pop-container{
+
+  width: 500px;
+  height: 250px;
+  background-color: white;
+  z-index: 101;
+  border-radius: 20px;
+  box-shadow:  0 0px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.delete-attr-pop-container-buttons{
+  width: 100%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
