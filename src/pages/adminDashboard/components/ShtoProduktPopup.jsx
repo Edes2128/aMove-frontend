@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
@@ -14,6 +14,11 @@ import axios from "axios";
 import DepoContext from "../../../context/depoContext/DepoContext";
 import AlertContext from "../../../context/alertContext/AlertContext";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Divider from '@material-ui/core/Divider';
 
 export default function ShtoProduktPopup({ closePopup }) {
   const [titulli, setTitulli] = useState("");
@@ -23,14 +28,16 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [cmimi, setCmimi] = useState(0);
   const [sasia, setSasia] = useState(0);
   const [njesia, setNjesia] = useState("");
-  const [ngjyrat, setNgjyrat] = useState([]);
-  const [masat, setMasat] = useState([]);
   const [image, setImage] = useState("");
   const [file, setFile] = useState("");
-  const [productAttributes,setProductAtrributes] = useState([]);
+  const [productAttributes, setProductAtrributes] = useState([]);
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
-
+  const { attrNames, attrValues } = depoContext;
+  useEffect(() => {
+    depoContext.getAttrNames();
+    depoContext.getAttrValues();
+  }, []);
 
   const submit = (e) => {
     e.preventDefault();
@@ -43,8 +50,6 @@ export default function ShtoProduktPopup({ closePopup }) {
     fd.append("cmimi", cmimi);
     fd.append("sasia", sasia);
     fd.append("njesia", njesia);
-    fd.append("ngjyrat", ngjyrat);
-    fd.append("masat", masat);
     fd.append("image", image);
 
     axios
@@ -68,17 +73,9 @@ export default function ShtoProduktPopup({ closePopup }) {
 
   const addNgjyrat = (e) => {
     if (e.target.checked) {
-      setNgjyrat(ngjyrat.concat(e.target.value));
+      setProductAtrributes(productAttributes.concat(e.target.value));
     } else {
-      setNgjyrat(ngjyrat.filter((ngjyra) => ngjyra !== e.target.value));
-    }
-  };
-
-  const addMasat = (e) => {
-    if (e.target.checked) {
-      setMasat(masat.concat(e.target.value));
-    } else {
-      setMasat(masat.filter((masa) => masa !== e.target.value));
+      setProductAtrributes(productAttributes.filter((attribute) => attribute !== e.target.value));
     }
   };
 
@@ -139,7 +136,7 @@ export default function ShtoProduktPopup({ closePopup }) {
                 ></textarea>
               </div>
               <div
-              className={image === "" ? "image" : "image outlinestyle-none"}
+                className={image === "" ? "image" : "image outlinestyle-none"}
               >
                 {image === "" ? (
                   <>
@@ -234,103 +231,90 @@ export default function ShtoProduktPopup({ closePopup }) {
             <div className="atribute-tjera">
               <h3 style={{ marginBottom: "10px" }}>Atribute te tjera</h3>
               <div className="atributes-title">
-                <p>
-                  {" "}
-                  <AddIcon style={{ fontSize: "15px" }} /> Mundesia e ngjyrave
-                </p>
-                <p>
-                  {" "}
-                  <AddIcon style={{ fontSize: "15px" }} /> Mundesia e masave
-                </p>
+                {attrNames.map((attr) => (
+                  <p key={attr.id_name}>
+                    {" "}
+                    <AddIcon style={{ fontSize: "15px" }} /> Mundesia e{" "}
+                    {attr.name}
+                  </p>
+                ))}
               </div>
 
               <div className="ngjyrat-masat">
-                <div className="ngjyrat">
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        name="ngjyrat"
-                        defaultValue="bardhe"
-                        value={"bardhe"}
-                        onChange={addNgjyrat}
-                        color="primary"
-                      />
-                    }
-                    label="E Bardhe"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        name="ngjyrat"
-                        defaultValue="kuqe"
-                        value={"kuqe"}
-                        onChange={addNgjyrat}
-                        color="primary"
-                      />
-                    }
-                    label="E Kuqe"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        name="ngjyrat"
-                        defaultValue="zeze"
-                        value={"zeze"}
-                        onChange={addNgjyrat}
-                        color="primary"
-                      />
-                    }
-                    label="E Zeze"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        name="ngjyrat"
-                        defaultValue="blu"
-                        value={"blu"}
-                        onChange={addNgjyrat}
-                        color="primary"
-                      />
-                    }
-                    label="Blu"
-                  />
-                </div>
-                <div className="masat">
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        onChange={addMasat}
-                        name="vogel"
-                        value={"vogel"}
-                        color="primary"
-                      />
-                    }
-                    label="E Vogel"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        onChange={addMasat}
-                        name="mesme"
-                        value={"mesme"}
-                        color="primary"
-                      />
-                    }
-                    label="E Mesme"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        onChange={addMasat}
-                        name="madhe"
-                        value={"madhe"}
-                        color="primary"
-                      />
-                    }
-                    label="E Madhe"
-                  />
-                </div>
+                {attrNames.map((attr) => (
+                  <div className="ngjyrat" key={attr.name}>
+                    {attrValues
+                      .filter((attrValue) => attrValue.name_id === attr.id_name)
+                      .map((newValues) => (
+                        <FormControlLabel
+                        key={newValues.id}
+                          control={
+                            <Checkbox
+                              name={newValues.value}
+                              defaultValue={newValues.value}
+                              value={newValues.value}
+                              onChange={addNgjyrat}
+                              color="primary"
+                            />
+                          }
+                          label={newValues.value}
+                        />
+                      ))}
+                  </div>
+                ))}
               </div>
+            </div>
+            <div className="extra-attr-price">
+
+                          {attrNames.map(attrName => (
+                            <div className="extra-attr-price-names">
+                              <p>{attrName.name}</p>
+                              {attrValues.filter(attrValue => attrValue.name_id === attrName.id_name).map(newAttrValue => (
+
+                      <Accordion  style={{backgroundColor:'#ededed'}} >
+                      <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                      >
+                      {newAttrValue.value}
+                      </AccordionSummary>
+                      <Divider />
+                      <AccordionDetails className="accordion-details" > 
+                        
+                        <TextField  label="SKU" variant="outlined" />
+                        <TextField  label="Cmimi" variant="outlined" />
+                        <TextField  label="Sasia" variant="outlined" />
+                        <FormControl variant="outlined">
+                        <InputLabel htmlFor="njesia-label">Njesia</InputLabel>
+                        <Select
+                          value={njesia}
+                          onChange={(e) => setNjesia(e.target.value)}
+                          style={{ width: "150px" }}
+                          label="Njesia"
+                          inputProps={{
+                            name: "njesia",
+                            id: "njesia-label",
+                          }}
+                        >
+                          <MenuItem value="cop">Cop</MenuItem>
+                          <MenuItem value="kuti">Kuti</MenuItem>
+                          <MenuItem value="pako">Pako</MenuItem>
+                        </Select>
+                      </FormControl>
+
+                      </AccordionDetails>
+                        
+                        </Accordion>    
+
+
+                              ))}
+                            </div>
+                          ))}
+
+
+    
+
             </div>
             <div className="submit-cancel">
               <Button

@@ -44,7 +44,7 @@ export default function Produkte() {
   const [deletedImage, setDeletedImage] = useState(false);
   const [kategoria, setKategoria] = useState("");
   const [produktDetailsPop, showPorduktDetailsPop] = useState(false);
-  const [produktPopup, showProduktPopup] = useState(false);
+  const [produktPopup, showProduktPopup] = useState(true);
   const [page, setPage] = useState(1);
   const [idDelete, setDeleteId] = useState("");
   const [itemPage, setItempage] = useState(5);
@@ -624,7 +624,7 @@ export default function Produkte() {
                 <TableCell>{produkt.cmimi}</TableCell>
                 <TableCell>
                   <Button
-                    size="medium"
+                    size="small"
                     style={{
                       backgroundColor: renderButtonColorsStatus(produkt.status),
                       color: "white",
