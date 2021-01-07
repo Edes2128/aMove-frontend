@@ -14,11 +14,11 @@ import axios from "axios";
 import DepoContext from "../../../context/depoContext/DepoContext";
 import AlertContext from "../../../context/alertContext/AlertContext";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Divider from '@material-ui/core/Divider';
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Divider from "@material-ui/core/Divider";
 
 export default function ShtoProduktPopup({ closePopup }) {
   const [titulli, setTitulli] = useState("");
@@ -31,6 +31,7 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [image, setImage] = useState("");
   const [file, setFile] = useState("");
   const [productAttributes, setProductAtrributes] = useState([]);
+  const [productAttributesNames, setProductAtrributesNames] = useState([]);
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
   const { attrNames, attrValues } = depoContext;
@@ -38,6 +39,23 @@ export default function ShtoProduktPopup({ closePopup }) {
     depoContext.getAttrNames();
     depoContext.getAttrValues();
   }, []);
+
+  const ArrayofObject = []
+
+
+    attrValues.map(attr => {
+        let data = {
+              id : attr.id,
+              sku : "",
+              cmimi : "",
+              sasia : "",
+              njesia : ""
+
+          }
+          ArrayofObject.push(data)
+    })
+
+    console.log(ArrayofObject)
 
   const submit = (e) => {
     e.preventDefault();
@@ -75,9 +93,23 @@ export default function ShtoProduktPopup({ closePopup }) {
     if (e.target.checked) {
       setProductAtrributes(productAttributes.concat(e.target.value));
     } else {
-      setProductAtrributes(productAttributes.filter((attribute) => attribute !== e.target.value));
+      setProductAtrributes(
+        productAttributes.filter((attribute) => attribute !== e.target.value)
+      );
     }
   };
+  const addNames = (e) => {
+    if (e.target.checked) {
+      setProductAtrributesNames(productAttributesNames.concat(e.target.name));
+    } else {
+      setProductAtrributesNames(
+        productAttributesNames.filter(
+          (attribute) => attribute !== e.target.name
+        )
+      );
+    }
+  };
+
 
   return (
     <>
@@ -103,7 +135,10 @@ export default function ShtoProduktPopup({ closePopup }) {
               }}
             />
           </div>
-          <form className="form" onSubmit={submit}>
+          <form className="form" onSubmit={(e) =>{
+
+            console.log(e.target)
+          }}>
             <div className="form-titulli-sku">
               <div className="titulli">
                 <TextField
@@ -247,13 +282,15 @@ export default function ShtoProduktPopup({ closePopup }) {
                       .filter((attrValue) => attrValue.name_id === attr.id_name)
                       .map((newValues) => (
                         <FormControlLabel
-                        key={newValues.id}
+                          key={newValues.id}
                           control={
                             <Checkbox
-                              name={newValues.value}
+                              id={newValues.id}
+                              name={newValues.name}
                               defaultValue={newValues.value}
                               value={newValues.value}
                               onChange={addNgjyrat}
+                              onClick={addNames}
                               color="primary"
                             />
                           }
@@ -265,56 +302,76 @@ export default function ShtoProduktPopup({ closePopup }) {
               </div>
             </div>
             <div className="extra-attr-price">
-
-                          {attrNames.map(attrName => (
-                            <div className="extra-attr-price-names">
-                              <p>{attrName.name}</p>
-                              {attrValues.filter(attrValue => attrValue.name_id === attrName.id_name).map(newAttrValue => (
-
-                      <Accordion  style={{backgroundColor:'#ededed'}} >
-                      <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1a-content"
-                      id="panel1a-header"
+              {attrNames.map((attrName) => (
+                <div
+                  className="extra-attr-price-names"
+                  style={{
+                    display:
+                      productAttributesNames.some(
+                        (attr) => attr === attrName.name
+                      ) === true
+                        ? ""
+                        : "none",
+                  }}
+                >
+                  <p>{attrName.name}</p>
+                  {attrValues
+                    .filter(
+                      (attrValue) => attrValue.name_id === attrName.id_name
+                    )
+                    .map((newAttrValue) => (
+                      <Accordion
+                        style={{
+                          backgroundColor: "#ededed",
+                          display:
+                            productAttributes.some(
+                              (attr) => attr === newAttrValue.value
+                            ) === true
+                              ? ""
+                              : "none",
+                        }}
                       >
-                      {newAttrValue.value}
-                      </AccordionSummary>
-                      <Divider />
-                      <AccordionDetails className="accordion-details" > 
-                        
-                        <TextField  label="SKU" variant="outlined" />
-                        <TextField  label="Cmimi" variant="outlined" />
-                        <TextField  label="Sasia" variant="outlined" />
-                        <FormControl variant="outlined">
-                        <InputLabel htmlFor="njesia-label">Njesia</InputLabel>
-                        <Select
-                          value={njesia}
-                          onChange={(e) => setNjesia(e.target.value)}
-                          style={{ width: "150px" }}
-                          label="Njesia"
-                          inputProps={{
-                            name: "njesia",
-                            id: "njesia-label",
-                          }}
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls="panel1a-content"
+                          id="panel1a-header"
                         >
-                          <MenuItem value="cop">Cop</MenuItem>
-                          <MenuItem value="kuti">Kuti</MenuItem>
-                          <MenuItem value="pako">Pako</MenuItem>
-                        </Select>
-                      </FormControl>
-
-                      </AccordionDetails>
-                        
-                        </Accordion>    
-
-
-                              ))}
-                            </div>
-                          ))}
-
-
-    
-
+                          {newAttrValue.value}
+                        </AccordionSummary>
+                        <Divider />
+                        <AccordionDetails className="accordion-details">
+                      
+                          {ArrayofObject.filter(arrObject => arrObject.id === newAttrValue.id).map(values => (
+    <>
+                        <TextField label="SKU" variant="outlined" value={values.sku} />
+                        <TextField label="Cmimi" variant="outlined" value={values.cmimi}  />
+                        <TextField label="Sasia" variant="outlined" value={values.sasia} />
+                        <FormControl variant="outlined">
+                          <InputLabel htmlFor={`${newAttrValue.value}-njesia`}>
+                            Njesia
+                          </InputLabel>
+                          <Select
+                            value={values.njesia}
+                            style={{ width: "150px" }}
+                            label={`${newAttrValue.value}-njesia`}
+                            inputProps={{
+                              name: `${newAttrValue.value}-njesia`,
+                              id: `${newAttrValue.value}-njesia`,
+                            }}
+                          >
+                            <MenuItem value="cop">Cop</MenuItem>
+                            <MenuItem value="kuti">Kuti</MenuItem>
+                            <MenuItem value="pako">Pako</MenuItem>
+                          </Select>
+                        </FormControl>
+  </>
+                          )) }
+        
+                        </AccordionDetails>
+                      </Accordion>
+                    ))}
+                </div>
+              ))}
             </div>
             <div className="submit-cancel">
               <Button
