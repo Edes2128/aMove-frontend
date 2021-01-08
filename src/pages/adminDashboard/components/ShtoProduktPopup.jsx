@@ -32,6 +32,9 @@ export default function ShtoProduktPopup({ closePopup }) {
   const [file, setFile] = useState("");
   const [productAttributes, setProductAtrributes] = useState([]);
   const [productAttributesNames, setProductAtrributesNames] = useState([]);
+  const [productAttributesValuesIDS, setProductAttributesValuesIDS] = useState(
+    []
+  );
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
   const { attrNames, attrValues } = depoContext;
@@ -40,22 +43,22 @@ export default function ShtoProduktPopup({ closePopup }) {
     depoContext.getAttrValues();
   }, []);
 
-  const ArrayofObject = []
+  const ArrayofObject = [];
 
+  attrValues.map((attr) => {
+    let data = {
+      id: attr.id,
+      sku: "",
+      cmimi: 0,
+      sasia: 0,
+    };
+    ArrayofObject.push(data);
+  });
 
-    attrValues.map(attr => {
-        let data = {
-              id : attr.id,
-              sku : "",
-              cmimi : "",
-              sasia : "",
-              njesia : ""
-
-          }
-          ArrayofObject.push(data)
-    })
-
-    console.log(ArrayofObject)
+  const arrayOfObject2 = productAttributesValuesIDS.map((id) =>
+    ArrayofObject.filter((arrayObj) => arrayObj.id == id)
+  );
+  const arrayOfObject3 = arrayOfObject2.map((array) => array[0]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -69,7 +72,7 @@ export default function ShtoProduktPopup({ closePopup }) {
     fd.append("sasia", sasia);
     fd.append("njesia", njesia);
     fd.append("image", image);
-
+    fd.append("attributes[]", JSON.stringify(arrayOfObject3));
     axios
       .post(
         "https://192.168.88.250/demo_react_server/api/config/shto_produkt.php",
@@ -101,15 +104,32 @@ export default function ShtoProduktPopup({ closePopup }) {
   const addNames = (e) => {
     if (e.target.checked) {
       setProductAtrributesNames(productAttributesNames.concat(e.target.name));
+      setProductAttributesValuesIDS(
+        productAttributesValuesIDS.concat(e.target.id)
+      );
     } else {
       setProductAtrributesNames(
         productAttributesNames.filter(
           (attribute) => attribute !== e.target.name
         )
       );
+      setProductAttributesValuesIDS(
+        productAttributesValuesIDS.filter((attr) => attr !== e.target.id)
+      );
     }
   };
 
+  const addIDS = (e) => {
+    if (e.target.checked) {
+      setProductAttributesValuesIDS(
+        productAttributesValuesIDS.concat(e.target.id)
+      );
+    } else {
+      setProductAttributesValuesIDS(
+        productAttributesValuesIDS.filter((attr) => attr !== e.target.id)
+      );
+    }
+  };
 
   return (
     <>
@@ -135,10 +155,7 @@ export default function ShtoProduktPopup({ closePopup }) {
               }}
             />
           </div>
-          <form className="form" onSubmit={(e) =>{
-
-            console.log(e.target)
-          }}>
+          <form className="form" onSubmit={submit}>
             <div className="form-titulli-sku">
               <div className="titulli">
                 <TextField
@@ -289,8 +306,11 @@ export default function ShtoProduktPopup({ closePopup }) {
                               name={newValues.name}
                               defaultValue={newValues.value}
                               value={newValues.value}
-                              onChange={addNgjyrat}
-                              onClick={addNames}
+                              onChange={(e) => {
+                                addNames(e);
+                                addIDS(e);
+                                addNgjyrat(e);
+                              }}
                               color="primary"
                             />
                           }
@@ -340,33 +360,35 @@ export default function ShtoProduktPopup({ closePopup }) {
                         </AccordionSummary>
                         <Divider />
                         <AccordionDetails className="accordion-details">
-                      
-                          {ArrayofObject.filter(arrObject => arrObject.id === newAttrValue.id).map(values => (
-    <>
-                        <TextField label="SKU" variant="outlined" value={values.sku} />
-                        <TextField label="Cmimi" variant="outlined" value={values.cmimi}  />
-                        <TextField label="Sasia" variant="outlined" value={values.sasia} />
-                        <FormControl variant="outlined">
-                          <InputLabel htmlFor={`${newAttrValue.value}-njesia`}>
-                            Njesia
-                          </InputLabel>
-                          <Select
-                            value={values.njesia}
-                            style={{ width: "150px" }}
-                            label={`${newAttrValue.value}-njesia`}
-                            inputProps={{
-                              name: `${newAttrValue.value}-njesia`,
-                              id: `${newAttrValue.value}-njesia`,
-                            }}
-                          >
-                            <MenuItem value="cop">Cop</MenuItem>
-                            <MenuItem value="kuti">Kuti</MenuItem>
-                            <MenuItem value="pako">Pako</MenuItem>
-                          </Select>
-                        </FormControl>
-  </>
-                          )) }
-        
+                          {ArrayofObject.filter(
+                            (arrObject) => arrObject.id === newAttrValue.id
+                          ).map((values) => (
+                            <>
+                              <TextField
+                                label="SKU"
+                                variant="outlined"
+                                onChange={(e) => {
+                                  values.sku = e.target.value;
+                                }}
+                              />
+                              <TextField
+                                label="Cmimi"
+                                variant="outlined"
+                                type="number"
+                                onChange={(e) => {
+                                  values.cmimi = e.target.value;
+                                }}
+                              />
+                              <TextField
+                                label="Sasia"
+                                variant="outlined"
+                                type="number"
+                                onChange={(e) => {
+                                  values.sasia = e.target.value;
+                                }}
+                              />
+                            </>
+                          ))}
                         </AccordionDetails>
                       </Accordion>
                     ))}

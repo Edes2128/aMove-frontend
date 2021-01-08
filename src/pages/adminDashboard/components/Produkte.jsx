@@ -44,7 +44,7 @@ export default function Produkte() {
   const [deletedImage, setDeletedImage] = useState(false);
   const [kategoria, setKategoria] = useState("");
   const [produktDetailsPop, showPorduktDetailsPop] = useState(false);
-  const [produktPopup, showProduktPopup] = useState(true);
+  const [produktPopup, showProduktPopup] = useState(false);
   const [page, setPage] = useState(1);
   const [idDelete, setDeleteId] = useState("");
   const [itemPage, setItempage] = useState(5);
