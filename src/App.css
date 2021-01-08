@@ -1,17 +1,60 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap");
+@font-face {
+  font-family: "Campton";
+  src: url("/fonts/Campton/Campton-Light.eot");
+  src: url("/fonts/Campton/Campton-Light.eot?#iefix")
+      format("embedded-opentype"),
+    url("/fonts/Campton/Campton-Light.woff2") format("woff2"),
+    url("/fonts/Campton/Campton-Light.woff") format("woff"),
+    url("/fonts/Campton/Campton-Light.ttf") format("truetype"),
+    url("/fonts/Campton/Campton-Light.svg#Campton-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Campton";
+  src: url("/fonts/Campton/Campton-Bold.eot");
+  src: url("/fonts/Campton/Campton-Bold.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/Campton/Campton-Bold.woff2") format("woff2"),
+    url("/fonts/Campton/Campton-Bold.woff") format("woff"),
+    url("/fonts/Campton/Campton-Bold.ttf") format("truetype"),
+    url("/fonts/Campton/Campton-Bold.svg#Campton-Bold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Campton";
+  src: url("/fonts/Campton/Campton-SemiBold.eot");
+  src: url("/fonts/Campton/Campton-SemiBold.eot?#iefix")
+      format("embedded-opentype"),
+    url("/fonts/Campton/Campton-SemiBold.woff2") format("woff2"),
+    url("/fonts/Campton/Campton-SemiBold.woff") format("woff"),
+    url("/fonts/Campton/Campton-SemiBold.ttf") format("truetype"),
+    url("/fonts/Campton/Campton-SemiBold.svg#Campton-SemiBold") format("svg");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 html {
-  font-family: "Poppins", sans-serif;
+  font-family: "Campton", sans-serif;
 }
 body {
   background-color: #ffffff;
 }
 tr:nth-child(even) {
   background-color: #fcfcfc;
+}
+tr {
+  border-radius: 20px !important;
 }
 .App {
   height: 90vh;
@@ -179,7 +222,7 @@ tr:nth-child(even) {
   background-color: white;
   justify-content: space-between;
   padding: 10px;
-  box-shadow:  0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .admin-klient-cat-content {
   display: flex;
@@ -191,7 +234,7 @@ tr:nth-child(even) {
   width: 98%;
   margin: 0 auto;
   background-color: white;
-  box-shadow:  0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .klient {
   display: flex;
@@ -2096,7 +2139,7 @@ tr:nth-child(even) {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  box-shadow:  0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .shto-kategori-produktesh-header {
@@ -2117,7 +2160,6 @@ tr:nth-child(even) {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 .shto-kategori-pop-opa {
   position: fixed;
@@ -2143,6 +2185,85 @@ tr:nth-child(even) {
 }
 .shto-kategori-pop-container-buttons {
   width: 70%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.produkt-kategori-edit-pop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.produkt-kategori-edit-pop-opa {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.4;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+.produkt-kategori-edit-pop-container {
+  z-index: 101;
+  width: 500px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  justify-content: space-around;
+}
+
+.produkt-kategori-edit-pop-container-buttons {
+  width: 60%;
+  height: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.produkt-kategori-delete-pop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.produkt-kategori-delete-pop-opa {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.4;
+  background-color: black;
+}
+.produkt-kategori-delete-pop-container {
+  width: 500px;
+  height: 200px;
+  border-radius: 20px;
+  background-color: white;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.produkt-kategori-delete-pop-container-buttons {
+  width: 60%;
   height: 30%;
   display: flex;
   align-items: center;

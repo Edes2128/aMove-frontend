@@ -22,6 +22,11 @@ import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined"
 
 export default function ShtoKategoriProduktesh() {
   const [shtoKategoriPop, showKategoriPop] = useState(false);
+  const [editKategoriPop, showEditKategoriPop] = useState(false);
+  const [deleteKategoriPop, showDeleteKategoriPop] = useState(false);
+  const [editKategoriName, setEditKategoriName] = useState("");
+  const [editID, setEditID] = useState("");
+  const [deleteID, setDeleteID] = useState("");
   const [kategoriName, setKategoriName] = useState("");
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
@@ -66,11 +71,136 @@ export default function ShtoKategoriProduktesh() {
   };
   return (
     <>
+      {deleteKategoriPop && (
+        <div className="produkt-kategori-delete-pop">
+          <div
+            className="produkt-kategori-delete-pop-opa"
+            onClick={() => {
+              showDeleteKategoriPop(false);
+              setDeleteID("");
+            }}
+          ></div>
+
+          <div className="produkt-kategori-delete-pop-container">
+            <p>Jeni te sigurt qe doni ta fshini?</p>
+            <div className="produkt-kategori-delete-pop-container-buttons">
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  axios
+                    .post(
+                      "https://192.168.88.250/demo_react_server/api/config/delete_categoryProduct.php",
+                      { id: deleteID }
+                    )
+                    .then((res) => {
+                      if (res.data.status === 1) {
+                        alertContext.setAlert(`${res.data.message}`, "success");
+                        showDeleteKategoriPop(false);
+                        setDeleteID("");
+                        depoContext.getCategoryProducts();
+                      } else {
+                        alertContext.setAlert(`${res.data.message}`, "error");
+                      }
+                    });
+                }}
+              >
+                Po
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  showDeleteKategoriPop(false);
+                  setDeleteID("");
+                }}
+              >
+                Jo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {editKategoriPop && (
+        <div className="produkt-kategori-edit-pop">
+          <div
+            className="produkt-kategori-edit-pop-opa"
+            onClick={() => {
+              showEditKategoriPop(false);
+              setEditID("");
+              setEditKategoriName("");
+            }}
+          ></div>
+          <div className="produkt-kategori-edit-pop-container">
+            <CloseOutlinedIcon
+              style={{
+                alignSelf: "flex-end",
+                marginRight: "20px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                showEditKategoriPop(false);
+                setEditID("");
+                setEditKategoriName("");
+              }}
+            />
+            <TextField
+              style={{ width: "60%" }}
+              variant="outlined"
+              label="Emri i kategorise"
+              value={editKategoriName}
+              onChange={(e) => setEditKategoriName(e.target.value)}
+            />
+
+            <div className="produkt-kategori-edit-pop-container-buttons">
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  axios
+                    .post(
+                      "https://192.168.88.250/demo_react_server/api/config/edit_productCategory.php",
+                      { id: editID, name: editKategoriName }
+                    )
+                    .then((res) => {
+                      if (res.data.status === 1) {
+                        alertContext.setAlert(`${res.data.message}`, "success");
+                        showKategoriPop(false);
+                        setEditID("");
+                        setEditKategoriName("");
+                      } else {
+                        alertContext.setAlert(`${res.data.message}`, "error");
+                      }
+                    });
+                }}
+              >
+                Ruaj
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  showEditKategoriPop(false);
+                  setEditID("");
+                  setEditKategoriName("");
+                }}
+              >
+                Anullo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {shtoKategoriPop && (
         <div className="shto-kategori-pop">
           <div
             className="shto-kategori-pop-opa"
-            onClick={() => showKategoriPop(false)}
+            onClick={() => {
+              showKategoriPop(false);
+              setKategoriName("");
+            }}
           ></div>
           <div className="shto-kategori-pop-container">
             <CloseOutlinedIcon
@@ -79,7 +209,10 @@ export default function ShtoKategoriProduktesh() {
                 marginRight: "20px",
                 cursor: "pointer",
               }}
-              onClick={() => showKategoriPop(false)}
+              onClick={() => {
+                showKategoriPop(false);
+                setKategoriName("");
+              }}
             />
 
             <TextField
@@ -118,6 +251,7 @@ export default function ShtoKategoriProduktesh() {
                 color="secondary"
                 onClick={() => {
                   showKategoriPop(false);
+                  setKategoriName("");
                 }}
               >
                 Anullo
@@ -185,8 +319,21 @@ export default function ShtoKategoriProduktesh() {
                 <TableCell align="center"> {category.id} </TableCell>
                 <TableCell align="center"> {category.name} </TableCell>
                 <TableCell align="center">
-                  <EditOutlinedIcon />
-                  <DeleteOutlineOutlinedIcon />
+                  <EditOutlinedIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      showEditKategoriPop(true);
+                      setEditKategoriName(category.name);
+                      setEditID(category.id);
+                    }}
+                  />
+                  <DeleteOutlineOutlinedIcon
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      setDeleteID(category.id);
+                      showDeleteKategoriPop(true);
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             ))}

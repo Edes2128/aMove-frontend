@@ -15,11 +15,11 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import PersonIcon from "@material-ui/icons/Person";
 import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined";
 import ArrowDropUpOutlinedIcon from "@material-ui/icons/ArrowDropUpOutlined";
-import ShtoKlient from "./components/ShtoKlient";
 import DepoContext from "../../context/depoContext/DepoContext";
 import Alerts from "../components/Alert";
 import ShtoAttributes from "./components/ShtoAttributes";
 import ShtoKategoriProduktesh from "./components/ShtoKategoriProduktesh";
+import ShtoKategoriKlientesh from "./components/ShtoKategoriKlientesh";
 
 export default function AdminDashboard({ history }) {
   const [dropdownKlient, Showklientdropdown] = useState(false);
@@ -113,8 +113,8 @@ export default function AdminDashboard({ history }) {
                 <Link className="link" to="/admin/klient">
                   Te gjithe
                 </Link>
-                <Link className="link" to="/admin/klient/shto">
-                  Shto klient
+                <Link className="link" to="/admin/klient/kategori">
+                  Shto kategori
                 </Link>
               </div>
             )}
@@ -139,7 +139,11 @@ export default function AdminDashboard({ history }) {
             />
             <ProtectedRoutes path="/admin/oferta" component={Oferta} />
             <ProtectedRoutes exact path="/admin/klient" component={Klient} />
-            <ProtectedRoutes path="/admin/klient/shto" component={ShtoKlient} />
+            <ProtectedRoutes
+              exact
+              path="/admin/klient/kategori"
+              component={ShtoKategoriKlientesh}
+            />
           </Switch>
         </div>
       </div>
