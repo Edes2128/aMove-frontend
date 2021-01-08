@@ -11,6 +11,7 @@ import {
   EMPTY_ORDER_DETAILS,
   GET_ATTR_NAMES,
   GET_ATTR_VALUES,
+  GET_CATEGORY_PRODUCTS,
 } from "./types";
 
 export default function DepoState({ children }) {
@@ -22,6 +23,7 @@ export default function DepoState({ children }) {
     orderDetails: [],
     attrNames: [],
     attrValues: [],
+    categoryProducts: [],
   };
 
   const [state, dispatch] = useReducer(DepoReducer, initialState);
@@ -162,13 +164,25 @@ export default function DepoState({ children }) {
   };
 
   const getAttrValues = async () => {
+    const res = await axios.get(
+      "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
+    );
+    dispatch({
+      type: GET_ATTR_VALUES,
+      payload: res.data,
+    });
+  };
 
-      const res = await axios.get('https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php');
-      dispatch({
-        type : GET_ATTR_VALUES,
-        payload: res.data
-      })
-  }
+  const getCategoryProducts = async () => {
+    const res = await axios.get(
+      "https://192.168.88.250/demo_react_server/api/config/get_productCategory.php"
+    );
+    dispatch({
+      type: GET_CATEGORY_PRODUCTS,
+      payload: res.data,
+    });
+  };
+  
 
   return (
     <DepoContext.Provider
@@ -180,6 +194,7 @@ export default function DepoState({ children }) {
         orderDetails: state.orderDetails,
         attrNames: state.attrNames,
         attrValues: state.attrValues,
+        categoryProducts: state.categoryProducts,
         getUser,
         getAllClients,
         getAllProducts,
@@ -195,6 +210,7 @@ export default function DepoState({ children }) {
         addProductToOrder,
         getAttrNames,
         getAttrValues,
+        getCategoryProducts,
       }}
     >
       {children}

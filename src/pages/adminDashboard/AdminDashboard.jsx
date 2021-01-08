@@ -19,6 +19,8 @@ import ShtoKlient from "./components/ShtoKlient";
 import DepoContext from "../../context/depoContext/DepoContext";
 import Alerts from "../components/Alert";
 import ShtoAttributes from "./components/ShtoAttributes";
+import ShtoKategoriProduktesh from "./components/ShtoKategoriProduktesh";
+
 export default function AdminDashboard({ history }) {
   const [dropdownKlient, Showklientdropdown] = useState(false);
   const [dropdownProdukt, showProduktDropdown] = useState(false);
@@ -79,6 +81,9 @@ export default function AdminDashboard({ history }) {
                 <Link className="link" to="/admin/produktet/attributes">
                   Shto attribut
                 </Link>
+                <Link className="link" to="/admin/produktet/kategori">
+                  Shto kategori
+                </Link>
               </div>
             )}
             <Link className="link" to="/admin/oferta">
@@ -127,6 +132,10 @@ export default function AdminDashboard({ history }) {
             <ProtectedRoutes
               path="/admin/produktet/attributes"
               component={ShtoAttributes}
+            />
+            <ProtectedRoutes
+              path="/admin/produktet/kategori"
+              component={ShtoKategoriProduktesh}
             />
             <ProtectedRoutes path="/admin/oferta" component={Oferta} />
             <ProtectedRoutes exact path="/admin/klient" component={Klient} />

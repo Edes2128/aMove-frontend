@@ -37,10 +37,11 @@ export default function ShtoProduktPopup({ closePopup }) {
   );
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
-  const { attrNames, attrValues } = depoContext;
+  const { attrNames, attrValues , categoryProducts } = depoContext;
   useEffect(() => {
     depoContext.getAttrNames();
     depoContext.getAttrValues();
+    depoContext.getCategoryProducts();
   }, []);
 
   const ArrayofObject = [];
@@ -241,10 +242,11 @@ export default function ShtoProduktPopup({ closePopup }) {
                     id: "kategoria-label",
                   }}
                 >
-                  <MenuItem value="kategoria1">Kategoria1</MenuItem>
-                  <MenuItem value="kategoria2">Kategoria2</MenuItem>
-                  <MenuItem value="kategoria3">Kategoria3</MenuItem>
-                  <MenuItem value="kategoria4">Kategoria4</MenuItem>
+                    {categoryProducts.map(category => (
+
+                        <MenuItem value={category.name}> {category.name} </MenuItem>
+                    ))}
+
                 </Select>
               </FormControl>
               <TextField
