@@ -2,8 +2,10 @@ import React from 'react'
 
 export default function ShtoKategoriKlientesh() {
     return (
-        <div>
-            kategori klientesh
+        <div  className="shto-kategori-klientesh">
+            <div className="shot-kategori-klientesh-header">
+                
+            </div>
         </div>
     )
 }
