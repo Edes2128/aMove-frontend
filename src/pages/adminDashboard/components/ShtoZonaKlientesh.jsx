@@ -20,17 +20,17 @@ import Pagination from "@material-ui/lab/Pagination";
 import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 
-export default function ShtoKategoriKlientesh() {
+export default function ShtoZonaKlientesh() {
   const depoContext = useContext(DepoContext);
-  const { categoryClients } = depoContext;
+  const { zonaClients } = depoContext;
   const alertContext = useContext(AlertContext);
-  const [shtoKategoriPop, showShtoKategoriPop] = useState(false);
-  const [deleteKategoriPop, showDeleteKategoriPop] = useState(false);
-  const [editKategoriPopm, showEditKategoriPop] = useState(false);
-  const [editKategoriName, setEditKategoriName] = useState("");
-  const [editIDKategori, setEditIDKategori] = useState("");
-  const [emriKategorise, setEmriKategorise] = useState("");
+  const [shtoZonaPop, showShtoZonaPop] = useState(false);
+  const [emriZones, setEmriZones] = useState("");
+  const [deleteZonaPop, showDeleteZonaPop] = useState(false);
   const [deleteID, setDeleteID] = useState("");
+  const [editZonaPop, showEditZonaPop] = useState(false);
+  const [editZonaName, setEditZonaName] = useState("");
+  const [editZonaID, setEditZonaID] = useState("");
   const [itemPage, setItempage] = useState(5);
   const [page, setPage] = useState(1);
   const start = (page - 1) * itemPage;
@@ -52,7 +52,7 @@ export default function ShtoKategoriKlientesh() {
     setProperty({ key, direction });
   };
   if (propertyName !== null) {
-    categoryClients.sort((a, b) => {
+    zonaClients.sort((a, b) => {
       if (a[propertyName.key] < b[propertyName.key]) {
         return propertyName.direction === "ascending" ? -1 : 1;
       }
@@ -68,22 +68,22 @@ export default function ShtoKategoriKlientesh() {
   };
 
   useEffect(() => {
-    depoContext.getCategoryClients();
+    depoContext.getZonaClients();
   }, []);
 
   return (
     <>
-      {editKategoriPopm && (
-        <div className="edit-kategori-klientesh-pop">
+      {editZonaPop && (
+        <div className="edit-klient-zona-pop">
           <div
-            className="edit-kategori-klientesh-pop-opa"
+            className="edit-klient-zona-pop-opa"
             onClick={() => {
-              showEditKategoriPop(false);
-              setEditKategoriName("");
-              setEditIDKategori("");
+              showEditZonaPop(false);
+              setEditZonaID("");
+              setEditZonaName("");
             }}
           ></div>
-          <div className="edit-kategori-klientesh-pop-container">
+          <div className="edit-klient-zona-pop-container">
             <CloseOutlinedIcon
               style={{
                 alignSelf: "flex-end",
@@ -91,37 +91,37 @@ export default function ShtoKategoriKlientesh() {
                 cursor: "pointer",
               }}
               onClick={() => {
-                showEditKategoriPop(false);
-                setEditKategoriName("");
-                setEditIDKategori("");
+                showEditZonaPop(false);
+                setEditZonaID("");
+                setEditZonaName("");
               }}
             />
             <TextField
-              value={editKategoriName}
-              onChange={(e) => {
-                setEditKategoriName(e.target.value);
-              }}
               variant="outlined"
-              label="Emri i kategorise"
+              label="Emri i zones"
+              value={editZonaName}
+              onChange={(e) => {
+                setEditZonaName(e.target.value);
+              }}
               style={{ width: "60%" }}
             />
-            <div className="edit-kategori-klientesh-pop-container-buttons">
+            <div className="edit-klient-zona-pop-container-buttons">
               <Button
                 color="primary"
                 variant="outlined"
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/edit_category_client.php",
-                      { id: editIDKategori, name: editKategoriName }
+                      "https://192.168.88.250/demo_react_server/api/config/edit_zona_clients.php",
+                      { id: editZonaID, name: editZonaName }
                     )
                     .then((res) => {
                       if (res.data.status === 1) {
-                        showEditKategoriPop(false);
-                        setEditKategoriName("");
-                        setEditIDKategori("");
-                        depoContext.getCategoryClients();
+                        depoContext.getZonaClients();
                         alertContext.setAlert(`${res.data.message}`, "success");
+                        setEditZonaName("");
+                        setEditZonaID("");
+                        showEditZonaPop(false);
                       } else {
                         alertContext.setAlert(`${res.data.message}`, "error");
                       }
@@ -134,9 +134,9 @@ export default function ShtoKategoriKlientesh() {
                 color="secondary"
                 variant="outlined"
                 onClick={() => {
-                  showEditKategoriPop(false);
-                  setEditKategoriName("");
-                  setEditIDKategori("");
+                  setEditZonaName("");
+                  setEditZonaID("");
+                  showEditZonaPop(false);
                 }}
               >
                 Anullo
@@ -146,17 +146,16 @@ export default function ShtoKategoriKlientesh() {
         </div>
       )}
 
-      {deleteKategoriPop && (
-        <div className="delete-kategori-klientesh-pop">
+      {deleteZonaPop && (
+        <div className="delete-klient-zona-pop">
           <div
-            className="delete-kategori-klientesh-pop-opa"
+            className="delete-klient-zona-pop-opa"
             onClick={() => {
-              showDeleteKategoriPop(false);
+              showDeleteZonaPop(false);
               setDeleteID("");
             }}
           ></div>
-
-          <div className="delete-kategori-klientesh-pop-container">
+          <div className="delete-klient-zona-pop-container">
             <CloseOutlinedIcon
               style={{
                 alignSelf: "flex-end",
@@ -164,60 +163,60 @@ export default function ShtoKategoriKlientesh() {
                 cursor: "pointer",
               }}
               onClick={() => {
-                showDeleteKategoriPop(false);
+                showDeleteZonaPop(false);
                 setDeleteID("");
               }}
             />
-            <h4>Jeni te sigurt qe doni te fshni kateogrine?</h4>
-            <div className="delete-kategori-klientesh-pop-container-buttons">
+            <h4>Jeni te sigurt qe doni te fshini zonen?</h4>
+            <div className="delete-klient-zona-pop-container-buttons">
               <Button
                 color="secondary"
                 variant="outlined"
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/delete_category_client.php",
+                      "https://192.168.88.250/demo_react_server/api/config/delete_zona_clients.php",
                       { id: deleteID }
                     )
                     .then((res) => {
                       if (res.data.status === 1) {
-                        showDeleteKategoriPop(false);
-                        setDeleteID("");
                         alertContext.setAlert(`${res.data.message}`, "success");
-                        depoContext.getCategoryClients();
+                        depoContext.getZonaClients();
+                        setDeleteID("");
+                        showDeleteZonaPop(false);
                       } else {
                         alertContext.setAlert(`${res.data.message}`, "error");
                       }
                     });
                 }}
               >
-                Po
+                PO
               </Button>
               <Button
                 color="primary"
                 variant="outlined"
                 onClick={() => {
-                  showDeleteKategoriPop(false);
                   setDeleteID("");
+                  showDeleteZonaPop(false);
                 }}
               >
-                Jo
+                JO
               </Button>
             </div>
           </div>
         </div>
       )}
 
-      {shtoKategoriPop && (
-        <div className="shto-kategori-klientesh-pop">
+      {shtoZonaPop && (
+        <div className="shto-klient-zona-pop">
           <div
-            className="shto-kategori-klientesh-pop-opa"
+            className="shto-klient-zona-pop-opa"
             onClick={() => {
-              showShtoKategoriPop(false);
-              setEmriKategorise("");
+              showShtoZonaPop(false);
+              setEmriZones("");
             }}
           ></div>
-          <div className="shto-kategori-klientesh-pop-container">
+          <div className="shto-klient-zona-pop-container">
             <CloseOutlinedIcon
               style={{
                 alignSelf: "flex-end",
@@ -225,35 +224,33 @@ export default function ShtoKategoriKlientesh() {
                 cursor: "pointer",
               }}
               onClick={() => {
-                showShtoKategoriPop(false);
-                setEmriKategorise("");
+                showShtoZonaPop(false);
+                setEmriZones("");
               }}
             />
             <TextField
+              label="Emri i zones"
               style={{ width: "60%" }}
-              label="Emri i kategorise"
+              value={emriZones}
+              onChange={(e) => setEmriZones(e.target.value)}
               variant="outlined"
-              value={emriKategorise}
-              onChange={(e) => {
-                setEmriKategorise(e.target.value);
-              }}
             />
-            <div className="shto-kategori-klientesh-pop-container-buttons">
+            <div className="shto-klient-zona-pop-container-buttons">
               <Button
                 color="primary"
-                variant="contained"
+                variant="outlined"
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/add_category_client.php",
-                      { name: emriKategorise }
+                      "https://192.168.88.250/demo_react_server/api/config/add_zona_client.php",
+                      { name: emriZones }
                     )
                     .then((res) => {
                       if (res.data.status === 1) {
+                        depoContext.getZonaClients();
                         alertContext.setAlert(`${res.data.message}`, "success");
-                        showShtoKategoriPop(false);
-                        depoContext.getCategoryClients();
-                        setEmriKategorise("");
+                        setEmriZones("");
+                        showShtoZonaPop(false);
                       } else {
                         alertContext.setAlert(`${res.data.message}`, "error");
                       }
@@ -264,10 +261,10 @@ export default function ShtoKategoriKlientesh() {
               </Button>
               <Button
                 color="secondary"
-                variant="contained"
+                variant="outlined"
                 onClick={() => {
-                  showShtoKategoriPop(false);
-                  setEmriKategorise("");
+                  setEmriZones("");
+                  showShtoZonaPop(false);
                 }}
               >
                 Anullo
@@ -276,20 +273,22 @@ export default function ShtoKategoriKlientesh() {
           </div>
         </div>
       )}
-      <div className="shto-kategori-klientesh">
-        <div className="shto-kategori-klientesh-header">
-          <h3>Kategorite e klienteve</h3>
+
+      <div className="shto-klient-zona">
+        <div className="shto-klient-zona-header">
+          <h4>Zonat e klienteve</h4>
           <Button
             color="primary"
             variant="outlined"
             startIcon={<AddBoxOutlinedIcon />}
             onClick={() => {
-              showShtoKategoriPop(true);
+              showShtoZonaPop(true);
             }}
           >
-            Shto kategori
+            Shto zone
           </Button>
         </div>
+
         <Table>
           <TableHead>
             <TableRow>
@@ -323,31 +322,29 @@ export default function ShtoKategoriKlientesh() {
                     <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
                   )}
               </TableCell>
-              <TableCell style={{ cursor: "pointer" }} align="center">
-                Veprimet
-              </TableCell>
+              <TableCell align="center">Veprimet</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {categoryClients.slice(start, end).map((category) => (
+            {zonaClients.slice(start, end).map((zona) => (
               <TableRow>
-                <TableCell align="center">{category.id}</TableCell>
-                <TableCell align="center">{category.name}</TableCell>
+                <TableCell align="center">{zona.id}</TableCell>
+                <TableCell align="center">{zona.name}</TableCell>
                 <TableCell align="center">
                   <EditOutlinedIcon
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      setEditIDKategori(category.id);
-                      setEditKategoriName(category.name);
-                      showEditKategoriPop(true);
+                      showEditZonaPop(true);
+                      setEditZonaID(zona.id);
+                      setEditZonaName(zona.name);
                     }}
                   />
                   <DeleteOutlineOutlinedIcon
-                    onClick={() => {
-                      showDeleteKategoriPop(true);
-                      setDeleteID(category.id);
-                    }}
                     style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      showDeleteZonaPop(true);
+                      setDeleteID(zona.id);
+                    }}
                   />
                 </TableCell>
               </TableRow>
@@ -358,7 +355,7 @@ export default function ShtoKategoriKlientesh() {
         <div className="pagination">
           <div style={{ display: "flex", alignItems: "center" }}>
             <InputLabel style={{ marginRight: "10px" }} id="row">
-              Kategori ne faqe
+              Zona ne faqe
             </InputLabel>
             <Select
               labelId="row"
@@ -375,7 +372,7 @@ export default function ShtoKategoriKlientesh() {
             </Select>
           </div>
           <Pagination
-            count={Math.ceil(categoryClients.length / itemPage)}
+            count={Math.ceil(zonaClients.length / itemPage)}
             color="primary"
             page={page}
             size="large"

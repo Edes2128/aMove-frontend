@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
@@ -22,6 +22,12 @@ export default function ShtoKlientPopup({ closePopup }) {
   const [file, setFile] = useState("");
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
+  const { categoryClients, zonaClients } = depoContext;
+
+  useEffect(() => {
+    depoContext.getCategoryClients();
+    depoContext.getZonaClients();
+  }, []);
 
   const shtoKlient = (e) => {
     e.preventDefault();

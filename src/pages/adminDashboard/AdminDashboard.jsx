@@ -20,6 +20,7 @@ import Alerts from "../components/Alert";
 import ShtoAttributes from "./components/ShtoAttributes";
 import ShtoKategoriProduktesh from "./components/ShtoKategoriProduktesh";
 import ShtoKategoriKlientesh from "./components/ShtoKategoriKlientesh";
+import ShtoZonaKlientesh from "./components/ShtoZonaKlientesh";
 
 export default function AdminDashboard({ history }) {
   const [dropdownKlient, Showklientdropdown] = useState(false);
@@ -116,6 +117,9 @@ export default function AdminDashboard({ history }) {
                 <Link className="link" to="/admin/klient/kategori">
                   Shto kategori
                 </Link>
+                <Link className="link" to="/admin/klient/zona">
+                  Shto zone
+                </Link>
               </div>
             )}
           </div>
@@ -143,6 +147,11 @@ export default function AdminDashboard({ history }) {
               exact
               path="/admin/klient/kategori"
               component={ShtoKategoriKlientesh}
+            />
+            <ProtectedRoutes
+              exact
+              path="/admin/klient/zona"
+              component={ShtoZonaKlientesh}
             />
           </Switch>
         </div>

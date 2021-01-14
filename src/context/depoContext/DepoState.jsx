@@ -12,6 +12,8 @@ import {
   GET_ATTR_NAMES,
   GET_ATTR_VALUES,
   GET_CATEGORY_PRODUCTS,
+  GET_CATEGORY_CLIENTS,
+  GET_ZONA_CLIENTS,
 } from "./types";
 
 export default function DepoState({ children }) {
@@ -24,6 +26,8 @@ export default function DepoState({ children }) {
     attrNames: [],
     attrValues: [],
     categoryProducts: [],
+    categoryClients: [],
+    zonaClients: [],
   };
 
   const [state, dispatch] = useReducer(DepoReducer, initialState);
@@ -182,7 +186,26 @@ export default function DepoState({ children }) {
       payload: res.data,
     });
   };
-  
+
+  const getCategoryClients = async () => {
+    const res = await axios.get(
+      "https://192.168.88.250/demo_react_server/api/config/get_category_client.php"
+    );
+    dispatch({
+      type: GET_CATEGORY_CLIENTS,
+      payload: res.data,
+    });
+  };
+
+  const getZonaClients = async () => {
+    const res = await axios.get(
+      "https://192.168.88.250/demo_react_server/api/config/get_zona_clients.php"
+    );
+    dispatch({
+      type: GET_ZONA_CLIENTS,
+      payload: res.data,
+    });
+  };
 
   return (
     <DepoContext.Provider
@@ -195,6 +218,8 @@ export default function DepoState({ children }) {
         attrNames: state.attrNames,
         attrValues: state.attrValues,
         categoryProducts: state.categoryProducts,
+        categoryClients: state.categoryClients,
+        zonaClients: state.zonaClients,
         getUser,
         getAllClients,
         getAllProducts,
@@ -211,6 +236,8 @@ export default function DepoState({ children }) {
         getAttrNames,
         getAttrValues,
         getCategoryProducts,
+        getCategoryClients,
+        getZonaClients,
       }}
     >
       {children}
