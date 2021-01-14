@@ -121,9 +121,10 @@ export default function ShtoKlientPopup({ closePopup }) {
               variant="outlined"
             >
               <MenuItem value="None"></MenuItem>
-              <MenuItem value={"Zona 1"}>Zona 1</MenuItem>
-              <MenuItem value={"Zona 2"}>Zona 2</MenuItem>
-              <MenuItem value={"Zona 3"}>Zona 3</MenuItem>
+
+              {zonaClients.map((zona) => (
+                <MenuItem value={zona.name}>{zona.name}</MenuItem>
+              ))}
             </Select>
             <InputLabel id="kategoriForm">Kategoria</InputLabel>
             <Select
@@ -135,9 +136,9 @@ export default function ShtoKlientPopup({ closePopup }) {
               color="primary"
             >
               <MenuItem value="None"></MenuItem>
-              <MenuItem value={"Kategoria 1"}>Kategoria 1</MenuItem>
-              <MenuItem value={"Ktegoria 2"}>Kategoria 2</MenuItem>
-              <MenuItem value={"Kategoria 3"}>Kategoria 3</MenuItem>
+              {categoryClients.map((category) => (
+                <MenuItem value={category.name}>{category.name}</MenuItem>
+              ))}
             </Select>
           </div>
           {image === "" ? (
