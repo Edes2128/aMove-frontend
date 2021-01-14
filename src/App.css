@@ -50,12 +50,63 @@ html {
 body {
   background-color: #ffffff;
 }
-tr:nth-child(even) {
-  background-color: #fcfcfc;
+table{
+  border-collapse: separate !important;
+  border-spacing: 0 20px !important;
 }
-tr {
-  border-radius: 20px !important;
+thead{
+  background-color: #E5E5E5;
 }
+
+
+
+tr{
+  transition: all .2s ease-in-out;
+  margin-bottom: -10px;
+  
+} 
+td{
+  border: 1px solid rgba(0, 0, 0, 0.116) ;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 1px black  ;
+}
+tbody tr:hover {
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.185);
+  cursor: pointer;
+}
+
+tbody tr td:first-child {
+  border: 1px solid rgba(0, 0, 0, 0.116) ;
+  border-right: 0px;
+  border-top-left-radius: 15px ;
+  border-bottom-left-radius: 15px;
+}
+tbody tr td:last-child {
+  border-top-right-radius: 15px ;
+  border-bottom-right-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.116) ;
+  border-left: 0px;
+}
+
+tbody tr:hover {
+  background: #287DBF;
+}
+
+tbody tr:hover td{
+  color: white;
+}
+tbody tr:hover td:first-child {
+  border-top-left-radius: 15px ;
+  border-bottom-left-radius: 15px;
+}
+tbody tr:hover td:last-child {
+  border-top-right-radius: 15px ;
+  border-bottom-right-radius: 15px;
+}
+
+
+
 .App {
   height: 90vh;
   width: 100%;
@@ -216,13 +267,28 @@ tr {
 }
 .admin-klient-cat {
   display: flex;
-  width: 25%;
-  height: 150px;
+  width: 28%;
+  height: 140px;
   align-items: center;
   background-color: white;
   justify-content: space-between;
-  padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 10px 50px;
+  border-radius: 25px;
+}
+.admin-klient-cat:nth-child(1) {
+  background-color: #284bbf;
+  color: white;
+  box-shadow: 0 4px 10px rgba(40, 75, 191, 1);
+}
+.admin-klient-cat:nth-child(2) {
+  background-color: #4eb2ff;
+  color: white;
+  box-shadow: 0 4px 10px rgba(78, 178, 255, 1);
+}
+.admin-klient-cat:nth-child(3) {
+  background-color: #28bf86;
+  color: white;
+  box-shadow: 0 4px 10px rgba(40, 191, 134, 1);
 }
 .admin-klient-cat-content {
   display: flex;
@@ -234,7 +300,6 @@ tr {
   width: 98%;
   margin: 0 auto;
   background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .klient {
   display: flex;
@@ -1518,6 +1583,10 @@ tr {
 .user-details-pop-container {
   width: 500px;
   height: 600px;
+  background: url("/gradient-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-color: white;
   z-index: 102;
   border-radius: 30px;
@@ -1528,12 +1597,18 @@ tr {
   justify-content: space-between;
 }
 .user-pop-details-content {
-  width: 95%;
+  width: 60%;
   height: 80%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
+}
+.user-pop-details-content-detail{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
 }
 .produkt-edit-pop {
   position: fixed;
@@ -1666,6 +1741,10 @@ tr {
   width: 600px;
   height: 800px;
   background-color: white;
+  background: url("/gradient-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   z-index: 101;
   border-radius: 20px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);

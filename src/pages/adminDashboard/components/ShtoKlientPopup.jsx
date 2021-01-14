@@ -112,7 +112,7 @@ export default function ShtoKlientPopup({ closePopup }) {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="select-group">
-            <InputLabel id="zonaForm">Zona</InputLabel>
+            <InputLabel id="zonaForm" >Zona</InputLabel>
             <Select
               className="input-select"
               labelId="zonaForm"

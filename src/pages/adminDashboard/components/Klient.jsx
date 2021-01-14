@@ -386,29 +386,35 @@ export default function Klient() {
             />
             <Avatar
               src={`https://192.168.88.250/demo_react_server/images/${userDetails.image_profile}`}
-              style={{ height: "80px", width: "80px" }}
+              style={{ height: "200px", width: "200px" }}
             />
             <div className="user-pop-details-content">
-              <h3>Emri: </h3>
-              <i>
-                <p>{userDetails.name}</p>
-              </i>
+              <div className="user-pop-details-content-detail">
+                <h4>Emri: </h4>
+                <i>
+                  <p>{userDetails.name}</p>
+                </i>
+              </div>
 
-              <h3>Email: </h3>
-              <i>
-                {" "}
-                <p>{userDetails.email}</p>
-              </i>
-
-              <h3>Zona: </h3>
-              <i>
-                <p>{userDetails.zona}</p>
-              </i>
-
-              <h3>Kategoria: </h3>
-              <i>
-                <p>{userDetails.kategoria}</p>
-              </i>
+              <div className="user-pop-details-content-detail">
+                <h4>Email: </h4>
+                <i>
+                  {" "}
+                  <p>{userDetails.email}</p>
+                </i>
+              </div>
+              <div className="user-pop-details-content-detail">
+                <h4>Zona: </h4>
+                <i>
+                  <p>{userDetails.zona}</p>
+                </i>
+              </div>
+              <div className="user-pop-details-content-detail">
+                <h4>Kategoria: </h4>
+                <i>
+                  <p>{userDetails.kategoria}</p>
+                </i>
+              </div>
             </div>
           </div>
         </div>
@@ -420,24 +426,27 @@ export default function Klient() {
             <div className="admin-klient-cat-content">
               <p className="all-client">Te gjithe klientet</p>
               <h2 className="all-client-num">{klientet.length}</h2>
-              <span style={{ display: "flex" }} className="span-client-offer">
+              {/* <span style={{ display: "flex" }} className="span-client-offer">
                 20% <p>(30 dite)</p>
-              </span>
+              </span> */}
             </div>
             <div className="admin-klient-cat-icon">
-              <PeopleAltOutlinedIcon style={{ fontSize: 40 }} />
+              <PeopleAltOutlinedIcon style={{ fontSize: "50px" }} />
             </div>
           </div>
 
           <div className="admin-klient-cat">
             <div className="admin-klient-cat-content">
-              <InputLabel id="kategori">Kategoria</InputLabel>
+              <InputLabel id="kategori" style={{ color: "white" }}>
+                Kategoria
+              </InputLabel>
               <Select
                 labelId="kategori"
                 value={kategori === "" ? "none" : kategori}
                 onChange={(e) => Setkategori(e.target.value)}
+                style={{ color: "white" }}
               >
-                <MenuItem value="None">
+                <MenuItem value="none">
                   <em>None</em>
                 </MenuItem>
                 <MenuItem value={"Kategoria 1"}>Kategoria 1</MenuItem>
@@ -450,17 +459,20 @@ export default function Klient() {
               </span>
             </div>
             <div className="admin-klient-cat-icon">
-              <CategoryOutlinedIcon style={{ fontSize: 40 }} />
+              <CategoryOutlinedIcon style={{ fontSize: "50px" }} />
             </div>
           </div>
 
           <div className="admin-klient-cat">
             <div className="admin-klient-cat-content">
-              <InputLabel id="zona">Zona</InputLabel>
+              <InputLabel id="zona" style={{ color: "white" }}>
+                Zona
+              </InputLabel>
               <Select
                 labelId="zona"
                 value={zona === "" ? "none" : zona}
                 onChange={(e) => Setzona(e.target.value)}
+                style={{ color: "white" }}
               >
                 <MenuItem value="none">
                   <em>None</em>
@@ -472,7 +484,7 @@ export default function Klient() {
               <span className="span-client-offer">Asnje zone e zgjedhur</span>
             </div>
             <div className="admin-klient-cat-icon">
-              <ExploreOutlinedIcon style={{ fontSize: 40 }} />
+              <ExploreOutlinedIcon style={{ fontSize: "50px" }} />
             </div>
           </div>
         </div>
@@ -600,7 +612,9 @@ export default function Klient() {
               <TableBody>
                 {klientetFiltered.slice(start, end).map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell>{row.id}</TableCell>
+                    <TableCell style={{ color: "#287DBF" }}>
+                      #{row.id}
+                    </TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.zona}</TableCell>
