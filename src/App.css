@@ -58,7 +58,14 @@ thead{
   background-color: #E5E5E5;
 }
 
-
+thead tr th:first-child{
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+thead tr th:last-child{
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
 
 tr{
   transition: all .2s ease-in-out;
@@ -72,8 +79,10 @@ td{
   border-bottom: 1px black  ;
 }
 tbody tr:hover {
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.185);
+  box-shadow: 0 0px 30px rgba(0, 0, 0, 0.8);
   cursor: pointer;
+  transition: all .5s ease-in-out;
+  transform: translateY(-5px);
 }
 
 tbody tr td:first-child {
