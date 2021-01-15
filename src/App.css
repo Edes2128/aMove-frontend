@@ -192,7 +192,7 @@ tbody tr:hover td:last-child {
 .admin-header {
   height: 80px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 0 5px;
   position: fixed;
@@ -201,7 +201,9 @@ tbody tr:hover td:last-child {
   width: calc(100% - 205px);
   background-color: white;
   z-index: 20;
-  box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
+}
+.admin-header-collapse {
+  width: calc(100% - 70px);
 }
 .logo-move {
   width: 90px;
@@ -249,6 +251,16 @@ tbody tr:hover td:last-child {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  position: relative;
+}
+.user-name-admin::after{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10px;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.226);
 }
 .sidebar {
   width: 100%;
@@ -258,6 +270,9 @@ tbody tr:hover td:last-child {
   margin-left: 200px;
   width: 100%;
   margin-top: 90px;
+}
+.sidebar-right-collapse {
+  margin-left: 70px;
 }
 .sidebar-dashboard-image {
   width: 100%;
@@ -279,6 +294,9 @@ tbody tr:hover td:last-child {
   z-index: 21;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
+}
+.sidebar-dashboard-collapse {
+  width: 70px;
 }
 .link {
   width: 100%;

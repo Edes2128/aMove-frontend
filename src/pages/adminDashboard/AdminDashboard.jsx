@@ -21,16 +21,20 @@ import ShtoAttributes from "./components/ShtoAttributes";
 import ShtoKategoriProduktesh from "./components/ShtoKategoriProduktesh";
 import ShtoKategoriKlientesh from "./components/ShtoKategoriKlientesh";
 import ShtoZonaKlientesh from "./components/ShtoZonaKlientesh";
+import CollapseContext from '../../context/collpaseContext/CollpaseContext';
 
 export default function AdminDashboard({ history }) {
   const [dropdownKlient, Showklientdropdown] = useState(false);
   const [dropdownProdukt, showProduktDropdown] = useState(false);
   const depoContext = useContext(DepoContext);
   const { user } = depoContext;
+  const collpaseContext = useContext(CollapseContext);
+  const {value} = collpaseContext;
 
   useEffect(() => {
     depoContext.getUser();
   }, []);
+
 
   const handleLogout = () => {
     localStorage.setItem("auth", false);
@@ -47,24 +51,24 @@ export default function AdminDashboard({ history }) {
         handleLogout={() => handleLogout()}
       />
       <div className="sidebar">
-        <div className="sidebar-dashboard">
+        <div className={value === true ? "sidebar-dashboard sidebar-dashboard-collapse" : "sidebar-dashboard"}>
           <div className="sidebar-dashboard-image">
-            <img src="/move-logo.png" alt="" />
+            <img src="/move-logo.png" style={{display: value === true ? 'none' : ''}}  alt="" />
           </div>
           <div>
             <Link className="link" to="/admin">
-              <HomeIcon /> <p>Kreu</p>
+              <HomeIcon style={{fontSize:'40px'}} /> <p style={{display: value === true ? 'none' : ''}} >Kreu</p>
             </Link>
             <Link className="link" to="/admin/porosite">
-              <LocalMallIcon /> <p>Porosite</p>
+              <LocalMallIcon style={{fontSize:'40px'}}/> <p style={{display: value === true ? 'none' : ''}} >Porosite</p>
             </Link>
             <Link
               className="link"
               to="/admin/produktet"
               onClick={() => showProduktDropdown(!dropdownProdukt)}
             >
-              <FormatListNumberedIcon />
-              <p>
+              <FormatListNumberedIcon style={{fontSize:'40px'}} />
+              <p  style={{display: value === true ? 'none' : ''}}>
                 Produkte
                 {!dropdownProdukt ? (
                   <ArrowDropDownOutlinedIcon
@@ -88,15 +92,15 @@ export default function AdminDashboard({ history }) {
               </div>
             )}
             <Link className="link" to="/admin/oferta">
-              <LocalOfferIcon /> <p>Oferta</p>
+              <LocalOfferIcon style={{fontSize:'40px'}}/> <p  style={{display: value === true ? 'none' : ''}}>Oferta</p>
             </Link>
             <Link
               className="link"
               to="/admin/klient"
               onClick={() => Showklientdropdown(!dropdownKlient)}
             >
-              <PersonIcon />
-              <p>
+              <PersonIcon style={{fontSize:'40px'}} />
+              <p style={{display: value === true ? 'none' : ''}}>
                 Kliente{" "}
                 {!dropdownKlient ? (
                   <ArrowDropDownOutlinedIcon
@@ -124,7 +128,7 @@ export default function AdminDashboard({ history }) {
             )}
           </div>
         </div>
-        <div className="sidebar-right">
+        <div className={ value === true ?  "sidebar-right sidebar-right-collapse" : "sidebar-right"}>
           <Switch>
             <ProtectedRoutes exact path="/admin" component={Home} />
             <ProtectedRoutes path="/admin/porosite" component={Porosite} />

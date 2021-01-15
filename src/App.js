@@ -8,17 +8,19 @@ import KlientDashboard from './pages/klientDashboard/KlientDashboard';
 import KlientState from './context/klientContext/KlientState';
 import DepoState from './context/depoContext/DepoState';
 import AlertState from './context/alertContext/AlertState';
-
+import CollapseState from './context/collpaseContext/CollpaseState';
 function App() {
   return (
     <DepoState>
       <KlientState>
         <AlertState>
-          <Switch>
-            <Route exact path="/" component={FormLogin} />
-            <ProtectedRoutes path="/admin" component={AdminDashboard} />
-            <ProtectedRoutes path="/klient" component={KlientDashboard} />
-          </Switch>
+          <CollapseState>
+            <Switch>
+              <Route exact path="/" component={FormLogin} />
+              <ProtectedRoutes path="/admin" component={AdminDashboard} />
+              <ProtectedRoutes path="/klient" component={KlientDashboard} />
+            </Switch>
+          </CollapseState>
         </AlertState>
       </KlientState>
     </DepoState>
