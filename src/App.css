@@ -103,7 +103,7 @@ tbody tr:hover {
 }
 
 tbody tr:hover td {
-  color: white;
+  color: white !important;
 }
 tbody tr:hover td:first-child {
   border-top-left-radius: 15px;
@@ -1767,7 +1767,7 @@ tbody tr:hover td:last-child {
 }
 .user-edit-pop-container {
   width: 600px;
-  height: 800px;
+  height: 700px;
   background-color: white;
   background: url("/gradient-bg.png");
   background-position: center;
@@ -1788,6 +1788,27 @@ tbody tr:hover td:last-child {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+}
+.user-edit-pop-container-form-left-right{
+  display: flex;
+  width: 100%;
+  height: 40%;
+}
+.user-edit-pop-container-form-left{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+.user-edit-pop-container-form-right{
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
 }
 .edit-user-pop-buttons {
   width: 100%;
@@ -1815,9 +1836,13 @@ tbody tr:hover td:last-child {
   background-color: black;
 }
 .user-delete-pop-container {
-  height: 400px;
-  width: 500px;
+  height: 157px;
+  width: 632px;
   border-radius: 20px;
+  background: url("/gradient-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-color: white;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   z-index: 101;
@@ -1831,7 +1856,7 @@ tbody tr:hover td:last-child {
   height: 30%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 }
 .edit-order-pop {
   position: fixed;

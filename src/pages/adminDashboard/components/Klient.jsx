@@ -27,6 +27,7 @@ import FormControl from "@material-ui/core/FormControl";
 import AddIcon from "@material-ui/icons/Add";
 import Input from "@material-ui/core/Input";
 import axios from "axios";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 
 export default function Klient() {
   const [deletedID, setDeletedID] = useState("");
@@ -157,29 +158,37 @@ export default function Klient() {
           <div className="user-delete-pop-container">
             <h3>Jeni te sigurt qe doni te fshini klientin?</h3>
             <div className="user-delete-pop-buttons">
-              <Button
-                style={{ backgroundColor: "red", color: "white", width: "30%" }}
-                onClick={() => {
-                  depoContext.deleteUser(deletedID);
-                  setDeletePop(false);
-                  alertContext.setAlert("Klienti u fshi", "warning");
-                }}
-              >
-                Po
-              </Button>
-              <Button
-                style={{
-                  backgroundColor: "green",
-                  color: "white",
-                  width: "30%",
-                }}
-                onClick={() => {
-                  setDeletePop(false);
-                  alertContext.setAlert("Klienti nuk u fshi", "info");
-                }}
-              >
-                Jo
-              </Button>
+              <ButtonGroup size="large" disableElevation variant="contained">
+                <Button
+                  style={{
+                    borderTopLeftRadius: "30px",
+                    borderBottomLeftRadius: "30px",
+                    backgroundColor: "white",
+                    color: "black",
+                  }}
+                  onClick={() => {
+                    depoContext.deleteUser(deletedID);
+                    setDeletePop(false);
+                    alertContext.setAlert("Klienti u fshi", "warning");
+                  }}
+                >
+                  Po
+                </Button>
+                <Button
+                  style={{
+                    borderTopRightRadius: "30px",
+                    borderBottomRightRadius: "30px",
+                    backgroundColor: "#FF0000",
+                    color: "white",
+                  }}
+                  onClick={() => {
+                    setDeletePop(false);
+                    alertContext.setAlert("Klienti nuk u fshi", "info");
+                  }}
+                >
+                  Jo
+                </Button>
+              </ButtonGroup>
             </div>
           </div>
         </div>
@@ -201,85 +210,90 @@ export default function Klient() {
               className="user-edit-pop-container-form"
               onSubmit={onEditUser}
             >
-              <TextField
-                label="Emri"
-                style={{ width: "60%" }}
-                variant="outlined"
-                value={editEmri}
-                type="text"
-                onChange={(e) => setEditEmri(e.target.value)}
-              />
-              <TextField
-                label="Email"
-                style={{ width: "60%" }}
-                variant="outlined"
-                value={editEmail}
-                type="email"
-                onChange={(e) => setEditEmail(e.target.value)}
-              />
-              <TextField
-                type="password"
-                label="Password"
-                style={{ width: "60%" }}
-                variant="outlined"
-                value={editPassword}
-                onChange={(e) => setEditPassword(e.target.value)}
-              />
-              <FormControl variant="outlined">
-                <InputLabel htmlFor="njesia-label">Status</InputLabel>
-                <Select
-                  value={editStatus}
-                  onChange={(e) => setEditStatus(e.target.value)}
-                  style={{ width: "150px" }}
-                  label="Status"
-                  inputProps={{
-                    name: "status",
-                    id: "njesia-label",
-                  }}
-                >
-                  <MenuItem value={1}>Aktive</MenuItem>
-                  <MenuItem value={0}>Joaktive</MenuItem>
-                </Select>
-              </FormControl>
+              <div className="user-edit-pop-container-form-left-right">
+                <div className="user-edit-pop-container-form-left">
+                  <TextField
+                    label="Emri"
+                    style={{ width: "80%" }}
+                    variant="outlined"
+                    value={editEmri}
+                    type="text"
+                    onChange={(e) => setEditEmri(e.target.value)}
+                  />
+                  <TextField
+                    label="Email"
+                    style={{ width: "80%" }}
+                    variant="outlined"
+                    value={editEmail}
+                    type="email"
+                    onChange={(e) => setEditEmail(e.target.value)}
+                  />
+                  <TextField
+                    type="password"
+                    label="Password"
+                    style={{ width: "80%" }}
+                    variant="outlined"
+                    value={editPassword}
+                    onChange={(e) => setEditPassword(e.target.value)}
+                  />
+                </div>
+                <div className="user-edit-pop-container-form-right">
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="njesia-label">Status</InputLabel>
+                    <Select
+                      value={editStatus}
+                      onChange={(e) => setEditStatus(e.target.value)}
+                      style={{ width: "227px" }}
+                      label="Status"
+                      inputProps={{
+                        name: "status",
+                        id: "njesia-label",
+                      }}
+                    >
+                      <MenuItem value={1}>Aktive</MenuItem>
+                      <MenuItem value={0}>Joaktive</MenuItem>
+                    </Select>
+                  </FormControl>
 
-              <FormControl variant="outlined">
-                <InputLabel htmlFor="njesia-label">Kategoria</InputLabel>
-                <Select
-                  value={editKategoria}
-                  onChange={(e) => setEditKategoria(e.target.value)}
-                  style={{ width: "150px" }}
-                  label="Status"
-                  inputProps={{
-                    name: "status",
-                    id: "njesia-label",
-                  }}
-                >
-                  <MenuItem value="None"></MenuItem>
-                  <MenuItem value={"Kategoria 1"}>Kategoria 1</MenuItem>
-                  <MenuItem value={"Ktegoria 2"}>Kategoria 2</MenuItem>
-                  <MenuItem value={"Kategoria 3"}>Kategoria 3</MenuItem>
-                </Select>
-              </FormControl>
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="njesia-label">Kategoria</InputLabel>
+                    <Select
+                      value={editKategoria}
+                      onChange={(e) => setEditKategoria(e.target.value)}
+                      style={{ width: "227px" }}
+                      label="Status"
+                      inputProps={{
+                        name: "status",
+                        id: "njesia-label",
+                      }}
+                    >
+                      <MenuItem value="None"></MenuItem>
+                      <MenuItem value={"Kategoria 1"}>Kategoria 1</MenuItem>
+                      <MenuItem value={"Ktegoria 2"}>Kategoria 2</MenuItem>
+                      <MenuItem value={"Kategoria 3"}>Kategoria 3</MenuItem>
+                    </Select>
+                  </FormControl>
 
-              <FormControl variant="outlined">
-                <InputLabel htmlFor="njesia-label">Zona</InputLabel>
-                <Select
-                  value={editZona}
-                  onChange={(e) => setEditZona(e.target.value)}
-                  style={{ width: "150px" }}
-                  label="Status"
-                  inputProps={{
-                    name: "status",
-                    id: "njesia-label",
-                  }}
-                >
-                  <MenuItem value="None"></MenuItem>
-                  <MenuItem value={"Zona 1"}>Zona 1</MenuItem>
-                  <MenuItem value={"Zona 2"}>Zona 2</MenuItem>
-                  <MenuItem value={"Zona 3"}>Zona 3</MenuItem>
-                </Select>
-              </FormControl>
-
+                  <FormControl variant="outlined">
+                    <InputLabel htmlFor="njesia-label">Zona</InputLabel>
+                    <Select
+                      value={editZona}
+                      onChange={(e) => setEditZona(e.target.value)}
+                      style={{ width: "227px" }}
+                      label="Status"
+                      inputProps={{
+                        name: "status",
+                        id: "njesia-label",
+                      }}
+                    >
+                      <MenuItem value="None"></MenuItem>
+                      <MenuItem value={"Zona 1"}>Zona 1</MenuItem>
+                      <MenuItem value={"Zona 2"}>Zona 2</MenuItem>
+                      <MenuItem value={"Zona 3"}>Zona 3</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
               <div
                 className={
                   editImage === "" ? "image-2" : "image-2 outlinestyle-none"
@@ -344,7 +358,7 @@ export default function Klient() {
               <div className="edit-user-pop-buttons">
                 <Button
                   color="primary"
-                  variant="outlined"
+                  variant="contained"
                   type="submit"
                   onClick={() => setDeletedImage(false)}
                 >
@@ -353,7 +367,7 @@ export default function Klient() {
                 </Button>
                 <Button
                   color="secondary"
-                  variant="outlined"
+                  variant="contained"
                   onClick={() => {
                     setUserEditPop(false);
                     alertContext.setAlert("Klienti nuk u ndryshua", "info");
