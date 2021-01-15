@@ -1,12 +1,12 @@
 @font-face {
   font-family: "Campton";
-  src: url("/fonts/Campton/Campton-Light.eot");
-  src: url("/fonts/Campton/Campton-Light.eot?#iefix")
+  src: url("/src/fonts/Campton/Campton-Light.eot");
+  src: url("/src/fonts/Campton/Campton-Light.eot?#iefix")
       format("embedded-opentype"),
-    url("/fonts/Campton/Campton-Light.woff2") format("woff2"),
-    url("/fonts/Campton/Campton-Light.woff") format("woff"),
-    url("/fonts/Campton/Campton-Light.ttf") format("truetype"),
-    url("/fonts/Campton/Campton-Light.svg#Campton-Light") format("svg");
+    url("/src/fonts/Campton/Campton-Light.woff2") format("woff2"),
+    url("/src/fonts/Campton/Campton-Light.woff") format("woff"),
+    url("/src/fonts/Campton/Campton-Light.ttf") format("truetype"),
+    url("/src/fonts/Campton/Campton-Light.svg#Campton-Light") format("svg");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -14,12 +14,12 @@
 
 @font-face {
   font-family: "Campton";
-  src: url("/fonts/Campton/Campton-Bold.eot");
-  src: url("/fonts/Campton/Campton-Bold.eot?#iefix") format("embedded-opentype"),
-    url("/fonts/Campton/Campton-Bold.woff2") format("woff2"),
-    url("/fonts/Campton/Campton-Bold.woff") format("woff"),
-    url("/fonts/Campton/Campton-Bold.ttf") format("truetype"),
-    url("/fonts/Campton/Campton-Bold.svg#Campton-Bold") format("svg");
+  src: url("/src/fonts/Campton/Campton-Bold.eot");
+  src: url("/src/fonts/Campton/Campton-Bold.eot?#iefix") format("embedded-opentype"),
+    url("/src/fonts/Campton/Campton-Bold.woff2") format("woff2"),
+    url("/src/fonts/Campton/Campton-Bold.woff") format("woff"),
+    url("/src/fonts/Campton/Campton-Bold.ttf") format("truetype"),
+    url("/src/fonts/Campton/Campton-Bold.svg#Campton-Bold") format("svg");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -27,13 +27,13 @@
 
 @font-face {
   font-family: "Campton";
-  src: url("/fonts/Campton/Campton-SemiBold.eot");
-  src: url("/fonts/Campton/Campton-SemiBold.eot?#iefix")
+  src: url("/src/fonts/Campton/Campton-SemiBold.eot");
+  src: url("/src/fonts/Campton/Campton-SemiBold.eot?#iefix")
       format("embedded-opentype"),
-    url("/fonts/Campton/Campton-SemiBold.woff2") format("woff2"),
-    url("/fonts/Campton/Campton-SemiBold.woff") format("woff"),
-    url("/fonts/Campton/Campton-SemiBold.ttf") format("truetype"),
-    url("/fonts/Campton/Campton-SemiBold.svg#Campton-SemiBold") format("svg");
+    url("/src/fonts/Campton/Campton-SemiBold.woff2") format("woff2"),
+    url("/src/fonts/Campton/Campton-SemiBold.woff") format("woff"),
+    url("/src/fonts/Campton/Campton-SemiBold.ttf") format("truetype"),
+    url("/src/fonts/Campton/Campton-SemiBold.svg#Campton-SemiBold") format("svg");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -1610,7 +1610,7 @@ tbody tr:hover td:last-child {
 .user-details-pop-container {
   width: 500px;
   height: 600px;
-  background: url("/gradient-bg.png");
+  background: url("/src/images/gradient-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1768,7 +1768,7 @@ tbody tr:hover td:last-child {
   width: 600px;
   height: 700px;
   background-color: white;
-  background: url("/gradient-bg.png");
+  background: url("/src/images/gradient-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1838,7 +1838,7 @@ tbody tr:hover td:last-child {
   height: 157px;
   width: 632px;
   border-radius: 20px;
-  background: url("/gradient-bg.png");
+  background: url("/src/images/gradient-bg.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
