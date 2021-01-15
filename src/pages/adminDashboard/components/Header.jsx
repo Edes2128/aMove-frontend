@@ -5,11 +5,9 @@ import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined"
 import ArrowDropUpOutlinedIcon from "@material-ui/icons/ArrowDropUpOutlined";
 import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
-import AlertContext from "../../../context/alertContext/AlertContext";
 
 export default function Header({ name, userImg, handleLogout }) {
   const [logout, Setlogout] = useState(false);
-  const alertContext = useContext(AlertContext);
 
   return (
     <div className="admin-header">
