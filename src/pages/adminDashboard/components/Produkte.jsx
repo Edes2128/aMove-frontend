@@ -486,19 +486,6 @@ export default function Produkte() {
             <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
           </div>
         </div>
-
-        <div className="produkte-header-item">
-          <h2>Shto produkt</h2>
-          <AddOutlinedIcon
-            onClick={() => showProduktPopup(true)}
-            style={{
-              cursor: "pointer",
-              fontSize: "70px",
-              color: "#e3e3e3",
-              height: "70%",
-            }}
-          />
-        </div>
       </div>
       <div className="data-table-produkte">
         <div className="data-table-produkte-header">
@@ -605,10 +592,11 @@ export default function Produkte() {
                 <TableCell>{produkt.id} </TableCell>
                 <TableCell>
                   <img
-                    width="50"
-                    height="50"
+                    width="30"
+                    height="30"
                     src={`https://192.168.88.250/demo_react_server/images/${produkt.image}`}
                     alt="Foto Produkti"
+                    style={{borderRadius:'50%'}}
                   />
                 </TableCell>
                 <TableCell>{produkt.titulli}</TableCell>

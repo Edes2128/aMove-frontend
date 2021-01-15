@@ -123,9 +123,9 @@ export default function Klient() {
 
   const renderButtonColorsStatus = (status) => {
     if (status === 1) {
-      return "#3ccc38";
+      return "#73C850";
     } else if (status === 0) {
-      return "#fd3259";
+      return "#FF0000";
     }
   };
   const requestSort = (key) => {
@@ -502,6 +502,7 @@ export default function Klient() {
                 onChange={(e) => setSearchFilter(e.target.value)}
               ></TextField>
               <Button
+              style={{backgroundColor:'#2A7EBF',borderRadius:'8px',padding:'10px 20px'}}
                 variant="contained"
                 onClick={() => shotUserPopup(true)}
                 color="primary"
@@ -620,19 +621,18 @@ export default function Klient() {
                     <TableCell>{row.zona}</TableCell>
                     <TableCell>{row.kategoria}</TableCell>
                     <TableCell>
-                      <Button
+                      {/* <Button
                         size="medium"
                         style={{
-                          backgroundColor: renderButtonColorsStatus(
-                            row.status_user
-                          ),
+                          backgroundColor: renderButtonColorsStatus(row.status_user),
                           color: "white",
                           width: "100px",
                         }}
                       >
                         {" "}
                         {renderButtonStatus(row.status_user)}{" "}
-                      </Button>
+                      </Button> */}
+                      <p className="status-text" > <span className="status-pulse" style={{backgroundColor:renderButtonColorsStatus(row.status_user)}} ></span> {renderButtonStatus(row.status_user)} </p>
                     </TableCell>
                     <TableCell align="center">
                       <div className="veprime" style={{ cursor: "pointer" }}>
