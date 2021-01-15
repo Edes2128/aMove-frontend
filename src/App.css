@@ -1789,12 +1789,12 @@ tbody tr:hover td:last-child {
   align-items: center;
   justify-content: space-evenly;
 }
-.user-edit-pop-container-form-left-right{
+.user-edit-pop-container-form-left-right {
   display: flex;
   width: 100%;
   height: 40%;
 }
-.user-edit-pop-container-form-left{
+.user-edit-pop-container-form-left {
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -1802,7 +1802,7 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
   align-items: center;
 }
-.user-edit-pop-container-form-right{
+.user-edit-pop-container-form-right {
   width: 50%;
   display: flex;
   flex-direction: column;
