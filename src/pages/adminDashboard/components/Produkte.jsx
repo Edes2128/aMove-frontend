@@ -504,6 +504,11 @@ export default function Produkte() {
               onChange={(e) => setSearchFilter(e.target.value)}
             ></TextField>
             <Button
+              style={{
+                backgroundColor: "#2A7EBF",
+                borderRadius: "8px",
+                padding: "10px 20px",
+              }}
               color="primary"
               onClick={() => showProduktPopup(true)}
               variant="contained"
@@ -589,14 +594,16 @@ export default function Produkte() {
           <TableBody>
             {filteredProducts.slice(start, end).map((produkt) => (
               <TableRow key={produkt.id}>
-                <TableCell>{produkt.id} </TableCell>
+                <TableCell style={{ color: "#287DBF" }}>
+                  #{produkt.id}{" "}
+                </TableCell>
                 <TableCell>
                   <img
                     width="30"
                     height="30"
                     src={`https://192.168.88.250/demo_react_server/images/${produkt.image}`}
                     alt="Foto Produkti"
-                    style={{borderRadius:'50%'}}
+                    style={{ borderRadius: "50%" }}
                   />
                 </TableCell>
                 <TableCell>{produkt.titulli}</TableCell>
@@ -611,17 +618,18 @@ export default function Produkte() {
                 </TableCell>
                 <TableCell>{produkt.cmimi}</TableCell>
                 <TableCell>
-                  <Button
-                    size="small"
-                    style={{
-                      backgroundColor: renderButtonColorsStatus(produkt.status),
-                      color: "white",
-                      width: "100px",
-                    }}
-                  >
+                  <p className="status-text">
                     {" "}
+                    <span
+                      className="status-pulse"
+                      style={{
+                        backgroundColor: renderButtonColorsStatus(
+                          produkt.status
+                        ),
+                      }}
+                    ></span>{" "}
                     {renderButtonStatus(produkt.status)}{" "}
-                  </Button>
+                  </p>
                 </TableCell>
                 <TableCell align="center">
                   <div className="veprime" style={{ cursor: "pointer" }}>

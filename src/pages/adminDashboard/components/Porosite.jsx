@@ -444,7 +444,16 @@ export default function Porosite() {
               placeholder="Kerko..."
               onChange={(e) => setSearchFilter(e.target.value)}
             />
-            <Button startIcon={<AddIcon />} color="primary" variant="contained">
+            <Button
+              startIcon={<AddIcon />}
+              color="primary"
+              variant="contained"
+              style={{
+                backgroundColor: "#2A7EBF",
+                borderRadius: "8px",
+                padding: "10px 20px",
+              }}
+            >
               Shto Porosi
             </Button>
           </div>
@@ -538,25 +547,24 @@ export default function Porosite() {
           <TableBody>
             {filteredOrder.slice(start, end).map((order) => (
               <TableRow key={order.ID}>
-                <TableCell> {order.ID} </TableCell>
+                <TableCell style={{ color: "#287DBF" }}>#{order.ID} </TableCell>
                 <TableCell> {order.klient_emer} </TableCell>
                 <TableCell> {order.order_date} </TableCell>
                 <TableCell> {order.klient_zona} </TableCell>
                 <TableCell> {order.total_price} Leke </TableCell>
                 <TableCell>
-                  <Button
-                    size="small"
-                    style={{
-                      backgroundColor: renderButtonColorsStatus(
-                        order.order_status
-                      ),
-                      color: "white",
-                      width: "100px",
-                    }}
-                  >
+                  <p className="status-text">
                     {" "}
+                    <span
+                      className="status-pulse"
+                      style={{
+                        backgroundColor: renderButtonColorsStatus(
+                          order.order_status
+                        ),
+                      }}
+                    ></span>{" "}
                     {renderButtonStatus(order.order_status)}{" "}
-                  </Button>
+                  </p>
                 </TableCell>
 
                 <TableCell align="center">
