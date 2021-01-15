@@ -15,7 +15,8 @@
 @font-face {
   font-family: "Campton";
   src: url("/src/fonts/Campton/Campton-Bold.eot");
-  src: url("/src/fonts/Campton/Campton-Bold.eot?#iefix") format("embedded-opentype"),
+  src: url("/src/fonts/Campton/Campton-Bold.eot?#iefix")
+      format("embedded-opentype"),
     url("/src/fonts/Campton/Campton-Bold.woff2") format("woff2"),
     url("/src/fonts/Campton/Campton-Bold.woff") format("woff"),
     url("/src/fonts/Campton/Campton-Bold.ttf") format("truetype"),
@@ -33,7 +34,8 @@
     url("/src/fonts/Campton/Campton-SemiBold.woff2") format("woff2"),
     url("/src/fonts/Campton/Campton-SemiBold.woff") format("woff"),
     url("/src/fonts/Campton/Campton-SemiBold.ttf") format("truetype"),
-    url("/src/fonts/Campton/Campton-SemiBold.svg#Campton-SemiBold") format("svg");
+    url("/src/fonts/Campton/Campton-SemiBold.svg#Campton-SemiBold")
+      format("svg");
   font-weight: 600;
   font-style: normal;
   font-display: swap;

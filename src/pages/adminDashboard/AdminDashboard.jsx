@@ -49,7 +49,7 @@ export default function AdminDashboard({ history }) {
       <div className="sidebar">
         <div className="sidebar-dashboard">
           <div className="sidebar-dashboard-image">
-            <img src="/src/images/move-logo.png" alt="" />
+            <img src="/move-logo.png" alt="" />
           </div>
           <div>
             <Link className="link" to="/admin">
@@ -58,7 +58,6 @@ export default function AdminDashboard({ history }) {
             <Link className="link" to="/admin/porosite">
               <LocalMallIcon /> <p>Porosite</p>
             </Link>
-
             <Link
               className="link"
               to="/admin/produktet"
