@@ -201,7 +201,7 @@ tbody tr:hover td:last-child {
   width: calc(100% - 205px);
   background-color: white;
   z-index: 20;
-  transition: all .3s ease-in;
+  transition: all 0.3s ease-in;
 }
 .admin-header-collapse {
   width: calc(100% - 70px);
@@ -254,8 +254,8 @@ tbody tr:hover td:last-child {
   cursor: pointer;
   position: relative;
 }
-.user-name-admin::after{
-  content: '';
+.user-name-admin::after {
+  content: "";
   position: absolute;
   top: 0;
   left: -10px;
@@ -271,7 +271,7 @@ tbody tr:hover td:last-child {
   margin-left: 200px;
   width: 100%;
   margin-top: 90px;
-  transition: all .3s ease-in;
+  transition: all 0.3s ease-in;
 }
 .sidebar-right-collapse {
   margin-left: 70px;
@@ -296,7 +296,7 @@ tbody tr:hover td:last-child {
   z-index: 21;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-  transition: all .3s ease-in;
+  transition: all 0.3s ease-in;
 }
 .sidebar-dashboard-collapse {
   width: 70px;
