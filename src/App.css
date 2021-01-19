@@ -2688,3 +2688,78 @@ tbody tr:hover td:last-child {
   align-items: center;
   justify-content: space-between;
 }
+.ofertat {
+  width: 95%;
+  margin: 0 auto;
+}
+.ofertat-header {
+  height: 170px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ofertat-header-item {
+  width: 30%;
+  height: 120px;
+  background-color: #2a7ebf;
+  color: white;
+  border-radius: 25px;
+  display: flex;
+  position: relative;
+}
+.ofertat-header-item-left {
+  width: 70%;
+  height: 100%;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.ofertat-header-item-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  height: 100%;
+}
+.ofertat-header-item::before {
+  content: "";
+  position: absolute;
+  background-color: #1f5f91;
+  top: 21%;
+  right: 0px;
+  height: 71px;
+  width: 11px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.ofertat-header-item::after {
+  content: "";
+  position: absolute;
+  background-color: #32ff0c;
+  top: 37%;
+  right: 3px;
+  height: 25%;
+  width: 4px;
+}
+.ofertat-header-item:nth-child(2)::after {
+  background-color: #f8f000;
+}
+.ofertat-header-item:nth-child(3)::after {
+  background-color: #ff0000;
+}
+.ofertat-data-table{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.ofertat-data-table-header{
+  width: 100%;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+} 
