@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import Button from "@material-ui/core/Button";
 
@@ -39,12 +39,17 @@ export default function Oferta() {
           <h4>Ofertat</h4>
           <Button
             startIcon={<LocalOfferOutlinedIcon />}
-            style={{ backgroundColor: "#2a7ebf", color: "white", padding:'10px 20px' }}
-
+            style={{
+              backgroundColor: "#2a7ebf",
+              color: "white",
+              padding: "10px 20px",
+            }}
           >
             Shto Oferte
           </Button>
         </header>
+
+
       </div>
     </div>
   );
