@@ -22,6 +22,7 @@ import ShtoKategoriProduktesh from "./components/ShtoKategoriProduktesh";
 import ShtoKategoriKlientesh from "./components/ShtoKategoriKlientesh";
 import ShtoZonaKlientesh from "./components/ShtoZonaKlientesh";
 import CollapseContext from "../../context/collpaseContext/CollpaseContext";
+import AccountDetails from "./components/AccountDetails";
 
 export default function AdminDashboard({ history }) {
   const [dropdownKlient, Showklientdropdown] = useState(false);
@@ -174,6 +175,11 @@ export default function AdminDashboard({ history }) {
               exact
               path="/admin/klient/zona"
               component={ShtoZonaKlientesh}
+            />
+            <ProtectedRoutes
+              exact
+              path="/admin/account"
+              component={AccountDetails}
             />
           </Switch>
         </div>
