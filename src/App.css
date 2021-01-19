@@ -146,11 +146,15 @@ tbody tr:hover td:last-child {
   align-items: center;
 }
 .App {
-  height: 90vh;
+  height: 100vh;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: url("/src/images/gradient-home-1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .nav-home {
   padding: 20px;
@@ -162,13 +166,10 @@ tbody tr:hover td:last-child {
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  box-shadow: 0 10px 15px rgba(1, 1, 1, 0.2);
+  box-shadow: 0 4px 10px rgba(1, 1, 1, 0.3);
+  backdrop-filter: blur(20px);
 }
-.img-form-login-home {
-  border-radius: 50%;
-  background-color: white;
-  box-shadow: 0 5px 5px rgba(1, 1, 1, 0.1);
-}
+
 .div-img-form-login-home {
   width: 100%;
   display: flex;
@@ -224,7 +225,7 @@ tbody tr:hover td:last-child {
   right: 0;
   transition: all 1s ease-in;
   display: none;
-  box-shadow: -2px 3px 10px rgba(55, 168, 33, 0.4);
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
   background-color: white;
   z-index: 5;
 }
@@ -232,14 +233,16 @@ tbody tr:hover td:last-child {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 35%;
+  width: 40%;
   font-weight: bolder;
   cursor: pointer;
   font-size: 20px;
 }
 .display-block {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
   padding: 10px;
   transition: all 1s ease-in;
 }
@@ -2691,7 +2694,7 @@ tbody tr:hover td:last-child {
   margin: 0 auto;
 }
 .ofertat-header {
-  height: 170px;
+  height: 130px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -2760,4 +2763,32 @@ tbody tr:hover td:last-child {
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
+}
+.shto-oferte-pop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.shto-oferte-pop-opa {
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  top: 0;
+  left: 0;
+  background-color: black;
+  position: fixed;
+}
+.shto-oferte-pop-container {
+  width: 800px;
+  height: 800px;
+  z-index: 101;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }

@@ -9,22 +9,31 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import CollapseContext from "../../../context/collpaseContext/CollpaseContext";
-
+import PermIdentityOutlinedIcon from "@material-ui/icons/PermIdentityOutlined";
+import { Link } from "react-router-dom";
 export default function Header({ name, userImg, handleLogout }) {
   const [logout, Setlogout] = useState(false);
   const collapseContext = useContext(CollapseContext);
   const { value } = collapseContext;
 
   return (
-    <div className={value === true ?  "admin-header admin-header-collapse" : "admin-header"}>
+    <div
+      className={
+        value === true ? "admin-header admin-header-collapse" : "admin-header"
+      }
+    >
       <div className="btns-collapse">
         {value === false ? (
-          <IconButton onClick={() => collapseContext.setTrue()} >
-            <ArrowBackIosOutlinedIcon onClick={() => collapseContext.setTrue()} />
+          <IconButton onClick={() => collapseContext.setTrue()}>
+            <ArrowBackIosOutlinedIcon
+              onClick={() => collapseContext.setTrue()}
+            />
           </IconButton>
         ) : (
           <IconButton onClick={() => collapseContext.setFalse()}>
-            <ArrowForwardIosOutlinedIcon onClick={() => collapseContext.setFalse()} />
+            <ArrowForwardIosOutlinedIcon
+              onClick={() => collapseContext.setFalse()}
+            />
           </IconButton>
         )}
       </div>
@@ -57,6 +66,22 @@ export default function Header({ name, userImg, handleLogout }) {
             <PowerSettingsNewIcon onClick={handleLogout} />
             Logout
           </p>
+          <Link
+            style={{
+              textDecoration: "none",
+              color: "black",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-evenly",
+              fontSize: "20px",
+              fontWeight: "bolder",
+              width:'40%'
+            }}
+            to="/admin/account"
+          >
+            <PermIdentityOutlinedIcon />
+            Account
+          </Link>
         </div>
       </div>
     </div>

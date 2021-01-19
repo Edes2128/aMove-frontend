@@ -43,9 +43,8 @@ export default function FormLogin({ history }) {
           <img
             className="img-form-login-home"
             src="move-logo.png"
-            width="100px"
             alt="amove logo"
-          />
+            />
         </div>
         <p style={{ fontSize: "17px" }}>Sign in to continue</p>
         <div className="div-input-form-login-home">
@@ -67,6 +66,7 @@ export default function FormLogin({ history }) {
             label="Password"
             variant="outlined"
             name="passowrd"
+            style={{borderColor:'white'}}
             required
             onChange={(e) => setPassword(e.target.value)}
           />
