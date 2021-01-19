@@ -235,13 +235,14 @@ export default function ShtoProduktPopup({ closePopup }) {
                 <Select
                   onChange={(e) => setKategoriForm(e.target.value)}
                   style={{ width: "150px" }}
-                  value={kategoriForm}
+                  value={kategoriForm === "" ? "none" : kategoriForm}
                   label="Kategoria"
                   inputProps={{
                     name: "kategoria",
                     id: "kategoria-label",
                   }}
                 >
+                   <MenuItem value="">None</MenuItem>
                   {categoryProducts.map((category) => (
                     <MenuItem value={category.name}> {category.name} </MenuItem>
                   ))}
