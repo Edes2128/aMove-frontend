@@ -151,7 +151,7 @@ tbody tr:hover td:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/src/images/gradient-home-1.jpg");
+  background: url("/src/images/gradient-home-5.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -168,7 +168,7 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
   box-shadow: 0 4px 10px rgba(1, 1, 1, 0.3);
   backdrop-filter: blur(10px);
-  /* background-image: linear-gradient(45deg,rgba(255, 255, 255, 0.089),rgba(0, 0, 0, 0.137)); */
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .div-img-form-login-home {
@@ -2875,6 +2875,9 @@ tbody tr:hover td:last-child {
 .home {
   width: 95%;
   margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .home-header {
   width: 100%;

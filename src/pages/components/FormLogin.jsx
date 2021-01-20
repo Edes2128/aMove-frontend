@@ -44,9 +44,17 @@ export default function FormLogin({ history }) {
             className="img-form-login-home"
             src="move-logo.png"
             alt="amove logo"
-            />
+          />
         </div>
-        <p style={{ fontSize: "17px" }}>Sign in to continue</p>
+        <p
+          style={{
+            fontSize: "17px",
+            color: "white",
+            textShadow: "0 5px 10px black",
+          }}
+        >
+          Sign in to continue
+        </p>
         <div className="div-input-form-login-home">
           <TextField
             className="input-form-login-home"
@@ -66,16 +74,19 @@ export default function FormLogin({ history }) {
             label="Password"
             variant="outlined"
             name="passowrd"
-            style={{borderColor:'white'}}
+            style={{ borderColor: "white" }}
             required
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <Button
           className="submit-form-login-home"
-          variant="contained"
           type="submit"
-          color="primary"
+          style={{
+            backgroundColor: "#2a7ebf",
+            color: "white",
+            boxShadow: "0 4px 10px rgba(0,0,0,.3)",
+          }}
         >
           Submit
         </Button>
