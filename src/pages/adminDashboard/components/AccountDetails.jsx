@@ -30,11 +30,9 @@ export default function AccountDetails() {
         setEditFile(user.image_profile);
         setEditName(user.name);
         setEditEmail(user.email);
-        setTimeout(() => {
-          depoContext.getUser();
-        }, 1000);
+
     
-  }, []);
+  },);
 
   const onChangeGeneral = (e) => {
     e.preventDefault();
