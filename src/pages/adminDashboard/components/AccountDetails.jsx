@@ -24,33 +24,41 @@ export default function AccountDetails() {
   const [editImage, setEditImage] = useState("");
   const [editFile, setEditFile] = useState("");
 
-
   useEffect(() => {
 
-    setEditImage(user.image_profile);
-    setEditFile(user.image_profile);
-    setEditName(user.name);
-    setEditEmail(user.email);
-   setTimeout(() => {
-    depoContext.getUser();
-   },1000)
-
+        setEditImage(user.image_profile);
+        setEditFile(user.image_profile);
+        setEditName(user.name);
+        setEditEmail(user.email);
+        setTimeout(() => {
+          depoContext.getUser();
+        }, 1000);
+    
   }, []);
 
-
   const onChangeGeneral = (e) => {
+    e.preventDefault();
 
-        e.preventDefault();
+    const fd = new FormData();
+    fd.append("id", user.id);
+    fd.append("name", editName);
+    fd.append("email", editEmail);
+    fd.append("image", editImage);
 
-        const fd = new FormData();
-        fd.append('name',editName);
-        fd.append('email',editEmail);
-        fd.append('image',editImage)
-
-        axios.post('https://192.168.88.250/demo_react_server/api/config/change_general_settings.php')
-
-  }
-
+    axios
+      .post(
+        "https://192.168.88.250/demo_react_server/api/config/change_general_settings.php",
+        fd
+      )
+      .then((res) => {
+        if (res.data.status === 1) {
+          alertContext.setAlert(`${res.data.message}`, "success");
+          depoContext.getUser();
+        } else {
+          alertContext.setAlert(`${res.data.message}`, "error");
+        }
+      });
+  };
 
   const onChangePassword = (e) => {
     e.preventDefault();
@@ -96,7 +104,10 @@ export default function AccountDetails() {
         </div>
         <div className="account-details-container">
           {userSettings === "general" && (
-            <form className="account-details-general" onSubmit={onChangeGeneral} >
+            <form
+              className="account-details-general"
+              onSubmit={onChangeGeneral}
+            >
               <div className="account-details-general-left">
                 <div className="account-details-general-image">
                   {editImage === "" ? (
@@ -188,6 +199,7 @@ export default function AccountDetails() {
                   color="primary"
                   variant="outlined"
                   style={{ padding: "6px 50px", fontSize: "16px" }}
+                  type="submit"
                 >
                   Edit
                 </Button>
