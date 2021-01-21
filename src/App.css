@@ -151,7 +151,7 @@ tbody tr:hover td:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/src/images/gradient-home-5.jpg");
+  background: url("/src/images/gradient-home-9.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2784,13 +2784,63 @@ tbody tr:hover td:last-child {
   position: fixed;
 }
 .shto-oferte-pop-container {
-  width: 800px;
-  height: 800px;
+  width: 900px;
+  height: 900px;
   z-index: 101;
   background-color: white;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+.shto-oferte-pop-cotnainer-header-tabs {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+}
+.shto-oferte-pop-cotnainer-header-tabs::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.5px;
+  background-color: rgba(0, 0, 0, 0.151);
+}
+.shto-oferte-pop-cotnainer-header-tabs::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.5px;
+  background-color: rgba(0, 0, 0, 0.151);
+}
+
+.shto-oferte-pop-cotnainer-forms {
+  width: 100%;
+  height: calc(100% - 60px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .account-details {
   width: 95%;
   margin: 0 auto;
