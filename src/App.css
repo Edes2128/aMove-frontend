@@ -151,7 +151,7 @@ tbody tr:hover td:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/src/images/gradient-home-9.jpg");
+  background: url("/src/images/gradient-home-10.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -2826,6 +2826,12 @@ tbody tr:hover td:last-child {
   width: 100%;
   height: calc(100% - 60px);
 }
+
+
+
+
+
+
 
 
 
