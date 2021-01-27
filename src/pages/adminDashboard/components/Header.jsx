@@ -48,7 +48,7 @@ export default function Header({ name, userImg, handleLogout }) {
         </p>
         <Avatar
           className="logo-user-loggedin"
-          src={`https://192.168.88.250/demo_react_server/images/${userImg}`}
+          src={`https://amove.alcodeit.com/images/${userImg}`}
           alt="LogoUser"
         />
         {!logout && (
@@ -75,7 +75,7 @@ export default function Header({ name, userImg, handleLogout }) {
               justifyContent: "space-evenly",
               fontSize: "20px",
               fontWeight: "bolder",
-              width:'40%'
+              width: "40%",
             }}
             to="/admin/account"
           >

@@ -46,11 +46,7 @@ export default function ShtoKlientPopup({ closePopup }) {
       headers: { "content-type": "multipart/form-data" },
     };
     axios
-      .post(
-        "https://192.168.88.250/demo_react_server/api/config/register_klient.php",
-        avatar,
-        config
-      )
+      .post("https://amove.alcodeit.com/register_klient.php", avatar, config)
       .then((res) => {
         if (res.data.status === 0) {
           alertContext.setAlert("Plotesoni te gjitha fushat!", "error");
@@ -112,7 +108,7 @@ export default function ShtoKlientPopup({ closePopup }) {
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="select-group">
-            <InputLabel id="zonaForm" >Zona</InputLabel>
+            <InputLabel id="zonaForm">Zona</InputLabel>
             <Select
               className="input-select"
               labelId="zonaForm"

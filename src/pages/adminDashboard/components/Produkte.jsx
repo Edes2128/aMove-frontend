@@ -92,7 +92,7 @@ export default function Produkte() {
 
     axios
       .post(
-        `https://192.168.88.250/demo_react_server/api/config/edit_product.php?produkt_id=${editID}`,
+        `https://amove.alcodeit.com/edit_product.php?produkt_id=${editID}`,
         fd
       )
       .then((res) => {
@@ -174,7 +174,7 @@ export default function Produkte() {
           <div className="produkt-details-pop-container">
             <Avatar
               style={{ width: "80px", height: "80px" }}
-              src={`https://192.168.88.250/demo_react_server/images/${produktDetails.image}`}
+              src={`https://amove.alcodeit.com/images/${produktDetails.image}`}
               alt={produktDetails.titulli}
             />
             <h2>Titulli :</h2>
@@ -297,7 +297,7 @@ export default function Produkte() {
                             className="delete-icon-image"
                           />
                           <img
-                            src={`https://192.168.88.250/demo_react_server/images/${fileEdit}`}
+                            src={`https://amove.alcodeit.com/images/${fileEdit}`}
                             alt=""
                           />
                         </>
@@ -601,7 +601,7 @@ export default function Produkte() {
                   <img
                     width="30"
                     height="30"
-                    src={`https://192.168.88.250/demo_react_server/images/${produkt.image}`}
+                    src={`https://amove.alcodeit.com/images/${produkt.image}`}
                     alt="Foto Produkti"
                     style={{ borderRadius: "50%" }}
                   />

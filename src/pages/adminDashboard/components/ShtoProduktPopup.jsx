@@ -81,10 +81,7 @@ export default function ShtoProduktPopup({ closePopup }) {
     fd.append("image", image);
     fd.append("attributes[]", JSON.stringify(arrayOfObject3));
     axios
-      .post(
-        "https://192.168.88.250/demo_react_server/api/config/shto_produkt.php",
-        fd
-      )
+      .post("https://amove.alcodeit.com/shto_produkt.php", fd)
       .then((res) => {
         if (res.data.status === 0) {
           alertContext.setAlert(
@@ -242,7 +239,7 @@ export default function ShtoProduktPopup({ closePopup }) {
                     id: "kategoria-label",
                   }}
                 >
-                   <MenuItem value="">None</MenuItem>
+                  <MenuItem value="">None</MenuItem>
                   {categoryProducts.map((category) => (
                     <MenuItem value={category.name}> {category.name} </MenuItem>
                   ))}

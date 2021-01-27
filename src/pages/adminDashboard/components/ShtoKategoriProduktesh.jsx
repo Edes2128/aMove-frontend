@@ -90,7 +90,7 @@ export default function ShtoKategoriProduktesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/delete_categoryProduct.php",
+                      "https://amove.alcodeit.com/delete_categoryProduct.php",
                       { id: deleteID }
                     )
                     .then((res) => {
@@ -160,7 +160,7 @@ export default function ShtoKategoriProduktesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/edit_productCategory.php",
+                      "https://amove.alcodeit.com/edit_productCategory.php",
                       { id: editID, name: editKategoriName }
                     )
                     .then((res) => {
@@ -229,7 +229,7 @@ export default function ShtoKategoriProduktesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/add_product_category.php",
+                      "https://amove.alcodeit.com/add_product_category.php",
                       { name: kategoriName }
                     )
                     .then((res) => {

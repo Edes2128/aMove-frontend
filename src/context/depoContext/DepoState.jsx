@@ -34,7 +34,7 @@ export default function DepoState({ children }) {
 
   const getUser = async () => {
     const res = await axios.get(
-      `https://192.168.88.250/demo_react_server/api/config/user_profile.php?token="${JSON.parse(
+      `https://amove.alcodeit.com/user_profile.php?token="${JSON.parse(
         localStorage.getItem("token")
       )}"`
     );
@@ -46,7 +46,7 @@ export default function DepoState({ children }) {
 
   const getOrderDetails = async (order) => {
     const res = await axios.get(
-      `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
+      `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
     );
 
     dispatch({
@@ -63,7 +63,7 @@ export default function DepoState({ children }) {
 
   const getAllClients = async () => {
     const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/getAll_clients.php"
+      "https://amove.alcodeit.com/getAll_clients.php"
     );
 
     dispatch({
@@ -74,7 +74,7 @@ export default function DepoState({ children }) {
 
   const getAllProducts = async () => {
     const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/get_allProducts.php"
+      "https://amove.alcodeit.com/get_allProducts.php"
     );
 
     dispatch({
@@ -84,9 +84,7 @@ export default function DepoState({ children }) {
   };
 
   const getAllOrders = async () => {
-    const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/getAll_orders.php"
-    );
+    const res = await axios.get("https://amove.alcodeit.com/getAll_orders.php");
 
     dispatch({
       type: GET_ALL_ORDERS,
@@ -96,7 +94,7 @@ export default function DepoState({ children }) {
 
   const cancelOrder = async (order_id) => {
     await axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/cancel_order.php?order_id=${order_id}`
+      `https://amove.alcodeit.com/cancel_order.php?order_id=${order_id}`
     );
 
     setTimeout(() => getAllOrders(), 100);
@@ -104,7 +102,7 @@ export default function DepoState({ children }) {
 
   const deleteProduct = async (product_id) => {
     await axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/delete_product.php?product_id=${product_id}`
+      `https://amove.alcodeit.com/delete_product.php?product_id=${product_id}`
     );
 
     setTimeout(() => getAllProducts(), 100);
@@ -112,7 +110,7 @@ export default function DepoState({ children }) {
 
   const deleteUser = async (user_id) => {
     await axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/delete_user.php?user_id=${user_id}`
+      `https://amove.alcodeit.com/delete_user.php?user_id=${user_id}`
     );
 
     setTimeout(() => getAllClients(), 100);
@@ -120,7 +118,7 @@ export default function DepoState({ children }) {
 
   const increaseOrderQty = async (order) => {
     await axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/increase_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
+      `https://amove.alcodeit.com/increase_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
     );
     setTimeout(() => getOrderDetails(order), 100);
     setTimeout(() => getAllOrders(), 100);
@@ -128,7 +126,7 @@ export default function DepoState({ children }) {
 
   const decreaseOrderQty = async (order) => {
     await axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/decrease_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
+      `https://amove.alcodeit.com/decrease_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
     );
     setTimeout(() => getOrderDetails(order), 100);
     setTimeout(() => getAllOrders(), 100);
@@ -136,7 +134,7 @@ export default function DepoState({ children }) {
 
   const deleteProductFromOrder = async (orderID, productID, order) => {
     await axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/delete_product_from_order.php?order_id=${orderID}&produkt_id=${productID}`
+      `https://amove.alcodeit.com/delete_product_from_order.php?order_id=${orderID}&produkt_id=${productID}`
     );
 
     setTimeout(() => getOrderDetails(order), 100);
@@ -150,7 +148,7 @@ export default function DepoState({ children }) {
       produktID: data.id,
     };
     await axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/add_product_to_order.php?order_id=${orderID}`,
+      `https://amove.alcodeit.com/add_product_to_order.php?order_id=${orderID}`,
       payload
     );
     setTimeout(() => getAllOrders(), 100);
@@ -159,7 +157,7 @@ export default function DepoState({ children }) {
 
   const getAttrNames = async () => {
     const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/get_all_attr_names.php"
+      "https://amove.alcodeit.com/get_all_attr_names.php"
     );
     dispatch({
       type: GET_ATTR_NAMES,
@@ -169,7 +167,7 @@ export default function DepoState({ children }) {
 
   const getAttrValues = async () => {
     const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
+      "https://amove.alcodeit.com/get_name_values_attribues.php"
     );
     dispatch({
       type: GET_ATTR_VALUES,
@@ -179,7 +177,7 @@ export default function DepoState({ children }) {
 
   const getCategoryProducts = async () => {
     const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/get_productCategory.php"
+      "https://amove.alcodeit.com/get_productCategory.php"
     );
     dispatch({
       type: GET_CATEGORY_PRODUCTS,
@@ -189,7 +187,7 @@ export default function DepoState({ children }) {
 
   const getCategoryClients = async () => {
     const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/get_category_client.php"
+      "https://amove.alcodeit.com/get_category_client.php"
     );
     dispatch({
       type: GET_CATEGORY_CLIENTS,
@@ -199,7 +197,7 @@ export default function DepoState({ children }) {
 
   const getZonaClients = async () => {
     const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/get_zona_clients.php"
+      "https://amove.alcodeit.com/get_zona_clients.php"
     );
     dispatch({
       type: GET_ZONA_CLIENTS,

@@ -111,10 +111,10 @@ export default function ShtoZonaKlientesh() {
                 variant="outlined"
                 onClick={() => {
                   axios
-                    .post(
-                      "https://192.168.88.250/demo_react_server/api/config/edit_zona_clients.php",
-                      { id: editZonaID, name: editZonaName }
-                    )
+                    .post("https://amove.alcodeit.com/edit_zona_clients.php", {
+                      id: editZonaID,
+                      name: editZonaName,
+                    })
                     .then((res) => {
                       if (res.data.status === 1) {
                         depoContext.getZonaClients();
@@ -175,7 +175,7 @@ export default function ShtoZonaKlientesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/delete_zona_clients.php",
+                      "https://amove.alcodeit.com/delete_zona_clients.php",
                       { id: deleteID }
                     )
                     .then((res) => {
@@ -241,10 +241,9 @@ export default function ShtoZonaKlientesh() {
                 variant="outlined"
                 onClick={() => {
                   axios
-                    .post(
-                      "https://192.168.88.250/demo_react_server/api/config/add_zona_client.php",
-                      { name: emriZones }
-                    )
+                    .post("https://amove.alcodeit.com/add_zona_client.php", {
+                      name: emriZones,
+                    })
                     .then((res) => {
                       if (res.data.status === 1) {
                         depoContext.getZonaClients();

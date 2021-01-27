@@ -83,10 +83,7 @@ export default function Klient() {
     fd.append("status", editStatus);
 
     axios
-      .post(
-        `https://192.168.88.250/demo_react_server/api/config/edit_user.php?user_id=${editID}`,
-        fd
-      )
+      .post(`https://amove.alcodeit.com/edit_user.php?user_id=${editID}`, fd)
       .then((res) => {
         if (res.data.status === 0) {
           alertContext.setAlert(`${res.data.message}`, "error");
@@ -347,7 +344,7 @@ export default function Klient() {
                           className="delete-icon-image"
                         />
                         <img
-                          src={`https://192.168.88.250/demo_react_server/images/${editFile}`}
+                          src={`https://amove.alcodeit.com/images/${editFile}`}
                           alt=""
                         />
                       </>
@@ -399,7 +396,7 @@ export default function Klient() {
               onClick={() => showUserDetailsPop(false)}
             />
             <Avatar
-              src={`https://192.168.88.250/demo_react_server/images/${userDetails.image_profile}`}
+              src={`https://amove.alcodeit.com/images/${userDetails.image_profile}`}
               style={{ height: "200px", width: "200px" }}
             />
             <div className="user-pop-details-content">

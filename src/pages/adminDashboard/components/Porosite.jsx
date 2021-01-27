@@ -150,7 +150,7 @@ export default function Porosite() {
                   >
                     <div className="edit-order-pop-container-item-image">
                       <img
-                        src={`https://192.168.88.250/demo_react_server/images/${order.image}`}
+                        src={`https://amove.alcodeit.com/images/${order.image}`}
                         alt=""
                       />
                     </div>
@@ -246,7 +246,7 @@ export default function Porosite() {
                     >
                       <div className="edit-order-pop-container-right-items-item-image">
                         <img
-                          src={`https://192.168.88.250/demo_react_server/images/${produkt.image}`}
+                          src={`https://amove.alcodeit.com/images/${produkt.image}`}
                           alt=""
                         />
                       </div>
@@ -338,7 +338,7 @@ export default function Porosite() {
               <div className="order-details-pop-content-item" key={order.ID}>
                 <div className="order-details-pop-content-item-image">
                   <img
-                    src={`https://192.168.88.250/demo_react_server/images/${order.image}`}
+                    src={`https://amove.alcodeit.com/images/${order.image}`}
                     alt=""
                   />
                 </div>
@@ -574,7 +574,7 @@ export default function Porosite() {
                         showOrderDetails(true);
                         axios
                           .get(
-                            `https://192.168.88.250/demo_react_server/api/config/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
+                            `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
                           )
                           .then((res) => setOrderDetailsContent(res.data));
                       }}

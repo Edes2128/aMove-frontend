@@ -3,7 +3,6 @@ import axios from "axios";
 import KlientContext from "./KlientContext";
 import KlientReducer from "./KlientReducer";
 
-
 import {
   GET_USER,
   GET_ALL_PRODUCTS,
@@ -13,8 +12,6 @@ import {
 } from "./types";
 
 export default function KlientState({ children }) {
-
-
   const initialState = {
     user: {},
     products: [],
@@ -26,7 +23,7 @@ export default function KlientState({ children }) {
 
   const getUser = async () => {
     const res = await axios.get(
-      `https://192.168.88.250/demo_react_server/api/config/user_profile.php?token="${JSON.parse(
+      `https://amove.alcodeit.com/user_profile.php?token="${JSON.parse(
         localStorage.getItem("token")
       )}"`
     );
@@ -38,7 +35,7 @@ export default function KlientState({ children }) {
 
   const getAllProducts = async () => {
     const res = await axios.get(
-      "https://192.168.88.250/demo_react_server/api/config/get_allProducts.php"
+      "https://amove.alcodeit.com/get_allProducts.php"
     );
     dispatch({
       type: GET_ALL_PRODUCTS,
@@ -48,7 +45,7 @@ export default function KlientState({ children }) {
 
   const getCartProducts = async () => {
     const res = await axios.get(
-      `https://192.168.88.250/demo_react_server/api/config/get_products_fromCart.php?klient=${JSON.parse(
+      `https://amove.alcodeit.com/get_products_fromCart.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}`
     );
@@ -60,7 +57,7 @@ export default function KlientState({ children }) {
 
   const getWishlistProducts = async () => {
     const res = await axios.get(
-      `https://192.168.88.250/demo_react_server/api/config/get_productsWishlist.php?klient=${JSON.parse(
+      `https://amove.alcodeit.com/get_productsWishlist.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}`
     );
@@ -75,16 +72,13 @@ export default function KlientState({ children }) {
       productID: product.id,
       klientID: JSON.parse(localStorage.getItem("id")),
     };
-    await axios.post(
-      "https://192.168.88.250/demo_react_server/api/config/add_toCart.php",
-      payload
-    );
+    await axios.post("https://amove.alcodeit.com/add_toCart.php", payload);
     setTimeout(() => getCartProducts(), 100);
   };
 
   const removeFromCart = async (product) => {
     axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/remove_product_fromCart.php?klient=${JSON.parse(
+      `https://amove.alcodeit.com/remove_product_fromCart.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}&product=${product.id}`
     );
@@ -98,17 +92,14 @@ export default function KlientState({ children }) {
       klientID: JSON.parse(localStorage.getItem("id")),
     };
 
-    axios.post(
-      "https://192.168.88.250/demo_react_server/api/config/add_toWishlist.php",
-      payload
-    );
+    axios.post("https://amove.alcodeit.com/add_toWishlist.php", payload);
 
     setTimeout(() => getWishlistProducts(), 100);
   };
 
   const removeFromWishlist = async (product) => {
     axios.post(
-      `https://192.168.88.250/demo_react_server/api/config/remove_product_fromWishlist.php?klient=${JSON.parse(
+      `https://amove.alcodeit.com/remove_product_fromWishlist.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}&product=${product.id}`
     );
@@ -121,10 +112,7 @@ export default function KlientState({ children }) {
       id: product.product_id,
     };
 
-    axios.post(
-      "https://192.168.88.250/demo_react_server/api/config/increase_qty.php",
-      payload
-    );
+    axios.post("https://amove.alcodeit.com/increase_qty.php", payload);
 
     setTimeout(() => getCartProducts(), 100);
   };
@@ -134,10 +122,7 @@ export default function KlientState({ children }) {
       id: product.product_id,
     };
 
-    axios.post(
-      "https://192.168.88.250/demo_react_server/api/config/decrease_qty.php",
-      payload
-    );
+    axios.post("https://amove.alcodeit.com/decrease_qty.php", payload);
 
     setTimeout(() => getCartProducts(), 100);
   };
@@ -145,7 +130,7 @@ export default function KlientState({ children }) {
   const makeOrder = async (payload, totali) => {
     await axios
       .post(
-        `https://192.168.88.250/demo_react_server/api/config/add_Order.php?klient=${JSON.parse(
+        `https://amove.alcodeit.com/add_Order.php?klient=${JSON.parse(
           localStorage.getItem("id")
         )}`,
         { payload, totali }
@@ -153,18 +138,17 @@ export default function KlientState({ children }) {
       .then((res) => {
         if (res.data.status === 1) {
           axios.post(
-            "https://192.168.88.250/demo_react_server/api/config/remove_AllProducts_from_cart.php"
+            "https://amove.alcodeit.com/remove_AllProducts_from_cart.php"
           );
 
           setTimeout(() => getCartProducts(), 100);
         }
-
       });
   };
 
   const getAllOrders = async () => {
     const res = await axios.get(
-      `http://localhost/demo_react_server/api/config/getAllOrders_forSingleUser.php?klient=${JSON.parse(
+      `https://amove.alcodeit.com/getAllOrders_forSingleUser.php?klient=${JSON.parse(
         localStorage.getItem("id")
       )}`
     );
@@ -174,7 +158,6 @@ export default function KlientState({ children }) {
       payload: res.data,
     });
   };
-
 
   return (
     <KlientContext.Provider

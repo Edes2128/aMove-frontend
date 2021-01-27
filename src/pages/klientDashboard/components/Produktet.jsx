@@ -33,8 +33,7 @@ export default function Produktet() {
   const products = klientContext.products;
   const { cartProducts, wishlistProducts } = klientContext;
 
-  console.log(products)
-
+  console.log(products);
 
   useEffect(() => {
     klientContext.getAllProducts();
@@ -209,13 +208,13 @@ export default function Produktet() {
             />
           </div>
           <div className="produktet-list">
-            {products.slice(start,end).map((product) => (
+            {products.slice(start, end).map((product) => (
               <div className="produktet-list-item" key={product.id}>
                 <div className="produkte-header-item-image">
                   <Link to={`/klient/${product.id}`}>
                     <img
                       width="100"
-                      src={`http://localhost/demo_react_server/images/${product.image}`}
+                      src={`https://amove.alcodeit.com/images/${product.image}`}
                       alt=""
                     />
                   </Link>
@@ -238,8 +237,11 @@ export default function Produktet() {
                       color="primary"
                       style={{ width: "50%" }}
                     >
-                      <Link to="/klient/shporta" style={{color:'inherit',textDecoration:'none'}}>
-                      View in Cart
+                      <Link
+                        to="/klient/shporta"
+                        style={{ color: "inherit", textDecoration: "none" }}
+                      >
+                        View in Cart
                       </Link>
                     </Button>
                   ) : (
@@ -279,10 +281,10 @@ export default function Produktet() {
                   )}
                 </div>
               </div>
-            ))} 
+            ))}
           </div>
           <div className="produkte-pagination">
-          <div style={{ display: "flex", alignItems: "center" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <InputLabel style={{ marginRight: "10px" }} id="row">
                 Produkte ne faqe
               </InputLabel>

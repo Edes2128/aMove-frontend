@@ -15,7 +15,7 @@ export default function FormLogin({ history }) {
   const onSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("https://192.168.88.250/demo_react_server/api/config/login.php", {
+      .post("https://amove.alcodeit.com/login.php", {
         email,
         password,
       })

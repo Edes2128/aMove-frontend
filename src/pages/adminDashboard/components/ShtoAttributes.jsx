@@ -103,10 +103,9 @@ export default function ShtoAttributes() {
                 size="large"
                 onClick={() => {
                   axios
-                    .post(
-                      "https://192.168.88.250/demo_react_server/api/config/delete_attr_value.php",
-                      { id: deleteID }
-                    )
+                    .post("https://amove.alcodeit.com/delete_attr_value.php", {
+                      id: deleteID,
+                    })
                     .then((res) => {
                       if (res.data.status === 1) {
                         alertContext.setAlert(`${res.data.message}`, "success");
@@ -163,10 +162,10 @@ export default function ShtoAttributes() {
                 color="primary"
                 onClick={() => {
                   axios
-                    .post(
-                      "https://192.168.88.250/demo_react_server/api/config/edit_attr_value.php",
-                      { name_id: editID, value: editValue }
-                    )
+                    .post("https://amove.alcodeit.com/edit_attr_value.php", {
+                      name_id: editID,
+                      value: editValue,
+                    })
                     .then((res) => {
                       if (res.data.status === 1) {
                         alertContext.setAlert(`${res.data.message}`, "success");
@@ -221,10 +220,9 @@ export default function ShtoAttributes() {
                     clickable
                     onDelete={() => {
                       axios
-                        .post(
-                          "https://192.168.88.250/demo_react_server/api/config/delete_attr.php",
-                          { id: attr.id_name }
-                        )
+                        .post("https://amove.alcodeit.com/delete_attr.php", {
+                          id: attr.id_name,
+                        })
                         .then((res) => {
                           if (res.data.status === 1) {
                             depoContext.getAttrValues();
@@ -296,7 +294,7 @@ export default function ShtoAttributes() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/add_values_in_attributes.php",
+                      "https://amove.alcodeit.com/add_values_in_attributes.php",
                       { name_id: attrFromSelect, value: attrnameValue }
                     )
                     .then((res) => {
@@ -319,7 +317,7 @@ export default function ShtoAttributes() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/add_values_in_attributes.php",
+                      "https://amove.alcodeit.com/add_values_in_attributes.php",
                       { name_id: attrFromSelect, value: attrnameValue }
                     )
                     .then((res) => {
@@ -329,7 +327,7 @@ export default function ShtoAttributes() {
                         setAttrNameValue("");
                         showAttrPopValue(false);
                         axios.get(
-                          "https://192.168.88.250/demo_react_server/api/config/get_name_values_attribues.php"
+                          "https://amove.alcodeit.com/get_name_values_attribues.php"
                         );
                       } else {
                         alertContext.setAlert(`${res.data.message}`, "error");
@@ -372,10 +370,9 @@ export default function ShtoAttributes() {
                 variant="outlined"
                 onClick={() => {
                   axios
-                    .post(
-                      "https://192.168.88.250/demo_react_server/api/config/add_new_attribute.php",
-                      { name: attrValue }
-                    )
+                    .post("https://amove.alcodeit.com/add_new_attribute.php", {
+                      name: attrValue,
+                    })
                     .then((res) => {
                       if (res.data.status === 1) {
                         setAttrValue("");
@@ -397,10 +394,9 @@ export default function ShtoAttributes() {
                 variant="outlined"
                 onClick={() => {
                   axios
-                    .post(
-                      "https://192.168.88.250/demo_react_server/api/config/add_new_attribute.php",
-                      { name: attrValue }
-                    )
+                    .post("https://amove.alcodeit.com/add_new_attribute.php", {
+                      name: attrValue,
+                    })
                     .then((res) => {
                       if (res.data.status === 1) {
                         setAttrValue("");

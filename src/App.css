@@ -2784,12 +2784,12 @@ tbody tr:hover td:last-child {
   position: fixed;
 }
 .shto-oferte-pop-container {
-  width: 900px;
+  width: 950px;
   height: 900px;
   z-index: 101;
   background-color: white;
   border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.534);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -2821,7 +2821,6 @@ tbody tr:hover td:last-child {
   height: 0.5px;
   background-color: rgba(0, 0, 0, 0.151);
 }
-
 .shto-oferte-pop-cotnainer-forms {
   width: 100%;
   height: calc(100% - 60px);

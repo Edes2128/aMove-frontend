@@ -11,8 +11,7 @@ import KlientContext from "../../../context/klientContext/KlientContext";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 export default function Header({ name, userImg, handleLogout }) {
   const [logout, Setlogout] = useState(false);
@@ -27,11 +26,9 @@ export default function Header({ name, userImg, handleLogout }) {
     klientContext.getWishlistProducts();
   }, []);
 
-
   return (
     <div className="klient-dashboard-header">
       <div className="klient-dashboard-header-widgets-klient">
-        
         <Badge badgeContent={wishlistProducts.length} color="primary">
           <StarBorderOutlinedIcon
             onClick={() => {
@@ -40,9 +37,6 @@ export default function Header({ name, userImg, handleLogout }) {
             style={{ cursor: "pointer" }}
           />
         </Badge>
-
-
-
 
         <Badge badgeContent={cartProducts.length} color="primary">
           <ShoppingCartOutlinedIcon
@@ -53,30 +47,35 @@ export default function Header({ name, userImg, handleLogout }) {
           />
         </Badge>
 
-        
-        
         <Badge badgeContent={9} color="primary">
           <NotificationsIcon />
         </Badge>
         <Avatar
           className="logo-user-loggedin"
-          src={`https://192.168.88.250/demo_react_server/images/${userImg}`}
+          src={`https://amove.alcodeit.com/images/${userImg}`}
           alt="LogoUser"
         />
-        <ClickAwayListener onClickAway={() => Setlogout(false)} >
-        <p onClick={() => Setlogout(!logout)} style={{cursor:'pointer'}} >{name}</p>
+        <ClickAwayListener onClickAway={() => Setlogout(false)}>
+          <p onClick={() => Setlogout(!logout)} style={{ cursor: "pointer" }}>
+            {name}
+          </p>
         </ClickAwayListener>
         {!logout && (
-                  <ClickAwayListener onClickAway={() => Setlogout(false)} >
-          <ArrowDropDownOutlinedIcon style={{cursor:'pointer'}}  onClick={() => Setlogout(!logout)} />
+          <ClickAwayListener onClickAway={() => Setlogout(false)}>
+            <ArrowDropDownOutlinedIcon
+              style={{ cursor: "pointer" }}
+              onClick={() => Setlogout(!logout)}
+            />
           </ClickAwayListener>
         )}
         {logout && (
-                <ClickAwayListener onClickAway={() => Setlogout(false)} >
-          <ArrowDropUpOutlinedIcon style={{cursor:'pointer'}} onClick={() => Setlogout(!logout)} />
+          <ClickAwayListener onClickAway={() => Setlogout(false)}>
+            <ArrowDropUpOutlinedIcon
+              style={{ cursor: "pointer" }}
+              onClick={() => Setlogout(!logout)}
+            />
           </ClickAwayListener>
         )}
-
       </div>
       <div className={!logout ? "hover-logout" : "hover-logout display-block"}>
         <p onClick={handleLogout}>
@@ -86,135 +85,141 @@ export default function Header({ name, userImg, handleLogout }) {
         </p>
       </div>
 
-      { showProducts === true && (
-                  <ClickAwayListener onClickAway={() => setShowProducts(false)} >
-        <div className="header-cart-products">
-          {cartProducts.length > 0 ? (
-            <>
-              <div className="header-cart-products-length">
-                <h2> {cartProducts.length} items </h2>
-                <p>In your cart</p>
-              </div>
-              <div className="header-cart-products-content">
-                {cartProducts.map((item) => (
-                  <div className="header-cart-products-content-item" key={item.id} >
-                    <div className="header-cart-products-content-item-image">
-                      <img
-                        src={`http://localhost/demo_react_server/images/${item.image}`}
-                        alt=""
-                      />
+      {showProducts === true && (
+        <ClickAwayListener onClickAway={() => setShowProducts(false)}>
+          <div className="header-cart-products">
+            {cartProducts.length > 0 ? (
+              <>
+                <div className="header-cart-products-length">
+                  <h2> {cartProducts.length} items </h2>
+                  <p>In your cart</p>
+                </div>
+                <div className="header-cart-products-content">
+                  {cartProducts.map((item) => (
+                    <div
+                      className="header-cart-products-content-item"
+                      key={item.id}
+                    >
+                      <div className="header-cart-products-content-item-image">
+                        <img
+                          src={`https://amove.alcodeit.com/images/${item.image}`}
+                          alt=""
+                        />
+                      </div>
+                      <div className="header-cart-products-content-item-title-remove">
+                        <h4 style={{ fontSize: "15px" }}> {item.titulli} </h4>
+                        <p style={{ fontSize: "12px" }}>{item.pershkrimi} </p>
+                        <CloseOutlinedIcon
+                          style={{
+                            fontSize: "16px",
+                            color: "red",
+                            alignSelf: "flex-end",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            klientContext.removeFromCart(item);
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="header-cart-products-content-item-title-remove">
-                      <h4 style={{ fontSize: "15px" }}> {item.titulli} </h4>
-                      <p style={{ fontSize: "12px" }}>{item.pershkrimi} </p>
-                      <CloseOutlinedIcon
-                        style={{
-                          fontSize: "16px",
-                          color: "red",
-                          alignSelf: "flex-end",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          klientContext.removeFromCart(item);
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="header-cart-products-shporta">
-                <Link
-                  to="/klient/shporta"
-                  style={{
-                    width: "100%",
-                    color: "inherit",
-                    textDecoration: "none",
-                    overflow: "hidden",
-                  }}
-                >
-                  {" "}
-                  <Button
-                    color="primary"
-                    style={{ width: "100%" }}
-                    startIcon={<ShoppingCartOutlinedIcon />}
+                  ))}
+                </div>
+                <div className="header-cart-products-shporta">
+                  <Link
+                    to="/klient/shporta"
+                    style={{
+                      width: "100%",
+                      color: "inherit",
+                      textDecoration: "none",
+                      overflow: "hidden",
+                    }}
                   >
-                    Shporta
-                  </Button>{" "}
-                </Link>
+                    {" "}
+                    <Button
+                      color="primary"
+                      style={{ width: "100%" }}
+                      startIcon={<ShoppingCartOutlinedIcon />}
+                    >
+                      Shporta
+                    </Button>{" "}
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <div className="header-cart-empty">
+                <h4>Shporta eshte bosh</h4>
               </div>
-            </>
-          ) : (
-            <div className="header-cart-empty">
-              <h4>Shporta eshte bosh</h4>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
         </ClickAwayListener>
       )}
 
-      { showWishlist === true && (
-            <ClickAwayListener onClickAway={() => setShowWishlist(false)}>
-        <div className="header-cart-products">
-          {wishlistProducts.length > 0 ? (
-            <>
-              <div className="header-cart-products-length">
-                <h2>  {wishlistProducts.length} items</h2>
-                <p>In your wishlist</p>
-              </div>
-              <div className="header-cart-products-content">
-                {wishlistProducts.map((item) => (
-                  <div className="header-cart-products-content-item" key={item.id} >
-                    <div className="header-cart-products-content-item-image">
-                      <img
-                        src={`http://localhost/demo_react_server/images/${item.image}`}
-                        alt=""
-                      />
+      {showWishlist === true && (
+        <ClickAwayListener onClickAway={() => setShowWishlist(false)}>
+          <div className="header-cart-products">
+            {wishlistProducts.length > 0 ? (
+              <>
+                <div className="header-cart-products-length">
+                  <h2> {wishlistProducts.length} items</h2>
+                  <p>In your wishlist</p>
+                </div>
+                <div className="header-cart-products-content">
+                  {wishlistProducts.map((item) => (
+                    <div
+                      className="header-cart-products-content-item"
+                      key={item.id}
+                    >
+                      <div className="header-cart-products-content-item-image">
+                        <img
+                          src={`https://amove.alcodeit.com/images/${item.image}`}
+                          alt=""
+                        />
+                      </div>
+                      <div className="header-cart-products-content-item-title-remove">
+                        <h4 style={{ fontSize: "15px" }}> {item.titulli} </h4>
+                        <p style={{ fontSize: "12px" }}>{item.pershkrimi} </p>
+                        <CloseOutlinedIcon
+                          style={{
+                            fontSize: "16px",
+                            color: "red",
+                            alignSelf: "flex-end",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => {
+                            klientContext.removeFromWishlist(item);
+                          }}
+                        />
+                      </div>
                     </div>
-                    <div className="header-cart-products-content-item-title-remove">
-                      <h4 style={{ fontSize: "15px" }}> {item.titulli} </h4>
-                      <p style={{ fontSize: "12px" }}>{item.pershkrimi} </p>
-                      <CloseOutlinedIcon
-                        style={{
-                          fontSize: "16px",
-                          color: "red",
-                          alignSelf: "flex-end",
-                          cursor: "pointer",
-                        }}
-                        onClick={() => {
-                          klientContext.removeFromWishlist(item);
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="header-cart-products-shporta">
-                <Link
-                  to="/klient/wishlist"
-                  style={{
-                    width: "100%",
-                    color: "inherit",
-                    textDecoration: "none",
-                    overflow: "hidden",
-                  }}
-                >
-                  {" "}
-                  <Button
-                    color="primary"
-                    style={{ width: "100%" }}
-                    startIcon={<StarBorderOutlinedIcon />}
+                  ))}
+                </div>
+                <div className="header-cart-products-shporta">
+                  <Link
+                    to="/klient/wishlist"
+                    style={{
+                      width: "100%",
+                      color: "inherit",
+                      textDecoration: "none",
+                      overflow: "hidden",
+                    }}
                   >
-                    Wishlist
-                  </Button>{" "}
-                </Link>
+                    {" "}
+                    <Button
+                      color="primary"
+                      style={{ width: "100%" }}
+                      startIcon={<StarBorderOutlinedIcon />}
+                    >
+                      Wishlist
+                    </Button>{" "}
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <div className="header-cart-empty">
+                <h4>Wishlist eshte bosh</h4>
               </div>
-            </>
-          ) : (
-            <div className="header-cart-empty">
-              <h4>Wishlist eshte bosh</h4>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
         </ClickAwayListener>
       )}
     </div>

@@ -25,14 +25,11 @@ export default function AccountDetails() {
   const [editFile, setEditFile] = useState("");
 
   useEffect(() => {
-
-        setEditImage(user.image_profile);
-        setEditFile(user.image_profile);
-        setEditName(user.name);
-        setEditEmail(user.email);
-
-    
-  },);
+    setEditImage(user.image_profile);
+    setEditFile(user.image_profile);
+    setEditName(user.name);
+    setEditEmail(user.email);
+  });
 
   const onChangeGeneral = (e) => {
     e.preventDefault();
@@ -44,10 +41,7 @@ export default function AccountDetails() {
     fd.append("image", editImage);
 
     axios
-      .post(
-        "https://192.168.88.250/demo_react_server/api/config/change_general_settings.php",
-        fd
-      )
+      .post("https://amove.alcodeit.com/change_general_settings.php", fd)
       .then((res) => {
         if (res.data.status === 1) {
           alertContext.setAlert(`${res.data.message}`, "success");
@@ -62,10 +56,11 @@ export default function AccountDetails() {
     e.preventDefault();
 
     axios
-      .post(
-        "https://192.168.88.250/demo_react_server/api/config/change_password.php",
-        { id: user.id, newPassword: newPassword, oldPassword: currentPassword }
-      )
+      .post("https://amove.alcodeit.com/change_password.php", {
+        id: user.id,
+        newPassword: newPassword,
+        oldPassword: currentPassword,
+      })
       .then((res) => {
         if (res.data.status === 1) {
           alertContext.setAlert(`${res.data.message}`, "success");
@@ -168,7 +163,7 @@ export default function AccountDetails() {
                             />
                           </div>
                           <img
-                            src={`https://192.168.88.250/demo_react_server/images/${editImage}`}
+                            src={`https://amove.alcodeit.com/images/${editImage}`}
                             alt=""
                           />
                         </>

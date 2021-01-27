@@ -112,7 +112,7 @@ export default function ShtoKategoriKlientesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/edit_category_client.php",
+                      "https://amove.alcodeit.com/edit_category_client.php",
                       { id: editIDKategori, name: editKategoriName }
                     )
                     .then((res) => {
@@ -176,7 +176,7 @@ export default function ShtoKategoriKlientesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/delete_category_client.php",
+                      "https://amove.alcodeit.com/delete_category_client.php",
                       { id: deleteID }
                     )
                     .then((res) => {
@@ -245,7 +245,7 @@ export default function ShtoKategoriKlientesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://192.168.88.250/demo_react_server/api/config/add_category_client.php",
+                      "https://amove.alcodeit.com/add_category_client.php",
                       { name: emriKategorise }
                     )
                     .then((res) => {

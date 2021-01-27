@@ -6,13 +6,13 @@ import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 import { Link } from "react-router-dom";
 import ArrowBackOutlinedIcon from "@material-ui/icons/ArrowBackOutlined";
 import KlientContext from "../../../context/klientContext/KlientContext";
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from "@material-ui/icons/Star";
 
 export default function SingleProduct({ match }) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost/demo_react_server/api/config/get_allProducts.php")
+      .get("https://amove.alcodeit.com/get_allProducts.php")
       .then((res) => setProducts(res.data));
   }, []);
 
@@ -41,7 +41,7 @@ export default function SingleProduct({ match }) {
         <div key={single.id} className="single-product">
           <div className="single-product-left">
             <img
-              src={`https://192.168.88.250/demo_react_server/images/${single.image}`}
+              src={`https://amove.alcodeit.com/images/${single.image}`}
               alt={single.titulli}
             />
           </div>
@@ -64,14 +64,17 @@ export default function SingleProduct({ match }) {
                 {cartProducts.some((item) => item.product_id === single.id) ===
                 true ? (
                   <Button
-                  startIcon={<ShoppingCartOutlinedIcon />}
-                  color="primary"
-                  variant="contained"
-                >
-                  <Link to="/klient/shporta" style={{color:'inherit',textDecoration:'none'}}>
-                  View in Cart
-                  </Link>
-                </Button>
+                    startIcon={<ShoppingCartOutlinedIcon />}
+                    color="primary"
+                    variant="contained"
+                  >
+                    <Link
+                      to="/klient/shporta"
+                      style={{ color: "inherit", textDecoration: "none" }}
+                    >
+                      View in Cart
+                    </Link>
+                  </Button>
                 ) : (
                   <Button
                     size="large"
