@@ -1,20 +1,96 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
+import DepoContext from "../../../../context/depoContext/DepoContext";
 import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
 
 export default function OfertaSingleProductForm() {
- 
-    return (
-    <div>
-      <TextField
-        label="Data e fillimit"
-        onChange={(e) => console.log(e.target.value)}
-        variant="outlined"
-        type="date"
-        InputLabelProps={{
-            shrink: true,
-          }}
-      />
-    </div>
-  );
+  useEffect(() => {
+    depoContext.getAllProducts();
+  }, []);
 
+  const depoContext = useContext(DepoContext);
+  const [produktiZgjedhur, setProduktiZgjedhur] = useState("");
+  const [njesia, setNjesia] = useState("");
+  const [ulja, setUlja] = useState("");
+  const [dataFillimit, setDataFillimit] = useState("");
+  const [dataMbarimit, setDataMbarimit] = useState("");
+  const { produktet } = depoContext;
+
+  return (
+    <>
+      <form className="ofert-sinlgeProduct-form">
+        <div className="ofert-singleProduct-form-emriProduktit">
+          <Autocomplete
+            id="combo-box-demo"
+            options={produktet}
+            getOptionLabel={(option) => option.titulli}
+            style={{ width: 200 }}
+            autoHighlight
+            onChange={(event, newValue) => {
+              if (newValue === "") {
+                setProduktiZgjedhur("");
+              } else {
+                setProduktiZgjedhur(newValue.id);
+              }
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                onChange={(e) => setProduktiZgjedhur(e.target.value)}
+                label="Emri Produktit"
+                variant="outlined"
+              />
+            )}
+          />
+          <TextField
+            style={{ width: "100px" }}
+            variant="outlined"
+            label="Ulja"
+            value={ulja}
+            onChange={(e) => setUlja(e.target.value)}
+          />
+          <FormControl variant="outlined">
+            <InputLabel htmlFor="njesia-label">Njesia</InputLabel>
+            <Select
+              value={njesia}
+              onChange={(e) => setNjesia(e.target.value)}
+              style={{ width: "130px" }}
+              label="Status"
+              inputProps={{
+                name: "status",
+                id: "njesia-label",
+              }}
+            >
+              <MenuItem value={"Leke"}>Leke</MenuItem>
+              <MenuItem value={"%"}>%</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            type="date"
+            variant="outlined"
+            label="Data e fillimit"
+            onChange={(e) => setDataFillimit(e.target.value)}
+            value={dataFillimit}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <TextField
+            type="date"
+            variant="outlined"
+            label="Data e mbarimit"
+            value={dataMbarimit}
+            onChange={(e) => setDataMbarimit(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+        </div>
+      </form>
+    </>
+  );
 }
