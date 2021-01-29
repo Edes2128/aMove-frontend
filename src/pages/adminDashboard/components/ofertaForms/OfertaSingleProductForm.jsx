@@ -13,12 +13,13 @@ export default function OfertaSingleProductForm() {
   }, []);
 
   const depoContext = useContext(DepoContext);
-  const [produktiZgjedhur, setProduktiZgjedhur] = useState("");
+  const [produktiZgjedhur, setProduktiZgjedhur] = useState({});
   const [njesia, setNjesia] = useState("");
   const [ulja, setUlja] = useState("");
   const [dataFillimit, setDataFillimit] = useState("");
   const [dataMbarimit, setDataMbarimit] = useState("");
   const { produktet } = depoContext;
+
 
   return (
     <>
@@ -31,16 +32,12 @@ export default function OfertaSingleProductForm() {
             style={{ width: 200 }}
             autoHighlight
             onChange={(event, newValue) => {
-              if (newValue === "") {
-                setProduktiZgjedhur("");
-              } else {
-                setProduktiZgjedhur(newValue.id);
-              }
+                
+                setProduktiZgjedhur(newValue);
             }}
             renderInput={(params) => (
               <TextField
                 {...params}
-                onChange={(e) => setProduktiZgjedhur(e.target.value)}
                 label="Emri Produktit"
                 variant="outlined"
               />
@@ -90,6 +87,7 @@ export default function OfertaSingleProductForm() {
             }}
           />
         </div>
+        
       </form>
     </>
   );

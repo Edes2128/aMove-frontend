@@ -2,8 +2,14 @@ import React from 'react'
 
 export default function CategoryClientOfertaForm() {
     return (
-        <div>
-            Category Client
-        </div>
+        <>
+
+            <form className="oferta-categoryClient-form">
+                <div className="oferta-categoryClient-form-catKlient">
+                    
+                </div>
+            </form>
+
+        </>
     )
 }
