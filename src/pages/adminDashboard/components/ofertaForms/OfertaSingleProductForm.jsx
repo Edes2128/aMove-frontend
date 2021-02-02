@@ -9,15 +9,20 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 export default function OfertaSingleProductForm() {
   const depoContext = useContext(DepoContext);
+  const { produktet, produktAttr ,attrValues } = depoContext;
   const [produktiZgjedhur, setProduktiZgjedhur] = useState({});
   const [njesia, setNjesia] = useState("");
   const [ulja, setUlja] = useState("");
   const [dataFillimit, setDataFillimit] = useState("");
   const [dataMbarimit, setDataMbarimit] = useState("");
-  const { produktet, produktAttr } = depoContext;
+  const attrIDPr = produktAttr.map(pr => pr.attr_id)
+  const attrProduktesh = attrValues.filter(atrr => attrIDPr.includes(atrr.id))
   useEffect(() => {
     depoContext.getAllProducts();
+    depoContext.getAttrValues();
   }, []);
+  
+   
 
   useEffect(() => {
     if (produktiZgjedhur === null) {
