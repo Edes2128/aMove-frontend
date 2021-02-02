@@ -69,7 +69,7 @@ export default function Produkte() {
   };
 
   const renderButtonColorsStatus = (status) => {
-    if (status === 1) {
+    if (status  === 1) {
       return "#3ccc38";
     } else if (status === 0) {
       return "#fd3259";

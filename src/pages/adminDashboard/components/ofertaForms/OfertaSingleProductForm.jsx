@@ -8,17 +8,24 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 
 export default function OfertaSingleProductForm() {
-  useEffect(() => {
-    depoContext.getAllProducts();
-  }, []);
-
   const depoContext = useContext(DepoContext);
   const [produktiZgjedhur, setProduktiZgjedhur] = useState({});
   const [njesia, setNjesia] = useState("");
   const [ulja, setUlja] = useState("");
   const [dataFillimit, setDataFillimit] = useState("");
   const [dataMbarimit, setDataMbarimit] = useState("");
-  const { produktet } = depoContext;
+  const { produktet, produktAttr } = depoContext;
+  useEffect(() => {
+    depoContext.getAllProducts();
+  }, []);
+
+  useEffect(() => {
+    if (produktiZgjedhur === null) {
+      depoContext.getProduktAttr(0);
+    } else {
+      depoContext.getProduktAttr(produktiZgjedhur.id);
+    }
+  }, [produktiZgjedhur]);
 
 
   return (
@@ -32,8 +39,7 @@ export default function OfertaSingleProductForm() {
             style={{ width: 200 }}
             autoHighlight
             onChange={(event, newValue) => {
-                
-                setProduktiZgjedhur(newValue);
+              setProduktiZgjedhur(newValue);
             }}
             renderInput={(params) => (
               <TextField
@@ -87,7 +93,6 @@ export default function OfertaSingleProductForm() {
             }}
           />
         </div>
-        
       </form>
     </>
   );

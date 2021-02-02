@@ -3,7 +3,6 @@ import DepoContext from "../../../context/depoContext/DepoContext";
 import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
 
-
 export default function Home() {
   const depoContext = useContext(DepoContext);
   const { klientet, porosite } = depoContext;

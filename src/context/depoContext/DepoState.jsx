@@ -14,6 +14,7 @@ import {
   GET_CATEGORY_PRODUCTS,
   GET_CATEGORY_CLIENTS,
   GET_ZONA_CLIENTS,
+  GET_PRODUKT_ATTR,
 } from "./types";
 
 export default function DepoState({ children }) {
@@ -21,6 +22,7 @@ export default function DepoState({ children }) {
     user: {},
     klientet: [],
     produktet: [],
+    produktAttr: [],
     porosite: [],
     orderDetails: [],
     attrNames: [],
@@ -205,6 +207,17 @@ export default function DepoState({ children }) {
     });
   };
 
+  const getProduktAttr = async (id) => {
+    const res = await axios.get(
+      `https://amove.alcodeit.com/get_produkt_attr.php?produkt_id=${id}`
+    );
+
+    dispatch({
+      type: GET_PRODUKT_ATTR,
+      payload: res.data,
+    });
+  };
+
   return (
     <DepoContext.Provider
       value={{
@@ -218,6 +231,7 @@ export default function DepoState({ children }) {
         categoryProducts: state.categoryProducts,
         categoryClients: state.categoryClients,
         zonaClients: state.zonaClients,
+        produktAttr: state.produktAttr,
         getUser,
         getAllClients,
         getAllProducts,
@@ -236,6 +250,7 @@ export default function DepoState({ children }) {
         getCategoryProducts,
         getCategoryClients,
         getZonaClients,
+        getProduktAttr,
       }}
     >
       {children}

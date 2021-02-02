@@ -10,6 +10,7 @@ import {
   GET_CATEGORY_PRODUCTS,
   GET_CATEGORY_CLIENTS,
   GET_ZONA_CLIENTS,
+  GET_PRODUKT_ATTR,
 } from "./types";
 
 export default (state, action) => {
@@ -36,6 +37,8 @@ export default (state, action) => {
       return { ...state, categoryClients: action.payload };
     case GET_ZONA_CLIENTS:
       return { ...state, zonaClients: action.payload };
+    case GET_PRODUKT_ATTR:
+      return { ...state, produktAttr: action.payload };
     default:
       return state;
   }
