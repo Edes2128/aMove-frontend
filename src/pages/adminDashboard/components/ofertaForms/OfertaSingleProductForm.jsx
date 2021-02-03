@@ -28,6 +28,8 @@ export default function OfertaSingleProductForm() {
   const attrProduktesh = attrValues.filter((atrr) =>
     attrIDPr.includes(atrr.id)
   );
+  const [teGjitheKlientet, setTeGjitheKlientet] = useState(false);
+  const [teGithaAtributet, setTeGjithaAtributet] = useState(false);
   useEffect(() => {
     depoContext.getAllProducts();
     depoContext.getAttrValues();
@@ -117,12 +119,19 @@ export default function OfertaSingleProductForm() {
               ) : (
                 <>
                   <FormControlLabel
-                    control={<Checkbox color={"primary"} />}
+                    control={
+                      <Checkbox
+                        color={"primary"}
+                        onChange={(e) => setTeGjithaAtributet(e.target.checked)}
+                        checked={teGithaAtributet}
+                      />
+                    }
                     label={"Zgjidh te gjitha"}
                   />
                   <div className="ofert-singleProduct-form-attributet">
                     {attrProduktesh.map((attr) => (
                       <FormControlLabel
+                        disabled={teGithaAtributet}
                         control={<Checkbox color={"primary"} />}
                         label={attr.value}
                       />
@@ -136,8 +145,9 @@ export default function OfertaSingleProductForm() {
           <></>
         )}
         <div className="ofert-singleProduct-form-kategoriKlienti">
-        <Autocomplete
+          <Autocomplete
             id="combo-box-demo"
+            disabled={teGjitheKlientet}
             multiple
             filterSelectedOptions
             options={categoryClients}
@@ -155,10 +165,11 @@ export default function OfertaSingleProductForm() {
               />
             )}
           />
-                  <Autocomplete
+          <Autocomplete
             id="combo-box-demo"
             multiple
             filterSelectedOptions
+            disabled={teGjitheKlientet}
             options={klientet}
             getOptionLabel={(option) => option.name}
             style={{ width: "100%" }}
@@ -174,14 +185,24 @@ export default function OfertaSingleProductForm() {
               />
             )}
           />
-                 <FormControlLabel
-                    control={<Checkbox color={"primary"} />}
-                    label={"Zgjidh te gjithe klientet"}
-                  />
+          <FormControlLabel
+            control={
+              <Checkbox
+                color={"primary"}
+                onChange={(e) => setTeGjitheKlientet(e.target.checked)}
+                checked={teGjitheKlientet}
+              />
+            }
+            label={"Zgjidh te gjithe klientet"}
+          />
         </div>
         <div className="ofert-singleProduct-form-buttons">
-              <Button color="primary" variant="outlined" >Ruaj</Button>
-              <Button color="secondary" variant="contained" >Anullo</Button>
+          <Button color="primary" variant="outlined">
+            Ruaj
+          </Button>
+          <Button color="secondary" variant="contained">
+            Anullo
+          </Button>
         </div>
       </form>
     </>
