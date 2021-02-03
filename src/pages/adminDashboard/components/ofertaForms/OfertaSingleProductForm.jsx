@@ -6,10 +6,19 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import { Button } from "@material-ui/core";
 
 export default function OfertaSingleProductForm() {
   const depoContext = useContext(DepoContext);
-  const { produktet, produktAttr, attrValues } = depoContext;
+  const {
+    produktet,
+    produktAttr,
+    attrValues,
+    klientet,
+    categoryClients,
+  } = depoContext;
   const [produktiZgjedhur, setProduktiZgjedhur] = useState({});
   const [njesia, setNjesia] = useState("");
   const [ulja, setUlja] = useState("");
@@ -22,6 +31,8 @@ export default function OfertaSingleProductForm() {
   useEffect(() => {
     depoContext.getAllProducts();
     depoContext.getAttrValues();
+    depoContext.getCategoryClients();
+    depoContext.getAllClients();
   }, []);
 
   useEffect(() => {
@@ -98,10 +109,80 @@ export default function OfertaSingleProductForm() {
           />
         </div>
 
-            <div className="ofert-singleProduct-form-prAttributes">
-              
-            </div>
-
+        {produktiZgjedhur !== {} || produktiZgjedhur !== null ? (
+          <div className="ofert-singleProduct-form-prAttributes">
+            <>
+              {attrProduktesh.length === 0 ? (
+                <p> Ky produkt nuk ka atribute </p>
+              ) : (
+                <>
+                  <FormControlLabel
+                    control={<Checkbox color={"primary"} />}
+                    label={"Zgjidh te gjitha"}
+                  />
+                  <div className="ofert-singleProduct-form-attributet">
+                    {attrProduktesh.map((attr) => (
+                      <FormControlLabel
+                        control={<Checkbox color={"primary"} />}
+                        label={attr.value}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className="ofert-singleProduct-form-kategoriKlienti">
+        <Autocomplete
+            id="combo-box-demo"
+            multiple
+            filterSelectedOptions
+            options={categoryClients}
+            getOptionLabel={(option) => option.name}
+            style={{ width: "100%" }}
+            autoHighlight
+            onChange={(event, newValue) => {
+              setProduktiZgjedhur(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Kategori Klienti"
+                variant="outlined"
+              />
+            )}
+          />
+                  <Autocomplete
+            id="combo-box-demo"
+            multiple
+            filterSelectedOptions
+            options={klientet}
+            getOptionLabel={(option) => option.name}
+            style={{ width: "100%" }}
+            autoHighlight
+            onChange={(event, newValue) => {
+              setProduktiZgjedhur(newValue);
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Klient Specifik"
+                variant="outlined"
+              />
+            )}
+          />
+                 <FormControlLabel
+                    control={<Checkbox color={"primary"} />}
+                    label={"Zgjidh te gjithe klientet"}
+                  />
+        </div>
+        <div className="ofert-singleProduct-form-buttons">
+              <Button color="primary" variant="outlined" >Ruaj</Button>
+              <Button color="secondary" variant="contained" >Anullo</Button>
+        </div>
       </form>
     </>
   );
