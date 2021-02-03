@@ -2985,7 +2985,13 @@ tbody tr:hover td:last-child {
   flex-direction: column;
   padding: 0 15px;
 }
-
+.oferta-categoryClient-form-setProduktesh-btnShtoSet{
+  width: 30%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .oferta-categoryClient-form-setProduktesh-item {
   width: 100%;
   height: 100px;

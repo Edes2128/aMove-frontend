@@ -7,6 +7,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
+import PlaylistAddOutlinedIcon from "@material-ui/icons/PlaylistAddOutlined";
+import DeleteSweepOutlinedIcon from "@material-ui/icons/DeleteSweepOutlined";
 
 export default function CategoryClientOfertaForm() {
   useEffect(() => {
@@ -24,6 +26,13 @@ export default function CategoryClientOfertaForm() {
   const [dataMbarimit, setDataMbarimit] = useState("");
   const [kategoriteProdukteve, setKategoriteProdukteve] = useState([]);
   const [produkteSpecifike, setProdukteSpecfike] = useState([]);
+  const [setet, setSetet] = useState([
+    { emriProduktit: {}, bli: "", perfito: "" },
+  ]);
+  const deleteSet = (seti) => {
+    setSetet(setet.filter((obj) => obj !== seti));
+  };
+
   return (
     <>
       <form className="oferta-categoryClient-form">
@@ -130,26 +139,61 @@ export default function CategoryClientOfertaForm() {
           />
         </div>
         <div className="oferta-categoryClient-form-setProduktesh">
-          <p>Set Produktesh</p>
-
-          <div className="oferta-categoryClient-form-setProduktesh-item">
-            <Autocomplete
-              id="combo-box-demo"
-              options={produktet}
-              getOptionLabel={(option) => option.titulli}
-              style={{ width: "30%" }}
-              autoHighlight
-              // onChange={(event, newValue) => {
-              //   setProduktSpecifik(newValue);
-              // }}
-              renderInput={(params) => (
-                <TextField {...params} label="Produktet" variant="outlined" />
-              )}
-            />
-            <TextField variant="outlined" label="Bli" type={"number"} />
-            <p style={{ fontSize: "30px" }}>+</p>
-            <TextField variant="outlined" label="Perfito" type={"number"} />
+          <div className="oferta-categoryClient-form-setProduktesh-btnShtoSet">
+            <p>Set Produktesh</p>
+            <Button
+              startIcon={<PlaylistAddOutlinedIcon />}
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                setSetet((result) => [
+                  ...result,
+                  { emriProduktit: {}, bli: "", perfito: "" },
+                ]);
+              }}
+            >
+              Shto set
+            </Button>
           </div>
+          {setet.map((set) => (
+            <div className="oferta-categoryClient-form-setProduktesh-item">
+              <DeleteSweepOutlinedIcon
+                style={{
+                  color: "red",
+                  cursor: "pointer",
+                  fontSize: "25px",
+                  display: setet.length === 1 ? "none" : "",
+                }}
+                onClick={() => deleteSet(set)}
+              />
+              <Autocomplete
+                id="combo-box-demo"
+                options={produktet}
+                getOptionLabel={(option) => option.titulli}
+                style={{ width: "30%" }}
+                autoHighlight
+                onChange={(event, newValue) => {
+                  set.emriProduktit = newValue;
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Produktet" variant="outlined" />
+                )}
+              />
+              <TextField
+                variant="outlined"
+                label="Bli"
+                type={"number"}
+                onChange={(e) => (set.bli = e.target.value)}
+              />
+              <p style={{ fontSize: "30px" }}>+</p>
+              <TextField
+                variant="outlined"
+                label="Perfito"
+                type={"number"}
+                onChange={(e) => (set.perfito = e.target.value)}
+              />
+            </div>
+          ))}
         </div>
         <div className="oferta-categoryClient-form-buttons">
           <Button color="primary" variant="outlined">
