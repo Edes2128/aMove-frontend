@@ -266,6 +266,7 @@ export default function OfertaGrupForm() {
         <div className="oferta-grup-form-klientSpecifik">
           <Autocomplete
             multiple
+            disabled={tegjithekateogritKient}
             filterSelectedOptions
             id="combo-box-demo"
             options={klientet}

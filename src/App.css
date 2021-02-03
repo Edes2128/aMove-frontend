@@ -2782,7 +2782,6 @@ tbody tr:hover td:last-child {
   left: 0;
   background-color: black;
   position: fixed;
-
 }
 .shto-oferte-pop-container {
   width: 950px;
@@ -2827,14 +2826,14 @@ tbody tr:hover td:last-child {
   height: calc(100% - 60px);
 }
 
-.ofert-sinlgeProduct-form{
+.ofert-sinlgeProduct-form {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.ofert-singleProduct-form-emriProduktit{
+.ofert-singleProduct-form-emriProduktit {
   width: 100%;
   height: 100px;
   display: flex;
@@ -2842,49 +2841,47 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
 }
 
-  .ofert-singleProduct-form-prAttributes{
-    width: 100%;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding-left: 15px;
-  }
-  
-  .ofert-singleProduct-form-kategoriKlienti{
-    width: 100%;
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    padding: 0px 15px;
-  }
-  .ofert-singleProduct-form-buttons{
-    width: 50%;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 0 auto;
-  }
+.ofert-singleProduct-form-prAttributes {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 15px;
+}
 
+.ofert-singleProduct-form-kategoriKlienti {
+  width: 100%;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0px 15px;
+}
+.ofert-singleProduct-form-buttons {
+  width: 50%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 auto;
+}
 
-
-.ofert-categoryProduct-form{
+.ofert-categoryProduct-form {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.ofert-categoryProduct-form-kategoriProdukti{
+.ofert-categoryProduct-form-kategoriProdukti {
   width: 100%;
   height: 120px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.ofert-categoryProduct-form-kategoriKlienti{
+.ofert-categoryProduct-form-kategoriKlienti {
   width: 100%;
   height: 250px;
   display: flex;
@@ -2893,7 +2890,7 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
   padding: 0 10px;
 }
-.ofert-categoryProduct-form-buttons{
+.ofert-categoryProduct-form-buttons {
   width: 40%;
   margin: 0 auto;
   height: 100px;
@@ -2902,13 +2899,13 @@ tbody tr:hover td:last-child {
   justify-content: space-evenly;
 }
 
-.oferta-clientSpecifikForm-form{
+.oferta-clientSpecifikForm-form {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.oferta-clientSpecifikForm-form-emerKlienti{
+.oferta-clientSpecifikForm-form-emerKlienti {
   width: 100%;
   height: 100px;
   display: flex;
@@ -2916,7 +2913,7 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
 }
 
-.oferta-clientSpecifikForm-form-kategoriProdukti{
+.oferta-clientSpecifikForm-form-kategoriProdukti {
   width: 100%;
   height: 220px;
   display: flex;
@@ -2926,15 +2923,24 @@ tbody tr:hover td:last-child {
   padding: 0 14px;
 }
 
-.oferta-clientSpecifikForm-form-setProdukti{
+.oferta-clientSpecifikForm-form-setProdukti {
   width: 100%;
-  height: 20%;
+  max-height: 400px;
+  height: 400px;
   padding: 0 15px;
   display: flex;
   flex-direction: column;
-
+  overflow: auto;
+  position: relative;
 }
-.oferta-clientSpecifikForm-form-setProdukti-item{
+.oferta-clientSpecifikForm-form-setProdukti-btnShtoSet {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+}
+.oferta-clientSpecifikForm-form-setProdukti-item {
   width: 100%;
   height: 100px;
   display: flex;
@@ -2942,7 +2948,7 @@ tbody tr:hover td:last-child {
   justify-content: space-between;
 }
 
-.oferta-clientSpecifikForm-form-buttons{
+.oferta-clientSpecifikForm-form-buttons {
   width: 40%;
   height: 100px;
   margin: 0 auto;
@@ -2951,23 +2957,20 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
 }
 
-
-
-.oferta-categoryClient-form{
+.oferta-categoryClient-form {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column
+  flex-direction: column;
 }
-.oferta-categoryClient-form-catKlient{
-
+.oferta-categoryClient-form-catKlient {
   width: 100%;
   height: 100px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.oferta-categoryClient-form-categoryProduct{
+.oferta-categoryClient-form-categoryProduct {
   width: 100%;
   height: 220px;
   display: flex;
@@ -2975,7 +2978,7 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
   padding: 0 14px;
 }
-.oferta-categoryClient-form-setProduktesh{
+.oferta-categoryClient-form-setProduktesh {
   width: 100%;
   height: 30%;
   display: flex;
@@ -2983,31 +2986,29 @@ tbody tr:hover td:last-child {
   padding: 0 15px;
 }
 
-.oferta-categoryClient-form-setProduktesh-item{
+.oferta-categoryClient-form-setProduktesh-item {
   width: 100%;
   height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.oferta-categoryClient-form-buttons{
-
+.oferta-categoryClient-form-buttons {
   width: 40%;
   height: 100px;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
-
 }
 
-.oferta-grup-form{
+.oferta-grup-form {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.oferta-grup-form-kategoriProdukti{
+.oferta-grup-form-kategoriProdukti {
   width: 100%;
   height: 100px;
   display: flex;
@@ -3015,23 +3016,23 @@ tbody tr:hover td:last-child {
   align-items: center;
 }
 
-.oferta-grup-form-produktSpecifik{
+.oferta-grup-form-produktSpecifik {
   width: 100%;
   height: 100px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.oferta-grup-form-kategoriKlienti{
+.oferta-grup-form-kategoriKlienti {
   width: 100%;
   height: 150px;
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
   flex-direction: column;
-  padding:  0 13px;
+  padding: 0 13px;
 }
-.oferta-grup-form-klientSpecifik{
+.oferta-grup-form-klientSpecifik {
   width: 100%;
   height: 100px;
   display: flex;
@@ -3039,7 +3040,7 @@ tbody tr:hover td:last-child {
   padding: 0 15px;
 }
 
-.oferta-grup-form-buttons{
+.oferta-grup-form-buttons {
   width: 40%;
   height: 100px;
   display: flex;
@@ -3048,40 +3049,34 @@ tbody tr:hover td:last-child {
   margin: 0 auto;
 }
 
-.oferta-set-form{
+.oferta-set-form {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
-.oferta-set-form-emriProduktit{
+.oferta-set-form-shtoSetBtn {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+.oferta-set-form-emriProduktit {
   width: 100%;
   height: 100px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
-.oferta-set-form-buttons{
+.oferta-set-form-buttons {
   width: 40%;
   margin: 0 auto;
   height: 100px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  
-}         
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 .account-details {
   width: 95%;

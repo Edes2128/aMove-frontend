@@ -7,6 +7,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import { Button } from "@material-ui/core";
+import PlaylistAddOutlinedIcon from "@material-ui/icons/PlaylistAddOutlined";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 
 export default function ClientSpecifikOfertaForm() {
   useEffect(() => {
@@ -24,6 +26,13 @@ export default function ClientSpecifikOfertaForm() {
   const [dataMbarimit, setDataMbarimit] = useState("");
   const [kategoriteProdukteve, setKategoriteProdukteve] = useState([]);
   const [produktSpecifik, setProduktSpecifik] = useState([]);
+  const [setet, setSetet] = useState([
+    { emriProduktit: {}, bli: "", perfito: "" },
+  ]);
+
+  const deleteSet = (seti) => {
+    setSetet(setet.filter((obj) => obj !== seti));
+  };
 
   return (
     <>
@@ -127,33 +136,69 @@ export default function ClientSpecifikOfertaForm() {
           />
         </div>
         <div className="oferta-clientSpecifikForm-form-setProdukti">
+          <div className="oferta-clientSpecifikForm-form-setProdukti-btnShtoSet">
             <p>Set Produkti</p>
+            <Button
+              startIcon={<PlaylistAddOutlinedIcon />}
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                setSetet((result) => [
+                  ...result,
+                  { emriProduktit: {}, bli: "", perfito: "" },
+                ]);
+              }}
+            >
+              Shto set
+            </Button>
+          </div>
+          {setet.map((set) => (
             <div className="oferta-clientSpecifikForm-form-setProdukti-item">
-            <Autocomplete
-            id="combo-box-demo"
-            options={produktet}
-            getOptionLabel={(option) => option.titulli}
-            style={{ width: "30%" }}
-            autoHighlight
-            onChange={(event, newValue) => {
-              setProduktSpecifik(newValue);
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Produktet"
-                variant="outlined"
+              <DeleteOutlineOutlinedIcon
+                onClick={() => deleteSet(set)}
+                style={{
+                  color: "red",
+                  fontSize: "25px",
+                  cursor: "pointer",
+                  display: setet.length === 1 ? "none" : "",
+                }}
               />
-            )}
-          />
-          <TextField  variant="outlined" label="Bli" type={"number"} />
-          <p style={{fontSize:'30px'}} >+</p>
-          <TextField variant="outlined" label="Perfito"  type={"number"} />
+              <Autocomplete
+                id="combo-box-demo"
+                options={produktet}
+                getOptionLabel={(option) => option.titulli}
+                style={{ width: "30%" }}
+                autoHighlight
+                onChange={(event, newValue) => {
+                  set.emriProduktit = newValue;
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} label="Produktet" variant="outlined" />
+                )}
+              />
+              <TextField
+                variant="outlined"
+                label="Bli"
+                type={"number"}
+                onChange={(e) => (set.bli = e.target.value)}
+              />
+              <p style={{ fontSize: "30px" }}>+</p>
+              <TextField
+                variant="outlined"
+                label="Perfito"
+                type={"number"}
+                onChange={(e) => (set.perfito = e.target.value)}
+              />
             </div>
+          ))}
         </div>
         <div className="oferta-clientSpecifikForm-form-buttons">
-                <Button color="primary" variant="outlined" >Ruaj</Button>
-                <Button color="secondary" variant="contained" >Anullo</Button>
+          <Button color="primary" variant="outlined">
+            Ruaj
+          </Button>
+          <Button color="secondary" variant="contained">
+            Anullo
+          </Button>
         </div>
       </form>
     </>
