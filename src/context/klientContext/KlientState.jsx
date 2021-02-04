@@ -9,6 +9,7 @@ import {
   GET_WISHLIST_PRODUCTS,
   GET_CART_PRODUCTS,
   GET_ORDERS_SINGLE_USER,
+  GET_PRODUCTS_CATEGORIES,
 } from "./types";
 
 export default function KlientState({ children }) {
@@ -18,6 +19,7 @@ export default function KlientState({ children }) {
     cartProducts: [],
     wishlistProducts: [],
     ordersSingleUser: [],
+    produktCategories: [],
   };
   const [state, dispatch] = useReducer(KlientReducer, initialState);
 
@@ -110,6 +112,7 @@ export default function KlientState({ children }) {
   const increaseQty = async (product) => {
     const payload = {
       id: product.product_id,
+      klient_id :  parseInt(JSON.parse(localStorage.getItem("id")))
     };
 
     axios.post("https://amove.alcodeit.com/increase_qty.php", payload);
@@ -120,6 +123,7 @@ export default function KlientState({ children }) {
   const decreaseQty = async (product) => {
     const payload = {
       id: product.product_id,
+
     };
 
     axios.post("https://amove.alcodeit.com/decrease_qty.php", payload);
@@ -159,6 +163,16 @@ export default function KlientState({ children }) {
     });
   };
 
+  const getCategoryProducts = async () => {
+    const res = await axios.get(
+      "https://amove.alcodeit.com/get_productCategory.php"
+    );
+    dispatch({
+      type: GET_PRODUCTS_CATEGORIES,
+      payload: res.data,
+    });
+  };
+
   return (
     <KlientContext.Provider
       value={{
@@ -167,6 +181,7 @@ export default function KlientState({ children }) {
         cartProducts: state.cartProducts,
         wishlistProducts: state.wishlistProducts,
         ordersSingleUser: state.ordersSingleUser,
+        produktCategories: state.produktCategories,
         getUser,
         getAllProducts,
         getCartProducts,
@@ -179,6 +194,7 @@ export default function KlientState({ children }) {
         decreaseQty,
         makeOrder,
         getAllOrders,
+        getCategoryProducts,
       }}
     >
       {children}

@@ -20,7 +20,10 @@ import KlientContext from "../../../context/klientContext/KlientContext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Pagination from "@material-ui/lab/Pagination";
 
+
 export default function Produktet() {
+  const klientContext = useContext(KlientContext);
+  const { cartProducts, wishlistProducts, produktCategories } = klientContext;
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [range, setRange] = useState("all");
   const [kategori, setKategori] = useState("");
@@ -29,20 +32,12 @@ export default function Produktet() {
   const [itemPage, setItempage] = useState(6);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
-  const klientContext = useContext(KlientContext);
   const products = klientContext.products;
-  const { cartProducts, wishlistProducts } = klientContext;
-
-  useEffect(() => {
-    window.addEventListener('online', function(e) { console.log('online');
-  });
-  },[])
-
-
 
 
   useEffect(() => {
     klientContext.getAllProducts();
+    klientContext.getCategoryProducts();
   }, []);
 
   const handleChange2 = (event, value) => {
@@ -78,6 +73,7 @@ export default function Produktet() {
   }
 
   return (
+
     <div>
       <div className="filter-produkte">
         <div className="filter">
@@ -135,31 +131,13 @@ export default function Produktet() {
                   onChange={(e) => setKategori(e.target.value)}
                   value={kategori}
                 >
-                  <FormControlLabel
-                    value="kategoria1"
-                    control={<Radio color="primary" />}
-                    label="Kategoria 1"
-                  />
-                  <FormControlLabel
-                    value="kategoria2"
-                    control={<Radio color="primary" />}
-                    label="Kategoria 2"
-                  />
-                  <FormControlLabel
-                    value="kategoria3"
-                    control={<Radio color="primary" />}
-                    label="Kategoria 3"
-                  />
-                  <FormControlLabel
-                    value="kategoria4"
-                    control={<Radio color="primary" />}
-                    label="Kategoria 4"
-                  />
-                  <FormControlLabel
-                    value="kategoria5"
-                    control={<Radio color="primary" />}
-                    label="Kategoria 5"
-                  />
+                  {produktCategories.map((cat) => (
+                    <FormControlLabel
+                      value={cat.name}
+                      control={<Radio color="primary" />}
+                      label={cat.name}
+                    />
+                  ))}
                 </RadioGroup>
               </FormControl>
             </div>

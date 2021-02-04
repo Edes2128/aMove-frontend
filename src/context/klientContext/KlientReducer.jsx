@@ -4,6 +4,7 @@ import {
   GET_USER,
   GET_WISHLIST_PRODUCTS,
   GET_ORDERS_SINGLE_USER,
+  GET_PRODUCTS_CATEGORIES,
 } from "./types";
 
 export default (state, action) => {
@@ -18,6 +19,8 @@ export default (state, action) => {
       return { ...state, wishlistProducts: action.payload };
     case GET_ORDERS_SINGLE_USER:
       return { ...state, ordersSingleUser: action.payload };
+    case GET_PRODUCTS_CATEGORIES:
+      return { ...state, produktCategories: action.payload };
     default:
       return state;
   }
