@@ -29,12 +29,13 @@ export default function KlientDashboard({ history }) {
       <Alert />
       <div className="klient-dashboard">
         <Sidebar />
-        <div className="klient-dashboard-header-body">
-          <Header
+        <Header
             name={name}
             userImg={image_profile}
             handleLogout={() => handleLogout()}
           />
+
+   
           <div className="klient-dashboard-body">
             <Switch>
               <ProtectedRoutes exact path="/klient" component={Home} />
@@ -65,7 +66,6 @@ export default function KlientDashboard({ history }) {
               />
             </Switch>
           </div>
-        </div>
       </div>
     </>
   );

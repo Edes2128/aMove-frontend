@@ -33,7 +33,13 @@ export default function Produktet() {
   const products = klientContext.products;
   const { cartProducts, wishlistProducts } = klientContext;
 
-  console.log(products);
+  useEffect(() => {
+    window.addEventListener('online', function(e) { console.log('online');
+  });
+  },[])
+
+
+
 
   useEffect(() => {
     klientContext.getAllProducts();
@@ -213,7 +219,6 @@ export default function Produktet() {
                 <div className="produkte-header-item-image">
                   <Link to={`/klient/${product.id}`}>
                     <img
-                      width="100"
                       src={`https://amove.alcodeit.com/images/${product.image}`}
                       alt=""
                     />
