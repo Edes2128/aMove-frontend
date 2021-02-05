@@ -11,6 +11,7 @@ import KlientContext from "../../context/klientContext/KlientContext";
 import Shporta from "./components/Shporta";
 import Wishlist from "./components/Wishlist";
 import Alert from "../components/Alert";
+
 export default function KlientDashboard({ history }) {
   const klientContext = useContext(KlientContext);
   const { name, image_profile } = klientContext.user;

@@ -9,6 +9,7 @@ import KlientState from './context/klientContext/KlientState';
 import DepoState from './context/depoContext/DepoState';
 import AlertState from './context/alertContext/AlertState';
 import CollapseState from './context/collpaseContext/CollpaseState';
+
 function App() {
   return (
     <DepoState>
@@ -26,5 +27,4 @@ function App() {
     </DepoState>
   );
 }
-
 export default App;

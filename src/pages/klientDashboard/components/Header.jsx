@@ -12,6 +12,10 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import IconButton from "@material-ui/core/IconButton";
+import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
+import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
+import CollapseContext from "../../../context/collpaseContext/CollpaseContext";
 
 export default function Header({ name, userImg, handleLogout }) {
   const [logout, Setlogout] = useState(false);
@@ -20,6 +24,8 @@ export default function Header({ name, userImg, handleLogout }) {
   const klientContext = useContext(KlientContext);
   const cartProducts = klientContext.cartProducts;
   const wishlistProducts = klientContext.wishlistProducts;
+  const collpaseContext = useContext(CollapseContext);
+  const { value } = collpaseContext;
 
   useEffect(() => {
     klientContext.getCartProducts();
@@ -28,6 +34,17 @@ export default function Header({ name, userImg, handleLogout }) {
 
   return (
     <div className="klient-dashboard-header">
+      {!value && (
+        <IconButton>
+          <ArrowBackIosOutlinedIcon />
+        </IconButton>
+      )}
+      {value && (
+        <IconButton>
+          <ArrowForwardIosOutlinedIcon />
+        </IconButton>
+      )}
+
       <div className="klient-dashboard-header-widgets-klient">
         <Badge badgeContent={wishlistProducts.length} color="primary">
           <StarBorderOutlinedIcon

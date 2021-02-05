@@ -829,8 +829,8 @@ tbody tr:hover td:last-child {
   height: 90px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding-right: 10px;
+  justify-content: space-between;
+  padding: 0 10px;
   position: fixed;
   top: 0;
   right: 0;
@@ -870,7 +870,6 @@ tbody tr:hover td:last-child {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 .klient-dashboard-body {
   width: calc(100% - 200px);
@@ -1281,7 +1280,7 @@ tbody tr:hover td:last-child {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 100px;
 }
 .wishlist-content {
   width: 98%;
@@ -1301,6 +1300,7 @@ tbody tr:hover td:last-child {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 .wishlist-item:hover {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
@@ -1315,7 +1315,7 @@ tbody tr:hover td:last-child {
   align-items: center;
 }
 .wishlist-item-image img {
-  width: 120px;
+  width: 70%;
   height: auto;
 }
 .wishlist-item-content {
@@ -2997,7 +2997,7 @@ tbody tr:hover td:last-child {
   flex-direction: column;
   padding: 0 15px;
 }
-.oferta-categoryClient-form-setProduktesh-btnShtoSet{
+.oferta-categoryClient-form-setProduktesh-btnShtoSet {
   width: 30%;
   height: auto;
   display: flex;
