@@ -112,7 +112,7 @@ export default function KlientState({ children }) {
   const increaseQty = async (product) => {
     const payload = {
       id: product.product_id,
-      klient_id :  parseInt(JSON.parse(localStorage.getItem("id")))
+      klient_id: parseInt(JSON.parse(localStorage.getItem("id"))),
     };
 
     axios.post("https://amove.alcodeit.com/increase_qty.php", payload);
@@ -123,7 +123,7 @@ export default function KlientState({ children }) {
   const decreaseQty = async (product) => {
     const payload = {
       id: product.product_id,
-
+      klient_id: parseInt(JSON.parse(localStorage.getItem("id"))),
     };
 
     axios.post("https://amove.alcodeit.com/decrease_qty.php", payload);
