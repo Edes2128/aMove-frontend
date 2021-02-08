@@ -11,10 +11,13 @@ import KlientContext from "../../context/klientContext/KlientContext";
 import Shporta from "./components/Shporta";
 import Wishlist from "./components/Wishlist";
 import Alert from "../components/Alert";
+import CollapseContext from "../../context/collpaseContext/CollpaseContext";
 
 export default function KlientDashboard({ history }) {
   const klientContext = useContext(KlientContext);
   const { name, image_profile } = klientContext.user;
+  const collpaseContext = useContext(CollapseContext);
+  const { value } = collpaseContext;
 
   const handleLogout = () => {
     localStorage.setItem("auth", false);
@@ -31,42 +34,43 @@ export default function KlientDashboard({ history }) {
       <div className="klient-dashboard">
         <Sidebar />
         <Header
-            name={name}
-            userImg={image_profile}
-            handleLogout={() => handleLogout()}
-          />
+          name={name}
+          userImg={image_profile}
+          handleLogout={() => handleLogout()}
+        />
 
-   
-          <div className="klient-dashboard-body">
-            <Switch>
-              <ProtectedRoutes exact path="/klient" component={Home} />
-              <ProtectedRoutes
-                exact
-                path="/klient/porosite"
-                component={Porosite}
-              />
-              <Route
-                exact
-                path="/klient/produktet"
-                render={(props) => <Produktet {...props} />}
-              />
-              <ProtectedRoutes
-                exact
-                path="/klient/shporta"
-                component={Shporta}
-              />
-              <ProtectedRoutes
-                exact
-                path="/klient/wishlist"
-                component={Wishlist}
-              />
-              <ProtectedRoutes
-                exact
-                path="/klient/:id"
-                component={SingleProduct}
-              />
-            </Switch>
-          </div>
+        <div
+          className={
+            value === true
+              ? "klient-dashboard-body klient-dashboard-body-collapse"
+              : "klient-dashboard-body"
+          }
+        >
+          <Switch>
+            <ProtectedRoutes exact path="/klient" component={Home} />
+            <ProtectedRoutes
+              exact
+              path="/klient/porosite"
+              component={Porosite}
+            />
+            <Route
+              exact
+              path="/klient/produktet"
+              render={(props) => <Produktet {...props} />}
+            />
+            <ProtectedRoutes exact path="/klient/shporta" component={Shporta} />
+            <ProtectedRoutes
+              exact
+              path="/klient/wishlist"
+              component={Wishlist}
+            />
+            <ProtectedRoutes
+              exact
+              path="/klient/:id"
+              component={SingleProduct}
+            />
+          </Switch>
+        </div>
       </div>
     </>
   );

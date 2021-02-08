@@ -33,14 +33,20 @@ export default function Header({ name, userImg, handleLogout }) {
   }, []);
 
   return (
-    <div className="klient-dashboard-header">
+    <div
+      className={
+        value === true
+          ? "klient-dashboard-header klient-dashboard-header-collapse"
+          : "klient-dashboard-header"
+      }
+    >
       {!value && (
-        <IconButton>
+        <IconButton onClick={collpaseContext.setTrue}>
           <ArrowBackIosOutlinedIcon />
         </IconButton>
       )}
       {value && (
-        <IconButton>
+        <IconButton onClick={collpaseContext.setFalse}>
           <ArrowForwardIosOutlinedIcon />
         </IconButton>
       )}

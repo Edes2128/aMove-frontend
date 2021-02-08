@@ -17,16 +17,55 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import KlientContext from "../../../context/klientContext/KlientContext";
+import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
+import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 
 export default function Porosite() {
   const klientConext = useContext(KlientContext);
   const { ordersSingleUser } = klientConext;
   const [orderDetails, showOrderDetails] = useState(false);
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
+  const [searchFilter, setSearchFilter] = useState("");
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
+  const [propertyName, setProperty] = useState({
+    key: "ID",
+    direction: "descending",
+  });
+
+  const filteredOrders = ordersSingleUser.filter(
+    (order) =>
+      order.ID.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.orderDate.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.totali.toString().toLowerCase().includes(searchFilter.toLowerCase())
+  );
+
+  
+  if (propertyName !== null) {
+    filteredOrders.sort((a, b) => {
+      if (a[propertyName.key] < b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? -1 : 1;
+      }
+      if (a[propertyName.key] > b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
+  const requestSort = (key) => {
+    let direction = "ascending";
+    if (
+      propertyName &&
+      propertyName.key === key &&
+      propertyName.direction === "ascending"
+    ) {
+      direction = "descending";
+    }
+    setProperty({ key, direction });
+  };
 
   useEffect(() => {
     klientConext.getAllOrders();
@@ -49,14 +88,10 @@ export default function Porosite() {
   };
 
   const renderButtonColorsStatus = (status) => {
-    if (status == 1) {
-      return "green";
-    } else if (status == 2) {
-      return "yellow";
-    } else if (status == 3) {
-      return "red";
-    } else {
-      return "purple";
+    if (status === 1) {
+      return "#73C850";
+    } else if (status === 3) {
+      return "#FF0000";
     }
   };
 
@@ -104,6 +139,8 @@ export default function Porosite() {
               placeholder="Kerko..."
               label="Kerko"
               size="small"
+              type="search"
+              onChange={(e) => setSearchFilter(e.target.value)}
             />
             <Link
               to="/klient/shporta"
@@ -122,30 +159,89 @@ export default function Porosite() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell align="left">Data</TableCell>
-                <TableCell align="left">Status</TableCell>
-                <TableCell align="left">Totali</TableCell>
-                <TableCell align="center">Veprimet</TableCell>
+                <TableCell
+                  style={{ cursor: "pointer" }}
+                  onClick={() => requestSort("ID")}
+                >
+                  ID
+                  {propertyName.key === "ID" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "ID" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                </TableCell>
+                <TableCell
+                  style={{ cursor: "pointer" }}
+                  onClick={() => requestSort("orderDate")}
+                  align="left"
+                >
+                  Data
+                  {propertyName.key === "orderDate" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "orderDate" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                </TableCell>
+                <TableCell
+                  style={{ cursor: "pointer" }}
+                  onClick={() => requestSort("status")}
+                  align="left"
+                >
+                  Status
+                  {propertyName.key === "status" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "status" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                </TableCell>
+                <TableCell
+                  style={{ cursor: "pointer" }}
+                  onClick={() => requestSort("totali")}
+                  align="left"
+                >
+                  Totali
+                  {propertyName.key === "totali" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "totali" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                </TableCell>
+                <TableCell style={{ cursor: "pointer" }} align="center">
+                  Veprimet
+                </TableCell>
               </TableRow>
             </TableHead>
 
             <TableBody>
-              {ordersSingleUser.slice(start, end).map((order) => (
+              {filteredOrders.slice(start, end).map((order) => (
                 <TableRow>
                   <TableCell> {order.ID} </TableCell>
                   <TableCell> {order.orderDate} </TableCell>
                   <TableCell>
-                    <Button
-                      size="medium"
-                      style={{
-                        backgroundColor: renderButtonColorsStatus(order.status),
-                        color: "white",
-                      }}
-                    >
+                    <p className="status-text">
                       {" "}
+                      <span
+                        className="status-pulse"
+                        style={{
+                          backgroundColor: renderButtonColorsStatus(
+                            order.status
+                          ),
+                        }}
+                      ></span>{" "}
                       {renderButtonStatus(order.status)}{" "}
-                    </Button>
+                    </p>
                   </TableCell>
                   <TableCell> {order.totali} Leke </TableCell>
                   <TableCell align="center">
