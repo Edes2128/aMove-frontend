@@ -212,7 +212,7 @@ export default function ShtoAttributes() {
               <>
                 {attrNames.map((attr) => (
                   <Chip
-                    style={{ marginRight: "20px" }}
+                    style={{ margin: "10px" }}
                     variant="outlined"
                     color="primary"
                     label={attr.name}
@@ -325,6 +325,7 @@ export default function ShtoAttributes() {
                         alertContext.setAlert(`${res.data.message}`, "success");
                         getAttrFromSelect("");
                         setAttrNameValue("");
+                        depoContext.getAttrValues();
                         showAttrPopValue(false);
                         axios.get(
                           "https://amove.alcodeit.com/get_name_values_attribues.php"
