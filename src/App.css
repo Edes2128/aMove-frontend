@@ -40,6 +40,10 @@
   font-style: normal;
   font-display: swap;
 }
+::selection {
+  background-color: salmon;
+  color: white;
+}
 
 * {
   padding: 0;
@@ -754,7 +758,7 @@ tbody tr:hover td:last-child {
   justify-content: space-between;
 }
 .porosite-header-item {
-  width: 15%;
+  width: 18.3%;
   height: 137px;
   background-color: #287dbf;
   display: flex;
@@ -1044,7 +1048,7 @@ tbody tr:hover td:last-child {
 .produktet-list-item {
   width: 31%;
   height: 400px;
-  margin:  12px;
+  margin: 12px;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   margin-bottom: 40px;
