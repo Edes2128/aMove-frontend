@@ -140,21 +140,25 @@ export default function DepoState({ children }) {
     );
 
     setTimeout(() => getOrderDetails(order), 100);
-    setTimeout(() => getAllOrders(), 100);
-    setTimeout(() => getAllProducts(), 100);
+    // setTimeout(() => getAllOrders(), 100);
+    // setTimeout(() => getAllProducts(), 100);
   };
 
-  const addProductToOrder = async (data, orderID) => {
+  const addProductToOrder = async (data, orderID, order) => {
     const payload = {
       cmimi: data.cmimi,
       produktID: data.id,
+      orderID,
     };
+
     await axios.post(
-      `https://amove.alcodeit.com/add_product_to_order.php?order_id=${orderID}`,
+      `https://amove.alcodeit.com/add_product_to_order.php`,
       payload
     );
-    setTimeout(() => getAllOrders(), 100);
-    setTimeout(() => getAllProducts(), 100);
+
+    // setTimeout(() => getAllOrders(), 100);
+    // setTimeout(() => getAllProducts(), 100);
+    setTimeout(() => getOrderDetails(order), 100);
   };
 
   const getAttrNames = async () => {

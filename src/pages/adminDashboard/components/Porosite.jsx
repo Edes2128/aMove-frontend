@@ -30,12 +30,13 @@ export default function Porosite() {
   const { porosite, orderDetails, produktet } = depoContext;
   const totali = orderDetails.map((order) => order.totali);
   const orderDetailsProduktID = orderDetails.map((order) => order.produkt_id);
-  const orderDetailsID = orderDetails.map((oder) => oder.ID);
   const [editOrderPop, setEditOrderPop] = useState(false);
   const [orderDetailss, showOrderDetails] = useState(false);
   const [deletePop, showDeletePop] = useState(false);
   const [idDelete, setDeleteId] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
+  const [klientIDOrder, setKlientIDOrder] = useState("");
+  const [orderID, setOrderID] = useState("");
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
@@ -44,6 +45,11 @@ export default function Porosite() {
     key: "order_date",
     direction: "descending",
   });
+
+  const order2 = {
+    klientID: klientIDOrder,
+    ID: orderID,
+  };
 
   const findSamePrice = (produktID, produktCmimi, orderID, order) => {
     const produktObjectFound = produktet.find(
@@ -138,7 +144,6 @@ export default function Porosite() {
               depoContext.emptyOrderDetails();
             }}
           ></div>
-
           <div className="edit-order-pop-container">
             <div className="edit-order-pop-container-left">
               <h3>Produktet e porosise</h3>
@@ -265,7 +270,8 @@ export default function Porosite() {
                             onClick={() => {
                               depoContext.addProductToOrder(
                                 produkt,
-                                orderDetailsID[0]
+                                orderID,
+                                order2
                               );
                             }}
                           >
@@ -583,6 +589,8 @@ export default function Porosite() {
                       onClick={() => {
                         setEditOrderPop(true);
                         depoContext.getOrderDetails(order);
+                        setOrderID(order.ID);
+                        setKlientIDOrder(order.klientID);
                       }}
                     />
                     <DeleteOutlineOutlinedIcon
