@@ -50,18 +50,6 @@ export default function ShtoProduktPopup({ closePopup }) {
     setPershkrimi(e.target.value);
   };
 
-  useEffect(() => {
-    const datas = attrValues.map((attr) => {
-      return {
-        id: attr.id,
-        sku: "",
-        cmimi: 0,
-        sasia: 0,
-      };
-    });
-    return setArrayofObjects(arrayOfObjects.concat(datas.map((attr) => attr)));
-  }, []);
-
   const arrayOfObject2 = productAttributesValuesIDS.map((id) =>
     arrayOfObjects.filter((arrayObj) => arrayObj.id == id)
   );
@@ -308,6 +296,24 @@ export default function ShtoProduktPopup({ closePopup }) {
                                 addNames(e);
                                 addIDS(e);
                                 addNgjyrat(e);
+
+                                if (e.target.checked) {
+                                  setArrayofObjects((result) => [
+                                    ...result,
+                                    {
+                                      id: newValues.id,
+                                      sku: "",
+                                      cmimi: 0,
+                                      sasia: 0,
+                                    },
+                                  ]);
+                                } else {
+                                  setArrayofObjects(
+                                    arrayOfObjects.filter(
+                                      (object) => object.id !== newValues.id
+                                    )
+                                  );
+                                }
                               }}
                               color="primary"
                             />

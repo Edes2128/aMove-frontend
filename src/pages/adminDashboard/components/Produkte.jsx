@@ -371,6 +371,7 @@ export default function Produkte() {
                     showPorduktDetailsPop(false);
                     setDeletedImage(false);
                     alertContext.setAlert("Produkti nuk u ndryshua", "warning");
+                    depoContext.getAttrValues();
                   }}
                 >
                   Anullo
