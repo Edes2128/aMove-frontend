@@ -140,7 +140,7 @@ export default function DepoState({ children }) {
     );
 
     setTimeout(() => getOrderDetails(order), 100);
-    // setTimeout(() => getAllOrders(), 100);
+    setTimeout(() => getAllOrders(), 100);
     // setTimeout(() => getAllProducts(), 100);
   };
 
@@ -156,7 +156,7 @@ export default function DepoState({ children }) {
       payload
     );
 
-    // setTimeout(() => getAllOrders(), 100);
+    setTimeout(() => getAllOrders(), 100);
     // setTimeout(() => getAllProducts(), 100);
     setTimeout(() => getOrderDetails(order), 100);
   };

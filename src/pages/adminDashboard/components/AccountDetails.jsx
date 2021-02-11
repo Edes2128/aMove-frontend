@@ -29,7 +29,7 @@ export default function AccountDetails() {
     setEditFile(user.image_profile);
     setEditName(user.name);
     setEditEmail(user.email);
-  });
+  },[]);
 
   const onChangeGeneral = (e) => {
     e.preventDefault();

@@ -45,6 +45,7 @@ export default function Porosite() {
     key: "order_date",
     direction: "descending",
   });
+  const [disabledButton, setDisabledButton] = useState({});
 
   const order2 = {
     klientID: klientIDOrder,
@@ -52,15 +53,7 @@ export default function Porosite() {
   };
 
   const findSamePrice = (produktID, produktCmimi, orderID, order) => {
-    const produktObjectFound = produktet.find(
-      (produkt) => produkt.id === produktID
-    );
-
-    if (produktObjectFound.cmimi === produktCmimi) {
-      depoContext.deleteProductFromOrder(orderID, produktID, order);
-    } else {
-      alert("No");
-    }
+    depoContext.deleteProductFromOrder(orderID, produktID, order);
   };
 
   const [searchFilter, setSearchFilter] = useState("");
@@ -145,6 +138,19 @@ export default function Porosite() {
             }}
           ></div>
           <div className="edit-order-pop-container">
+            <CloseOutlinedIcon
+              style={{
+                position: "absolute",
+                right: "10px",
+                top: "10px",
+                fontSize: "25px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setEditOrderPop(false);
+                depoContext.emptyOrderDetails();
+              }}
+            />
             <div className="edit-order-pop-container-left">
               <h3>Produktet e porosise</h3>
               <div className="edit-order-pop-container-left-items">
@@ -267,12 +273,14 @@ export default function Porosite() {
                             size="medium"
                             color="primary"
                             variant="contained"
-                            onClick={() => {
+                            disabled={disabledButton === produkt ? true : false}
+                            onClick={(e) => {
                               depoContext.addProductToOrder(
                                 produkt,
                                 orderID,
                                 order2
                               );
+                              setDisabledButton(produkt);
                             }}
                           >
                             {" "}

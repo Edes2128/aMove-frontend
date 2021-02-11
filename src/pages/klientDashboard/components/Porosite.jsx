@@ -19,11 +19,16 @@ import InputLabel from "@material-ui/core/InputLabel";
 import KlientContext from "../../../context/klientContext/KlientContext";
 import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
+import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
+import AlertContext from "../../../context/alertContext/AlertContext";
 
 export default function Porosite() {
+  const alertContext = useContext(AlertContext);
   const klientConext = useContext(KlientContext);
   const { ordersSingleUser } = klientConext;
   const [orderDetails, showOrderDetails] = useState(false);
+  const [orderDeletePop, setOrderDeletePop] = useState(false);
+  const [orderDeleteID, setOrderDeleteID] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
   const [searchFilter, setSearchFilter] = useState("");
   const [page, setPage] = useState(1);
@@ -38,11 +43,13 @@ export default function Porosite() {
   const filteredOrders = ordersSingleUser.filter(
     (order) =>
       order.ID.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
-      order.orderDate.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
+      order.orderDate
+        .toString()
+        .toLowerCase()
+        .includes(searchFilter.toLowerCase()) ||
       order.totali.toString().toLowerCase().includes(searchFilter.toLowerCase())
   );
 
-  
   if (propertyName !== null) {
     filteredOrders.sort((a, b) => {
       if (a[propertyName.key] < b[propertyName.key]) {
@@ -76,11 +83,11 @@ export default function Porosite() {
   };
 
   const renderButtonStatus = (status) => {
-    if (status == 1) {
+    if (status === 1) {
       return "Aktive";
-    } else if (status == 2) {
+    } else if (status === 2) {
       return "Ne Pritje";
-    } else if (status == 3) {
+    } else if (status ===3) {
       return "Anulluar";
     } else {
       return "Perfunduar";
@@ -97,6 +104,60 @@ export default function Porosite() {
 
   return (
     <>
+      {orderDeletePop && (
+        <div className="order-delete-pop">
+          <div
+            className="order-delete-pop-opa"
+            onClick={() => setOrderDeletePop(false)}
+          ></div>
+
+          <div className="order-delete-pop-container">
+            <CloseOutlinedIcon
+              onClick={() => setOrderDeletePop(false)}
+              style={{
+                cursor: "pointer",
+                position: "absolute",
+                right: "7px",
+                top: "7px",
+              }}
+            />
+            <p style={{ fontSize: "20px" }}>
+              Jeni te sigurt qe doni te anulloni porosine?
+            </p>
+            <div className="order-delete-pop-container-buttons">
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  axios
+                    .post(
+                      `https://amove.alcodeit.com/cancel_order.php?order_id=${orderDeleteID}`
+                    )
+                    .then((res) => {
+                      if (res.data.status === 1) {
+                        setOrderDeletePop(false);
+                        klientConext.getAllOrders();
+                        alertContext.setAlert(`${res.data.message}`, "success");
+                      } else {
+                        alertContext.setAlert(`${res.data.message}`, "error");
+                      }
+                    });
+                }}
+              >
+                Po
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => setOrderDeletePop(false)}
+              >
+                Jo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {orderDetails && (
         <div className="order-details-pop">
           <div
@@ -257,7 +318,13 @@ export default function Porosite() {
                         }}
                       />
                       <EditOutlinedIcon />
-                      <DeleteOutlineOutlinedIcon />
+                      <DeleteOutlineOutlinedIcon
+                        style={{ display: order.status === 3 ? "none" : "" }}
+                        onClick={() => {
+                          setOrderDeletePop(true);
+                          setOrderDeleteID(order.ID);
+                        }}
+                      />
                     </div>
                   </TableCell>
                 </TableRow>
