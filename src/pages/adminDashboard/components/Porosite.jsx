@@ -28,6 +28,7 @@ export default function Porosite() {
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
   const { porosite, orderDetails, produktet } = depoContext;
+  const [ordersDetails, setOrderDetails] = useState(orderDetails);
   const totali = orderDetails.map((order) => order.totali);
   const orderDetailsProduktID = orderDetails.map((order) => order.produkt_id);
   const [editOrderPop, setEditOrderPop] = useState(false);
@@ -56,6 +57,20 @@ export default function Porosite() {
     depoContext.deleteProductFromOrder(orderID, produktID, order);
   };
 
+  const increaseQty = (produktID) => {
+    const findProduct = orderDetails.find(
+      (order) => order.produktID === produktID
+    );
+    findProduct.qty += 1;
+  };
+
+  const decreaseQty = (produktID) => {
+    const findProduct = orderDetails.find(
+      (order) => order.produktID === produktID
+    );
+    findProduct.qty -= 1;
+  };
+
   const [searchFilter, setSearchFilter] = useState("");
   const filteredOrder = porosite.filter(
     (order) =>
@@ -68,6 +83,8 @@ export default function Porosite() {
         .toLowerCase()
         .includes(searchFilter.toLowerCase())
   );
+
+  console.log(orderDetails);
 
   useEffect(() => {
     depoContext.getAllOrders();
@@ -171,43 +188,36 @@ export default function Porosite() {
                         <h5> Cmimi fillestar : {order.cmimiProduktit} Leke </h5>
                       </div>
                       <div className="edit-order-pop-item-buttons">
-                        <Tooltip title="Zbrit">
-                          <Button
-                            color="primary"
-                            size="small"
-                            variant="contained"
-                            disabled={order.qty === 1 ? true : false}
-                            onClick={() => {
-                              depoContext.decreaseOrderQty(order);
-                              alertContext.setAlert(
-                                `Sasia e produktit ${order.titulli} u ul`,
-                                "success"
-                              );
-                            }}
-                          >
-                            {" "}
-                            -{" "}
-                          </Button>
-                        </Tooltip>
+                        <Button
+                          color="primary"
+                          size="small"
+                          variant="contained"
+                          disabled={order.qty === 1 ? true : false}
+                          onClick={() => {
+                            depoContext.decreaseOrderQty(order);
+
+                            decreaseQty(order.produktID);
+                          }}
+                        >
+                          {" "}
+                          -{" "}
+                        </Button>
+
                         <p> {order.qty} </p>
-                        <Tooltip title="Rrit">
-                          <Button
-                            color="primary"
-                            size="small"
-                            variant="contained"
-                            disabled={order.qty === order.sasia ? true : false}
-                            onClick={() => {
-                              depoContext.increaseOrderQty(order);
-                              alertContext.setAlert(
-                                `Sasia e produktit ${order.titulli} u rrit`,
-                                "success"
-                              );
-                            }}
-                          >
-                            {" "}
-                            +{" "}
-                          </Button>
-                        </Tooltip>
+
+                        <Button
+                          color="primary"
+                          size="small"
+                          variant="contained"
+                          disabled={order.qty === order.sasia ? true : false}
+                          onClick={() => {
+                            depoContext.increaseOrderQty(order);
+                            increaseQty(order.produktID);
+                          }}
+                        >
+                          {" "}
+                          +{" "}
+                        </Button>
                       </div>
                     </div>
                     <div className="edit-order-pop-container-item-cmimi">

@@ -122,16 +122,12 @@ export default function DepoState({ children }) {
     await axios.post(
       `https://amove.alcodeit.com/increase_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
     );
-    setTimeout(() => getOrderDetails(order), 100);
-    setTimeout(() => getAllOrders(), 100);
   };
 
   const decreaseOrderQty = async (order) => {
     await axios.post(
       `https://amove.alcodeit.com/decrease_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
     );
-    setTimeout(() => getOrderDetails(order), 100);
-    setTimeout(() => getAllOrders(), 100);
   };
 
   const deleteProductFromOrder = async (orderID, productID, order) => {

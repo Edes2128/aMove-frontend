@@ -2114,6 +2114,7 @@ tbody tr:hover td:last-child {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .edit-order-pop-container-right-items-item-image {
   width: 100%;
