@@ -149,8 +149,9 @@ export default function Porosite() {
             className="edit-order-pop-opa"
             onClick={() => {
               setEditOrderPop(false);
-              depoContext.emptyOrderDetails();
               setOrdersDetails([]);
+              depoContext.emptyOrderDetails();
+              depoContext.getAllOrders();
             }}
           ></div>
           <div className="edit-order-pop-container">
