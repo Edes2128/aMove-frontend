@@ -22,13 +22,11 @@ import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined"
 import AlertContext from "../../../context/alertContext/AlertContext";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import Tooltip from "@material-ui/core/Tooltip";
 
 export default function Porosite() {
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
   const { porosite, orderDetails, produktet } = depoContext;
-  const [ordersDetails, setOrderDetails] = useState(orderDetails);
   const totali = orderDetails.map((order) => order.totali);
   const orderDetailsProduktID = orderDetails.map((order) => order.produkt_id);
   const [editOrderPop, setEditOrderPop] = useState(false);
@@ -51,10 +49,6 @@ export default function Porosite() {
   const order2 = {
     klientID: klientIDOrder,
     ID: orderID,
-  };
-
-  const findSamePrice = (produktID, produktCmimi, orderID, order) => {
-    depoContext.deleteProductFromOrder(orderID, produktID, order);
   };
 
   const increaseQty = (produktID) => {
@@ -194,9 +188,8 @@ export default function Porosite() {
                           variant="contained"
                           disabled={order.qty === 1 ? true : false}
                           onClick={() => {
+                            decreaseQty(order.produkt_id);
                             depoContext.decreaseOrderQty(order);
-
-                            decreaseQty(order.produktID);
                           }}
                         >
                           {" "}
@@ -211,8 +204,8 @@ export default function Porosite() {
                           variant="contained"
                           disabled={order.qty === order.sasia ? true : false}
                           onClick={() => {
+                            increaseQty(order.produkt_id);
                             depoContext.increaseOrderQty(order);
-                            increaseQty(order.produktID);
                           }}
                         >
                           {" "}
@@ -221,24 +214,21 @@ export default function Porosite() {
                       </div>
                     </div>
                     <div className="edit-order-pop-container-item-cmimi">
-                      <Tooltip title="Delete">
-                        <CloseOutlinedIcon
-                          style={{
-                            color: "red",
-                            alignSelf: "flex-end",
-                            justifySelf: "flex-end",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            findSamePrice(
-                              order.produkt_id,
-                              order.cmimiProduktit,
-                              order.ID,
-                              order
-                            );
-                          }}
-                        />
-                      </Tooltip>
+                      <CloseOutlinedIcon
+                        style={{
+                          color: "red",
+                          alignSelf: "flex-end",
+                          justifySelf: "flex-end",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
+                          depoContext.deleteProductFromOrder(
+                            order.ID,
+                            order.produkt_id,
+                            order
+                          );
+                        }}
+                      />
                       <h5> Totali : {order.qty * order.cmimiProduktit} </h5>
                     </div>
                   </div>
@@ -291,6 +281,7 @@ export default function Porosite() {
                                 order2
                               );
                               setDisabledButton(produkt);
+                              setTimeout(() => setDisabledButton({}), 1000);
                             }}
                           >
                             {" "}

@@ -137,7 +137,7 @@ export default function DepoState({ children }) {
 
     setTimeout(() => getOrderDetails(order), 100);
     setTimeout(() => getAllOrders(), 100);
-    // setTimeout(() => getAllProducts(), 100);
+    setTimeout(() => getAllProducts(), 100);
   };
 
   const addProductToOrder = async (data, orderID, order) => {
@@ -217,6 +217,7 @@ export default function DepoState({ children }) {
       payload: res.data,
     });
   };
+
 
   return (
     <DepoContext.Provider
