@@ -31,8 +31,8 @@ export default function Porosite() {
   const [resetActiveOrder, setActiveOrder] = useState(false);
   const [orderDeleteID, setOrderDeleteID] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
-  const [resetOrderID,setResetOrderID] = useState("")
-  const [resetOrderKlientID,setResetKlientID] = useState("")
+  const [resetOrderID, setResetOrderID] = useState("");
+  const [resetOrderKlientID, setResetKlientID] = useState("");
   const [searchFilter, setSearchFilter] = useState("");
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
@@ -43,7 +43,7 @@ export default function Porosite() {
     direction: "descending",
   });
 
-  console.log(ordersSingleUser)
+  console.log(ordersSingleUser);
 
   const filteredOrders = ordersSingleUser.filter(
     (order) =>
@@ -131,14 +131,39 @@ export default function Porosite() {
             />
             <h3>Doni te beni porosine aktive?</h3>
             <div className="order-resetActive-pop-container-buttons">
-              <Button color="primary" variant="outlined" onClick={() => {
-                axios.post(`https://amove.alcodeit.com/edit_order_status.php`, {orderID: resetOrderID, klientID : resetOrderKlientID }).then(res => {
-                  console.log(res.data)
-                } )
-              }} >
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  axios
+                    .post(`https://amove.alcodeit.com/edit_order_status.php`, {
+                      orderID: resetOrderID,
+                      klientID: resetOrderKlientID,
+                    })
+                    .then((res) => {
+                      if (res.data.status === 1) {
+                        klientConext.getAllOrders();
+                        setResetKlientID("");
+                        setResetOrderID("");
+                        setActiveOrder(false);
+                        alertContext.setAlert(`${res.data.message}`, "success");
+                      } else {
+                        alertContext.setAlert(`${res.data.message}`, "error");
+                      }
+                    });
+                }}
+              >
                 Po
               </Button>
-              <Button color="secondary" variant="outlined">
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  setResetKlientID("");
+                  setResetOrderID("");
+                  setActiveOrder(false);
+                }}
+              >
                 Jo
               </Button>
             </div>
@@ -362,9 +387,9 @@ export default function Porosite() {
                       {order.status === 3 ? (
                         <EditOutlinedIcon
                           onClick={() => {
-                            setActiveOrder(true)
-                            setResetOrderID(order.ID)
-                            setResetKlientID(order.klientID)
+                            setActiveOrder(true);
+                            setResetOrderID(order.ID);
+                            setResetKlientID(order.klientID);
                           }}
                         />
                       ) : (
