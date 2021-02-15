@@ -28,8 +28,11 @@ export default function Porosite() {
   const { ordersSingleUser } = klientConext;
   const [orderDetails, showOrderDetails] = useState(false);
   const [orderDeletePop, setOrderDeletePop] = useState(false);
+  const [resetActiveOrder, setActiveOrder] = useState(false);
   const [orderDeleteID, setOrderDeleteID] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
+  const [resetOrderID,setResetOrderID] = useState("")
+  const [resetOrderKlientID,setResetKlientID] = useState("")
   const [searchFilter, setSearchFilter] = useState("");
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
@@ -39,6 +42,8 @@ export default function Porosite() {
     key: "ID",
     direction: "descending",
   });
+
+  console.log(ordersSingleUser)
 
   const filteredOrders = ordersSingleUser.filter(
     (order) =>
@@ -87,7 +92,7 @@ export default function Porosite() {
       return "Aktive";
     } else if (status === 2) {
       return "Ne Pritje";
-    } else if (status ===3) {
+    } else if (status === 3) {
       return "Anulluar";
     } else {
       return "Perfunduar";
@@ -104,6 +109,43 @@ export default function Porosite() {
 
   return (
     <>
+      {resetActiveOrder && (
+        <div className="order-resetActive-pop">
+          <div
+            className="order-resetActive-pop-opa"
+            onClick={() => {
+              setActiveOrder(false);
+            }}
+          ></div>
+          <div className="order-resetActive-pop-container">
+            <CloseOutlinedIcon
+              onClick={() => {
+                setActiveOrder(false);
+              }}
+              style={{
+                position: "absolute",
+                top: "7px",
+                right: "7px",
+                cursor: "pointer",
+              }}
+            />
+            <h3>Doni te beni porosine aktive?</h3>
+            <div className="order-resetActive-pop-container-buttons">
+              <Button color="primary" variant="outlined" onClick={() => {
+                axios.post(`https://amove.alcodeit.com/edit_order_status.php`, {orderID: resetOrderID, klientID : resetOrderKlientID }).then(res => {
+                  console.log(res.data)
+                } )
+              }} >
+                Po
+              </Button>
+              <Button color="secondary" variant="outlined">
+                Jo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {orderDeletePop && (
         <div className="order-delete-pop">
           <div
@@ -317,7 +359,18 @@ export default function Porosite() {
                             .then((res) => setOrderDetailsContent(res.data));
                         }}
                       />
-                      <EditOutlinedIcon />
+                      {order.status === 3 ? (
+                        <EditOutlinedIcon
+                          onClick={() => {
+                            setActiveOrder(true)
+                            setResetOrderID(order.ID)
+                            setResetKlientID(order.klientID)
+                          }}
+                        />
+                      ) : (
+                        <EditOutlinedIcon />
+                      )}
+
                       <DeleteOutlineOutlinedIcon
                         style={{ display: order.status === 3 ? "none" : "" }}
                         onClick={() => {
