@@ -29,6 +29,7 @@ export default function Porosite() {
   const [orderDetails, showOrderDetails] = useState(false);
   const [orderDeletePop, setOrderDeletePop] = useState(false);
   const [resetActiveOrder, setActiveOrder] = useState(false);
+  const [orderEditPop,setOrderEditPop] = useState(false);
   const [orderDeleteID, setOrderDeleteID] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
   const [resetOrderID, setResetOrderID] = useState("");

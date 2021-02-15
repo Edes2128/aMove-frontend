@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import ArrowDropDownOutlinedIcon from "@material-ui/icons/ArrowDropDownOutlined";
 import ArrowDropUpOutlinedIcon from "@material-ui/icons/ArrowDropUpOutlined";
@@ -16,6 +15,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowBackIosOutlinedIcon from "@material-ui/icons/ArrowBackIosOutlined";
 import ArrowForwardIosOutlinedIcon from "@material-ui/icons/ArrowForwardIosOutlined";
 import CollapseContext from "../../../context/collpaseContext/CollpaseContext";
+import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 
 export default function Header({ name, userImg, handleLogout }) {
   const [logout, Setlogout] = useState(false);
@@ -71,7 +71,7 @@ export default function Header({ name, userImg, handleLogout }) {
         </Badge>
 
         <Badge badgeContent={9} color="primary">
-          <NotificationsIcon />
+          <NotificationsNoneOutlinedIcon />
         </Badge>
         <Avatar
           className="logo-user-loggedin"
