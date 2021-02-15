@@ -43,8 +43,6 @@ export default function Porosite() {
     direction: "descending",
   });
 
-  console.log(ordersSingleUser);
-
   const filteredOrders = ordersSingleUser.filter(
     (order) =>
       order.ID.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
