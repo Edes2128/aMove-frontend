@@ -3397,22 +3397,6 @@ tbody tr:hover td:last-child {
   display: flex;
   align-items: center;
 }
-.klient-produkte-search-notfound h3 {
-  animation: scale 1.5s infinite;
-}
-.klient-produkte-search-notfound p {
-  animation: scale 1.5s infinite;
-  margin-top: 40px;
-}
-@keyframes scale {
-  0% {
-    transform: scale(1.1);
-  }
-
-  100% {
-    transform: scale(1.4);
-  }
-}
 .klient-produkte-search-notfound img {
   height: 100%;
   width: auto;
@@ -3432,6 +3416,10 @@ tbody tr:hover td:last-child {
   display: flex;
   position: relative;
   overflow: hidden;
+  transition: all .4s ease-out;
+}
+.produktet-list-vertical-item:hover{
+  transform: translateY(-5px);
 }
 .produktet-list-vertical-item-image {
   height: 100%;

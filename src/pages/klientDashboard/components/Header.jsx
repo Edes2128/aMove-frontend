@@ -70,7 +70,7 @@ export default function Header({ name, userImg, handleLogout }) {
           />
         </Badge>
 
-        <Badge badgeContent={9} color="primary">
+        <Badge badgeContent={2} color="primary">
           <NotificationsNoneOutlinedIcon />
         </Badge>
         <Avatar

@@ -34,6 +34,7 @@ export default function Produktet() {
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const products = klientContext.products;
+  const [disabledButton, setDisabledButton] = useState({});
   const productFilter = products.filter(
     (product) =>
       product.titulli
@@ -190,7 +191,7 @@ export default function Produktet() {
           <div className="produkte-search">
             <TextField
               label="Kerko"
-              style={{ width: "100%", backgroundColor: "white" }}
+              style={{ width: "98%", backgroundColor: "white" }}
               placeholder="Kerko..."
               variant="outlined"
               color="primary"
@@ -269,11 +270,17 @@ export default function Produktet() {
                           <Button
                             variant="contained"
                             startIcon={<LocalMallOutlinedIcon />}
-                            disabled={product.sasia == 0 ? true : false}
+                            disabled={
+                              product.sasia == 0 || product === disabledButton
+                                ? true
+                                : false
+                            }
                             color="primary"
                             style={{ width: "80%" }}
                             onClick={() => {
                               klientContext.addToCart(product);
+                              setDisabledButton(product);
+                              setTimeout(() => setDisabledButton({}), 1500);
                             }}
                           >
                             Add to Cart
@@ -326,7 +333,6 @@ export default function Produktet() {
                       }}
                     >
                       <h3>Nuk u gjet asnje produkt nga kerkimi😥</h3>
-
                       <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
                     </div>
                   </div>
@@ -373,11 +379,17 @@ export default function Produktet() {
                           ) : (
                             <Button
                               startIcon={<LocalMallOutlinedIcon />}
-                              disabled={product.sasia == 0 ? true : false}
+                              disabled={
+                                product.sasia == 0 || product === disabledButton
+                                  ? true
+                                  : false
+                              }
                               color="primary"
                               style={{ width: "50%" }}
                               onClick={() => {
                                 klientContext.addToCart(product);
+                                setDisabledButton(product);
+                                setTimeout(() => setDisabledButton({}), 1500);
                               }}
                             >
                               Add to Cart
@@ -430,6 +442,7 @@ export default function Produktet() {
                 onChange={(e) => setItempage(e.target.value)}
                 value={itemPage}
               >
+                <MenuItem value={4}>4</MenuItem>
                 <MenuItem value={6}>6</MenuItem>
                 <MenuItem value={12}>12</MenuItem>
                 <MenuItem value={18}>18</MenuItem>
