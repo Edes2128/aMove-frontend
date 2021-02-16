@@ -26,13 +26,14 @@ import ShoppingBasketOutlinedIcon from "@material-ui/icons/ShoppingBasketOutline
 export default function Porosite() {
   const alertContext = useContext(AlertContext);
   const klientConext = useContext(KlientContext);
-  const { ordersSingleUser , products } = klientConext;
+  const { ordersSingleUser, products } = klientConext;
   const [orderDetails, showOrderDetails] = useState(false);
   const [orderDeletePop, setOrderDeletePop] = useState(false);
   const [resetActiveOrder, setActiveOrder] = useState(false);
   const [orderEditPop, setOrderEditPop] = useState(false);
   const [orderDeleteID, setOrderDeleteID] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
+  const [orderEditDetails, setEditOrderDetails] = useState([]);
   const [resetOrderID, setResetOrderID] = useState("");
   const [resetOrderKlientID, setResetKlientID] = useState("");
   const [searchFilter, setSearchFilter] = useState("");
@@ -44,8 +45,8 @@ export default function Porosite() {
     key: "ID",
     direction: "descending",
   });
-
-  console.log(ordersSingleUser)
+const totali  = orderEditDetails.map(order => order.totali);
+  console.log(orderEditDetails);
 
   const filteredOrders = ordersSingleUser.filter(
     (order) =>
@@ -118,23 +119,68 @@ export default function Porosite() {
             className="order-edit-pop-opa"
             onClick={() => {
               setOrderEditPop(false);
+              setEditOrderDetails([])
             }}
           ></div>
           <div className="order-edit-pop-container">
             <CloseOutlinedIcon
               onClick={() => {
                 setOrderEditPop(false);
+                setEditOrderDetails([])
               }}
               style={{
                 position: "absolute",
                 top: "7px",
                 right: "7px",
                 fontSize: "26px",
-                cursor:"pointer"
+                cursor: "pointer",
               }}
             />
-            <div className="order-edit-pop-container-left"></div>
-            <div className="order-edit-pop-container-right"></div>
+            <div className="order-edit-pop-container-left">
+              <div className="order-edit-pop-container-left-items">
+                {orderEditDetails.map((order) => (
+                  <div className="order-edit-pop-container-left-items-item">
+                    <CloseOutlinedIcon
+                      style={{
+                        color: "red",
+                        position: "absolute",
+                        top: "5px",
+                        right: "5px",
+                        cursor: "pointer",
+                      }}
+                    />
+                    <div className="order-edit-pop-container-left-items-item-image">
+                      <img
+                        src={`https://amove.alcodeit.com/images/${order.image}`}
+                        alt={order.titulli}
+                      />
+                    </div>
+                    <div className="order-edit-pop-container-left-items-item-titulli">
+                      <h4>{order.titulli}</h4>
+                      <p>Cmimi fillestar: {order.cmimiProduktit} Leke</p>
+                      <div className="order-edit-pop-container-left-items-item-titulli-buttons">
+                        <Button color="primary" variant="contained">
+                          -
+                        </Button>
+                        <span> {order.qty} </span>
+                        <Button color="primary" variant="contained">
+                          +
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="order-edit-pop-container-left-items-item-totali">
+                      <p>Totali: {order.cmimiProduktit * order.qty} Leke</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="order-edit-pop-container-left-totali">
+                <p>Totali : {totali[0]} Leke </p>
+              </div>
+            </div>
+            <div className="order-edit-pop-container-right">
+              
+            </div>
           </div>
         </div>
       )}
@@ -466,6 +512,11 @@ export default function Porosite() {
                         <EditOutlinedIcon
                           onClick={() => {
                             setOrderEditPop(true);
+                            axios
+                              .get(
+                                `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
+                              )
+                              .then((res) => setEditOrderDetails(res.data));
                           }}
                         />
                       )}
