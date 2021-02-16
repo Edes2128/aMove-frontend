@@ -25,6 +25,7 @@ export default function Produktet() {
   const { cartProducts, wishlistProducts, produktCategories } = klientContext;
   const [sliderPrice, setSliderPrice] = useState([0, 1000]);
   const [range, setRange] = useState("all");
+  const [produktMenuLayout, setProduktMenuLayout] = useState("horizontal");
   const [kategori, setKategori] = useState("");
   const [priceSort, setPriceSort] = useState("");
   const [searchFilter, setSearchFilter] = useState("");
@@ -33,9 +34,6 @@ export default function Produktet() {
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const products = klientContext.products;
-
-  console.log(products);
-
   const productFilter = products.filter(
     (product) =>
       product.titulli
@@ -69,21 +67,6 @@ export default function Produktet() {
     setRange("all");
     setKategori("");
   };
-
-  function sortByProperty(property) {
-    return function (a, b) {
-      if (priceSort === "high") {
-        if (a[property] > b[property]) {
-          return 1;
-        }
-      } else if (priceSort === "low") {
-        if (a[property] < b[property]) {
-          return -1;
-        }
-      }
-      return 0;
-    };
-  }
 
   return (
     <div>
@@ -180,11 +163,28 @@ export default function Produktet() {
                 <MenuItem value="high">Highest Price</MenuItem>
               </Select>
             </FormControl>
-            <div className="katror">
-              <BorderAllOutlinedIcon style={{ fontSize: "25px" }} />
+            <div
+              className="katror"
+              onClick={() => setProduktMenuLayout("horizontal")}
+            >
+              <BorderAllOutlinedIcon
+                style={{
+                  fontSize: "21px",
+                  color:
+                    produktMenuLayout === "horizontal" ? "#1b75bc" : "black",
+                }}
+              />
             </div>
-            <div className="drejtkendesh">
-              <ListOutlinedIcon style={{ fontSize: "30px" }} />
+            <div
+              className="drejtkendesh"
+              onClick={() => setProduktMenuLayout("vertical")}
+            >
+              <ListOutlinedIcon
+                style={{
+                  fontSize: "25px",
+                  color: produktMenuLayout === "vertical" ? "#1b75bc" : "black",
+                }}
+              />
             </div>
           </div>
           <div className="produkte-search">
@@ -206,8 +206,9 @@ export default function Produktet() {
               }}
             />
           </div>
-          <div className="produktet-list">
-            <>
+
+          {produktMenuLayout === "vertical" && (
+            <div className="produktet-list-vertical">
               {productFilter.length === 0 ? (
                 <div className="klient-produkte-search-notfound">
                   <img src="/search_notfound.gif" alt="" />
@@ -227,87 +228,150 @@ export default function Produktet() {
               ) : (
                 <>
                   {productFilter.slice(start, end).map((product) => (
-                    <div className="produktet-list-item" key={product.id}>
-                      <div className="produkte-header-item-image">
-                        <Link to={`/klient/${product.id}`}>
-                          <img
-                            src={`https://amove.alcodeit.com/images/${product.image}`}
-                            alt=""
-                          />
-                        </Link>
+                    <div className="produktet-list-vertical-item">
+                      <div className="produktet-list-vertical-item-image">
+                        <img
+                          src={`https://amove.alcodeit.com/images/${product.image}`}
+                          alt=""
+                        />
                       </div>
-
-                      <div className="produktet-list-item-price">
-                        <p> {product.cmimi} Leke </p>
+                      <div className="produktet-list-vertical-item-titulli">
+                        <h3 style={{ marginBottom: "20px" }}>
+                          {" "}
+                          {product.titulli}{" "}
+                        </h3>
+                        <p  >{product.pershkrimi}</p>
                       </div>
-                      <div className="produkte-header-item-title-description">
-                        <h4> {product.titulli} </h4>
-                        <p> {product.pershkrimi} </p>
-                      </div>
-
-                      <div className="produkte-header-item-wish-cart">
-                        {cartProducts.some(
-                          (item) => item.product_id === product.id
-                        ) === true ? (
-                          <Button
-                            startIcon={<LocalMallOutlinedIcon />}
-                            color="primary"
-                            style={{ width: "50%" }}
-                          >
-                            <Link
-                              to="/klient/shporta"
-                              style={{
-                                color: "inherit",
-                                textDecoration: "none",
-                              }}
-                            >
-                              View in Cart
-                            </Link>
-                          </Button>
-                        ) : (
-                          <Button
-                            startIcon={<LocalMallOutlinedIcon />}
-                            disabled={product.sasia == 0 ? true : false}
-                            color="primary"
-                            style={{ width: "50%" }}
-                            onClick={() => {
-                              klientContext.addToCart(product);
-                            }}
-                          >
-                            Add to Cart
-                          </Button>
-                        )}
-
-                        {wishlistProducts.some(
-                          (item) => item.product_id === product.id
-                        ) ? (
-                          <Button
-                            startIcon={<FavoriteIcon />}
-                            color="secondary"
-                            style={{ width: "50%" }}
-                            onClick={() =>
-                              klientContext.removeFromWishlist(product)
-                            }
-                          >
-                            Wish List
-                          </Button>
-                        ) : (
-                          <Button
-                            startIcon={<FavoriteBorderOutlinedIcon />}
-                            color="secondary"
-                            style={{ width: "50%" }}
-                            onClick={() => klientContext.addToWishlist(product)}
-                          >
-                            Wish List
-                          </Button>
-                        )}
+                      <div className="produktet-list-vertical-item-buttons">
+                         <p style={{color:"#1b75bc",fontWeight:"600"}}> {product.cmimi} Leke</p>
+                        <Button
+                          color="primary"
+                          variant="contained"
+                          style={{ width: "80%" }}
+                        >
+                          Add to cart
+                        </Button>
+                        <Button
+                          color="secondary"
+                          variant="outlined"
+                          style={{ width: "80%" }}
+                        >
+                          Wishlist
+                        </Button>
                       </div>
                     </div>
                   ))}
                 </>
               )}
-            </>
-          </div>
+            </div>
+          )}
+
+          {produktMenuLayout === "horizontal" && (
+            <div className="produktet-list">
+              <>
+                {productFilter.length === 0 ? (
+                  <div className="klient-produkte-search-notfound">
+                    <img src="/search_notfound.gif" alt="" />
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <i>
+                        <h3>Nuk u gjet asnje produkt nga kerkimi</h3>
+                      </i>
+                      <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {productFilter.slice(start, end).map((product) => (
+                      <div className="produktet-list-item" key={product.id}>
+                        <div className="produkte-header-item-image">
+                          <Link to={`/klient/${product.id}`}>
+                            <img
+                              src={`https://amove.alcodeit.com/images/${product.image}`}
+                              alt=""
+                            />
+                          </Link>
+                        </div>
+
+                        <div className="produktet-list-item-price">
+                          <p> {product.cmimi} Leke </p>
+                        </div>
+                        <div className="produkte-header-item-title-description">
+                          <h4> {product.titulli} </h4>
+                          <p> {product.pershkrimi} </p>
+                        </div>
+
+                        <div className="produkte-header-item-wish-cart">
+                          {cartProducts.some(
+                            (item) => item.product_id === product.id
+                          ) === true ? (
+                            <Button
+                              startIcon={<LocalMallOutlinedIcon />}
+                              color="primary"
+                              style={{ width: "50%" }}
+                            >
+                              <Link
+                                to="/klient/shporta"
+                                style={{
+                                  color: "inherit",
+                                  textDecoration: "none",
+                                }}
+                              >
+                                View in Cart
+                              </Link>
+                            </Button>
+                          ) : (
+                            <Button
+                              startIcon={<LocalMallOutlinedIcon />}
+                              disabled={product.sasia == 0 ? true : false}
+                              color="primary"
+                              style={{ width: "50%" }}
+                              onClick={() => {
+                                klientContext.addToCart(product);
+                              }}
+                            >
+                              Add to Cart
+                            </Button>
+                          )}
+
+                          {wishlistProducts.some(
+                            (item) => item.product_id === product.id
+                          ) ? (
+                            <Button
+                              startIcon={<FavoriteIcon />}
+                              color="secondary"
+                              style={{ width: "50%" }}
+                              onClick={() =>
+                                klientContext.removeFromWishlist(product)
+                              }
+                            >
+                              Wish List
+                            </Button>
+                          ) : (
+                            <Button
+                              startIcon={<FavoriteBorderOutlinedIcon />}
+                              color="secondary"
+                              style={{ width: "50%" }}
+                              onClick={() =>
+                                klientContext.addToWishlist(product)
+                              }
+                            >
+                              Wish List
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </>
+            </div>
+          )}
           <div
             className="produkte-pagination"
             style={{ display: productFilter.length === 0 ? "none" : "flex" }}
