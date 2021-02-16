@@ -219,9 +219,8 @@ export default function Produktet() {
                       flexDirection: "column",
                     }}
                   >
-                    <i>
-                      <h3>Nuk u gjet asnje produkt nga kerkimi</h3>
-                    </i>
+                    <h3>Nuk u gjet asnje produkt nga kerkimi😥</h3>
+
                     <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
                   </div>
                 </div>
@@ -240,24 +239,71 @@ export default function Produktet() {
                           {" "}
                           {product.titulli}{" "}
                         </h3>
-                        <p  >{product.pershkrimi}</p>
+                        <p>{product.pershkrimi}</p>
                       </div>
                       <div className="produktet-list-vertical-item-buttons">
-                         <p style={{color:"#1b75bc",fontWeight:"600"}}> {product.cmimi} Leke</p>
-                        <Button
-                          color="primary"
-                          variant="contained"
-                          style={{ width: "80%" }}
-                        >
-                          Add to cart
-                        </Button>
-                        <Button
-                          color="secondary"
-                          variant="outlined"
-                          style={{ width: "80%" }}
-                        >
-                          Wishlist
-                        </Button>
+                        <p style={{ color: "#1b75bc", fontWeight: "600" }}>
+                          {" "}
+                          {product.cmimi} Leke
+                        </p>
+                        {cartProducts.some(
+                          (item) => item.product_id === product.id
+                        ) === true ? (
+                          <Button
+                            startIcon={<LocalMallOutlinedIcon />}
+                            color="primary"
+                            variant="contained"
+                            style={{ width: "80%" }}
+                          >
+                            <Link
+                              to="/klient/shporta"
+                              style={{
+                                color: "inherit",
+                                textDecoration: "none",
+                              }}
+                            >
+                              View in Cart
+                            </Link>
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="contained"
+                            startIcon={<LocalMallOutlinedIcon />}
+                            disabled={product.sasia == 0 ? true : false}
+                            color="primary"
+                            style={{ width: "80%" }}
+                            onClick={() => {
+                              klientContext.addToCart(product);
+                            }}
+                          >
+                            Add to Cart
+                          </Button>
+                        )}
+                        {wishlistProducts.some(
+                          (item) => item.product_id === product.id
+                        ) ? (
+                          <Button
+                            variant="outlined"
+                            startIcon={<FavoriteIcon />}
+                            color="secondary"
+                            style={{ width: "80%" }}
+                            onClick={() =>
+                              klientContext.removeFromWishlist(product)
+                            }
+                          >
+                            Wish List
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="outlined"
+                            startIcon={<FavoriteBorderOutlinedIcon />}
+                            color="secondary"
+                            style={{ width: "80%" }}
+                            onClick={() => klientContext.addToWishlist(product)}
+                          >
+                            Wish List
+                          </Button>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -279,9 +325,8 @@ export default function Produktet() {
                         flexDirection: "column",
                       }}
                     >
-                      <i>
-                        <h3>Nuk u gjet asnje produkt nga kerkimi</h3>
-                      </i>
+                      <h3>Nuk u gjet asnje produkt nga kerkimi😥</h3>
+
                       <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
                     </div>
                   </div>
