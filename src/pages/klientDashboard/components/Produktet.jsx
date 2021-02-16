@@ -20,7 +20,6 @@ import KlientContext from "../../../context/klientContext/KlientContext";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Pagination from "@material-ui/lab/Pagination";
 
-
 export default function Produktet() {
   const klientContext = useContext(KlientContext);
   const { cartProducts, wishlistProducts, produktCategories } = klientContext;
@@ -28,12 +27,26 @@ export default function Produktet() {
   const [range, setRange] = useState("all");
   const [kategori, setKategori] = useState("");
   const [priceSort, setPriceSort] = useState("");
+  const [searchFilter, setSearchFilter] = useState("");
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(6);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const products = klientContext.products;
 
+  console.log(products);
+
+  const productFilter = products.filter(
+    (product) =>
+      product.titulli
+        .toString()
+        .toLowerCase()
+        .includes(searchFilter.toLowerCase()) ||
+      product.cmimi
+        .toString()
+        .toLowerCase()
+        .includes(searchFilter.toLowerCase())
+  );
 
   useEffect(() => {
     klientContext.getAllProducts();
@@ -73,7 +86,6 @@ export default function Produktet() {
   }
 
   return (
-
     <div>
       <div className="filter-produkte">
         <div className="filter">
@@ -182,6 +194,9 @@ export default function Produktet() {
               placeholder="Kerko..."
               variant="outlined"
               color="primary"
+              onChange={(e) => {
+                setSearchFilter(e.target.value);
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -192,81 +207,111 @@ export default function Produktet() {
             />
           </div>
           <div className="produktet-list">
-            {products.slice(start, end).map((product) => (
-              <div className="produktet-list-item" key={product.id}>
-                <div className="produkte-header-item-image">
-                  <Link to={`/klient/${product.id}`}>
-                    <img
-                      src={`https://amove.alcodeit.com/images/${product.image}`}
-                      alt=""
-                    />
-                  </Link>
+            <>
+              {productFilter.length === 0 ? (
+                <div className="klient-produkte-search-notfound">
+                  <img src="/search_notfound.gif" alt="" />
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <i>
+                      <h3>Nuk u gjet asnje produkt nga kerkimi</h3>
+                    </i>
+                    <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
+                  </div>
                 </div>
+              ) : (
+                <>
+                  {productFilter.slice(start, end).map((product) => (
+                    <div className="produktet-list-item" key={product.id}>
+                      <div className="produkte-header-item-image">
+                        <Link to={`/klient/${product.id}`}>
+                          <img
+                            src={`https://amove.alcodeit.com/images/${product.image}`}
+                            alt=""
+                          />
+                        </Link>
+                      </div>
 
-                <div className="produktet-list-item-price">
-                  <p> {product.cmimi} Leke </p>
-                </div>
-                <div className="produkte-header-item-title-description">
-                  <h4> {product.titulli} </h4>
-                  <p> {product.pershkrimi} </p>
-                </div>
+                      <div className="produktet-list-item-price">
+                        <p> {product.cmimi} Leke </p>
+                      </div>
+                      <div className="produkte-header-item-title-description">
+                        <h4> {product.titulli} </h4>
+                        <p> {product.pershkrimi} </p>
+                      </div>
 
-                <div className="produkte-header-item-wish-cart">
-                  {cartProducts.some(
-                    (item) => item.product_id === product.id
-                  ) === true ? (
-                    <Button
-                      startIcon={<LocalMallOutlinedIcon />}
-                      color="primary"
-                      style={{ width: "50%" }}
-                    >
-                      <Link
-                        to="/klient/shporta"
-                        style={{ color: "inherit", textDecoration: "none" }}
-                      >
-                        View in Cart
-                      </Link>
-                    </Button>
-                  ) : (
-                    <Button
-                      startIcon={<LocalMallOutlinedIcon />}
-                      disabled={product.sasia == 0 ? true : false}
-                      color="primary"
-                      style={{ width: "50%" }}
-                      onClick={() => {
-                        klientContext.addToCart(product);
-                      }}
-                    >
-                      Add to Cart
-                    </Button>
-                  )}
+                      <div className="produkte-header-item-wish-cart">
+                        {cartProducts.some(
+                          (item) => item.product_id === product.id
+                        ) === true ? (
+                          <Button
+                            startIcon={<LocalMallOutlinedIcon />}
+                            color="primary"
+                            style={{ width: "50%" }}
+                          >
+                            <Link
+                              to="/klient/shporta"
+                              style={{
+                                color: "inherit",
+                                textDecoration: "none",
+                              }}
+                            >
+                              View in Cart
+                            </Link>
+                          </Button>
+                        ) : (
+                          <Button
+                            startIcon={<LocalMallOutlinedIcon />}
+                            disabled={product.sasia == 0 ? true : false}
+                            color="primary"
+                            style={{ width: "50%" }}
+                            onClick={() => {
+                              klientContext.addToCart(product);
+                            }}
+                          >
+                            Add to Cart
+                          </Button>
+                        )}
 
-                  {wishlistProducts.some(
-                    (item) => item.product_id === product.id
-                  ) ? (
-                    <Button
-                      startIcon={<FavoriteIcon />}
-                      color="secondary"
-                      style={{ width: "50%" }}
-                      onClick={() => klientContext.removeFromWishlist(product)}
-                    >
-                      Wish List
-                    </Button>
-                  ) : (
-                    <Button
-                      startIcon={<FavoriteBorderOutlinedIcon />}
-                      color="secondary"
-                      style={{ width: "50%" }}
-                      onClick={() => klientContext.addToWishlist(product)}
-                    >
-                      Wish List
-                    </Button>
-                  )}
-                </div>
-              </div>
-            ))}
+                        {wishlistProducts.some(
+                          (item) => item.product_id === product.id
+                        ) ? (
+                          <Button
+                            startIcon={<FavoriteIcon />}
+                            color="secondary"
+                            style={{ width: "50%" }}
+                            onClick={() =>
+                              klientContext.removeFromWishlist(product)
+                            }
+                          >
+                            Wish List
+                          </Button>
+                        ) : (
+                          <Button
+                            startIcon={<FavoriteBorderOutlinedIcon />}
+                            color="secondary"
+                            style={{ width: "50%" }}
+                            onClick={() => klientContext.addToWishlist(product)}
+                          >
+                            Wish List
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
+            </>
           </div>
-          <div className="produkte-pagination">
+          <div
+            className="produkte-pagination"
+            style={{ display: productFilter.length === 0 ? "none" : "flex" }}
+          >
             <div style={{ display: "flex", alignItems: "center" }}>
               <InputLabel style={{ marginRight: "10px" }} id="row">
                 Produkte ne faqe
@@ -284,7 +329,7 @@ export default function Produktet() {
               </Select>
             </div>
             <Pagination
-              count={Math.ceil(products.length / itemPage)}
+              count={Math.ceil(productFilter.length / itemPage)}
               color="primary"
               page={page}
               size="large"

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
-import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
@@ -52,7 +51,7 @@ export default function Produkte() {
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const depoContext = useContext(DepoContext);
-  const { produktet } = depoContext;
+  const { produktet, categoryProducts } = depoContext;
   const alertContext = useContext(AlertContext);
   const [propertyName, setProperty] = useState({
     key: "id",
@@ -69,7 +68,7 @@ export default function Produkte() {
   };
 
   const renderButtonColorsStatus = (status) => {
-    if (status  === 1) {
+    if (status === 1) {
       return "#3ccc38";
     } else if (status === 0) {
       return "#fd3259";
@@ -121,6 +120,7 @@ export default function Produkte() {
 
   useEffect(() => {
     depoContext.getAllProducts();
+    depoContext.getCategoryProducts();
   }, []);
 
   const handleChange = (event, value) => {
@@ -320,10 +320,9 @@ export default function Produkte() {
                       id: "kategoria-label",
                     }}
                   >
-                    <MenuItem value="kategoria1">Kategoria1</MenuItem>
-                    <MenuItem value="kategoria2">Kategoria2</MenuItem>
-                    <MenuItem value="kategoria3">Kategoria3</MenuItem>
-                    <MenuItem value="kategoria4">Kategoria4</MenuItem>
+                    {categoryProducts.map((category) => (
+                      <MenuItem value={category.name}>{category.name}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
                 <TextField
