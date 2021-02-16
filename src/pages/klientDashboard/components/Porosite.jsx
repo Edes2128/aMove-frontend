@@ -21,15 +21,16 @@ import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
 import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
 import AlertContext from "../../../context/alertContext/AlertContext";
+import ShoppingBasketOutlinedIcon from "@material-ui/icons/ShoppingBasketOutlined";
 
 export default function Porosite() {
   const alertContext = useContext(AlertContext);
   const klientConext = useContext(KlientContext);
-  const { ordersSingleUser } = klientConext;
+  const { ordersSingleUser , products } = klientConext;
   const [orderDetails, showOrderDetails] = useState(false);
   const [orderDeletePop, setOrderDeletePop] = useState(false);
   const [resetActiveOrder, setActiveOrder] = useState(false);
-  // const [orderEditPop,setOrderEditPop] = useState(false);
+  const [orderEditPop, setOrderEditPop] = useState(false);
   const [orderDeleteID, setOrderDeleteID] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
   const [resetOrderID, setResetOrderID] = useState("");
@@ -43,6 +44,8 @@ export default function Porosite() {
     key: "ID",
     direction: "descending",
   });
+
+  console.log(ordersSingleUser)
 
   const filteredOrders = ordersSingleUser.filter(
     (order) =>
@@ -80,6 +83,7 @@ export default function Porosite() {
 
   useEffect(() => {
     klientConext.getAllOrders();
+    klientConext.getAllProducts();
   }, []);
 
   const handleChange = (event, value) => {
@@ -108,6 +112,33 @@ export default function Porosite() {
 
   return (
     <>
+      {orderEditPop && (
+        <div className="order-edit-pop">
+          <div
+            className="order-edit-pop-opa"
+            onClick={() => {
+              setOrderEditPop(false);
+            }}
+          ></div>
+          <div className="order-edit-pop-container">
+            <CloseOutlinedIcon
+              onClick={() => {
+                setOrderEditPop(false);
+              }}
+              style={{
+                position: "absolute",
+                top: "7px",
+                right: "7px",
+                fontSize: "26px",
+                cursor:"pointer"
+              }}
+            />
+            <div className="order-edit-pop-container-left"></div>
+            <div className="order-edit-pop-container-right"></div>
+          </div>
+        </div>
+      )}
+
       {resetActiveOrder && (
         <div className="order-resetActive-pop">
           <div
@@ -256,7 +287,47 @@ export default function Porosite() {
         </div>
       )}
       <div className="klient-porosite">
-        <h2>Porosite e mia</h2>
+        <div className="klient-porosite-header">
+          <div className="klient-porosite-header-item">
+            <div className="klient-porosite-header-item-left">
+              <h3>Porosi Aktive</h3>
+              <p style={{ fontWeight: "700", fontSize: "20px" }}>0</p>
+            </div>
+            <div className="klient-porosite-header-item-right">
+              <ShoppingBasketOutlinedIcon style={{ fontSize: "50px" }} />
+            </div>
+          </div>
+
+          <div className="klient-porosite-header-item">
+            <div className="klient-porosite-header-item-left">
+              <h3>Porosi te Anulluara</h3>
+              <p style={{ fontWeight: "700", fontSize: "20px" }}>0</p>
+            </div>
+            <div className="klient-porosite-header-item-right">
+              <ShoppingBasketOutlinedIcon style={{ fontSize: "50px" }} />
+            </div>
+          </div>
+
+          <div className="klient-porosite-header-item">
+            <div className="klient-porosite-header-item-left">
+              <h3>Porosi ne Pritje</h3>
+              <p style={{ fontWeight: "700", fontSize: "20px" }}>0</p>
+            </div>
+            <div className="klient-porosite-header-item-right">
+              <ShoppingBasketOutlinedIcon style={{ fontSize: "50px" }} />
+            </div>
+          </div>
+
+          <div className="klient-porosite-header-item">
+            <div className="klient-porosite-header-item-left">
+              <h3>Porosi te Perfunduara</h3>
+              <p style={{ fontWeight: "700", fontSize: "20px" }}>0</p>
+            </div>
+            <div className="klient-porosite-header-item-right">
+              <ShoppingBasketOutlinedIcon style={{ fontSize: "50px" }} />
+            </div>
+          </div>
+        </div>
 
         <div className="klient-porosite-data-table">
           <div className="klient-porosite-data-table-header">
@@ -392,7 +463,11 @@ export default function Porosite() {
                           }}
                         />
                       ) : (
-                        <EditOutlinedIcon />
+                        <EditOutlinedIcon
+                          onClick={() => {
+                            setOrderEditPop(true);
+                          }}
+                        />
                       )}
 
                       <DeleteOutlineOutlinedIcon

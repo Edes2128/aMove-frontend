@@ -385,6 +385,9 @@ tbody tr:hover td:last-child {
   display: flex;
   justify-content: space-between;
   padding: 10px 0px;
+  padding-left: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 .MuiPaginationItem-textPrimary.Mui-selected {
   background-color: #1b75bc !important;
@@ -1506,7 +1509,7 @@ tbody tr:hover td:last-child {
   opacity: 0.7;
 }
 .order-details-pop-content {
-  position: fixed;
+  position: relative;
   width: 600px;
   max-height: 900px;
   background-color: white;
@@ -1519,7 +1522,6 @@ tbody tr:hover td:last-child {
   width: 100%;
   height: 150px;
   display: flex;
-  overflow: hidden;
   margin-bottom: 20px;
   position: relative;
 }
@@ -1539,7 +1541,7 @@ tbody tr:hover td:last-child {
   bottom: 0px;
   width: 100%;
   height: 1px;
-  background-color: violet;
+  background-color: rgba(0, 0, 0, 0.11);
 }
 
 .order-details-pop-content-item-image {
@@ -1616,9 +1618,39 @@ tbody tr:hover td:last-child {
   background-color: white;
   margin: 0 auto;
   margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
-.klient-porosite h2 {
-  margin-left: 20px;
+.klient-porosite-header {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.klient-porosite-header-item {
+  background-color: #1b75bc;
+  height: 150px;
+  width: 22%;
+  border-radius: 25px;
+  display: flex;
+  color: white;
+  position: relative;
+}
+.klient-porosite-header-item-left {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.klient-porosite-header-item-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 40%;
 }
 .klient-porosite-data-table {
   width: 100%;
@@ -3416,9 +3448,9 @@ tbody tr:hover td:last-child {
   display: flex;
   position: relative;
   overflow: hidden;
-  transition: all .4s ease-out;
+  transition: all 0.4s ease-out;
 }
-.produktet-list-vertical-item:hover{
+.produktet-list-vertical-item:hover {
   transform: translateY(-5px);
 }
 .produktet-list-vertical-item-image {
@@ -3457,4 +3489,44 @@ tbody tr:hover td:last-child {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+}
+.order-edit-pop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.order-edit-pop-opa {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  opacity: 0.4;
+  background-color: black;
+}
+.order-edit-pop-container {
+  background-color: white;
+  width: 70%;
+  height: 95%;
+  z-index: 101;
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+  display: flex;
+}
+.order-edit-pop-container-left {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.order-edit-pop-container-right {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
