@@ -3346,3 +3346,44 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
   align-items: center;
 }
+.reset-order-pop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.reset-order-pop-opa{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: .4;
+  background-color: black;
+}
+.reset-order-pop-container{
+  width: 600px;
+  height: 250px;
+  z-index: 101;
+  background-color: white;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+}
+.reset-order-pop-container-buttons{
+  width: 50%;
+  height: 40%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

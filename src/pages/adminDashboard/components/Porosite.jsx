@@ -33,11 +33,11 @@ export default function Porosite() {
   const alertContext = useContext(AlertContext);
   const { porosite, produktet } = depoContext;
   const [ordersDetails, setOrdersDetails] = useState([]);
-  const totali = ordersDetails.map((order) => order.totali);
   const orderDetailsProduktID = ordersDetails.map((order) => order.produkt_id);
   const [editOrderPop, setEditOrderPop] = useState(false);
   const [orderDetailss, showOrderDetails] = useState(false);
   const [deletePop, showDeletePop] = useState(false);
+  const [resetOrderPop, setResetOrderPop] = useState(false);
   const [idDelete, setDeleteId] = useState("");
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
   const [klientIDOrder, setKlientIDOrder] = useState("");
@@ -143,6 +143,72 @@ export default function Porosite() {
 
   return (
     <>
+      {resetOrderPop && (
+        <div className="reset-order-pop">
+          <div
+            className="reset-order-pop-opa"
+            onClick={() => {
+              setResetOrderPop(false);
+              setOrderID("");
+              setKlientIDOrder("");
+            }}
+          ></div>
+          <div className="reset-order-pop-container">
+            <CloseOutlinedIcon
+              style={{
+                position: "absolute",
+                top: "7px",
+                right: "7px",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                setResetOrderPop(false);
+                setOrderID("");
+                setKlientIDOrder("");
+              }}
+            />
+            <h3>Deshironi te beni porosine aktive?</h3>
+            <div className="reset-order-pop-container-buttons">
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={() => {
+                  axios
+                    .post("https://amove.alcodeit.com/edit_order_status.php", {
+                      orderID: orderID,
+                      klientID: klientIDOrder,
+                    })
+                    .then((res) => {
+                      if (res.data.status === 1) {
+                        setResetOrderPop(false);
+                        setOrderID("");
+                        setKlientIDOrder("");
+                        depoContext.getAllOrders();
+                        alertContext.setAlert(`${res.data.message}`, "success");
+                      } else {
+                        alertContext.setAlert(`${res.data.message}`, "error");
+                      }
+                    });
+                }}
+              >
+                Po
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  setResetOrderPop(false);
+                  setOrderID("");
+                  setKlientIDOrder("");
+                }}
+              >
+                Jo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {editOrderPop && (
         <div className="edit-order-pop">
           <div
@@ -648,21 +714,32 @@ export default function Porosite() {
                           .then((res) => setOrderDetailsContent(res.data));
                       }}
                     />
-                    <EditOutlinedIcon
-                      onClick={() => {
-                        setEditOrderPop(true);
-                        depoContext.getOrderDetails(order);
-                        axios
-                          .get(
-                            `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
-                          )
-                          .then((res) => {
-                            setOrdersDetails(res.data);
-                          });
-                        setOrderID(order.ID);
-                        setKlientIDOrder(order.klientID);
-                      }}
-                    />
+                    {order.order_status === 3 ? (
+                      <EditOutlinedIcon
+                        onClick={() => {
+                          setResetOrderPop(true);
+                          setOrderID(order.ID);
+                          setKlientIDOrder(order.klientID);
+                        }}
+                      />
+                    ) : (
+                      <EditOutlinedIcon
+                        onClick={() => {
+                          setEditOrderPop(true);
+                          depoContext.getOrderDetails(order);
+                          axios
+                            .get(
+                              `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
+                            )
+                            .then((res) => {
+                              setOrdersDetails(res.data);
+                            });
+                          setOrderID(order.ID);
+                          setKlientIDOrder(order.klientID);
+                        }}
+                      />
+                    )}
+
                     <DeleteOutlineOutlinedIcon
                       onClick={() => {
                         showDeletePop(true);
