@@ -58,6 +58,8 @@ export default function Porosite() {
       order.totali.toString().toLowerCase().includes(searchFilter.toLowerCase())
   );
 
+  console.log(products);
+
   if (propertyName !== null) {
     filteredOrders.sort((a, b) => {
       if (a[propertyName.key] < b[propertyName.key]) {
@@ -137,6 +139,7 @@ export default function Porosite() {
               }}
             />
             <div className="order-edit-pop-container-left">
+              <h3 style={{ padding: "5px" }}>Produktet e porosise</h3>
               <div className="order-edit-pop-container-left-items">
                 {orderEditDetails.map((order) => (
                   <div className="order-edit-pop-container-left-items-item">
@@ -178,7 +181,34 @@ export default function Porosite() {
                 <p>Totali : {totali[0]} Leke </p>
               </div>
             </div>
-            <div className="order-edit-pop-container-right"></div>
+            <div className="order-edit-pop-container-right">
+              <h3>Produktet</h3>
+              <div className="order-edit-pop-container-right-items">
+                {products.map((product) => (
+                  <div className="order-edit-pop-container-right-items-item">
+                    <div className="order-edit-pop-container-right-items-item-image">
+                      <img
+                        src={`https://amove.alcodeit.com/images/${product.image}`}
+                        alt={product.titulli}
+                      />
+                    </div>
+                    <div className="order-edit-pop-container-right-items-item-titulli">
+                      <h3>{product.titulli}</h3>
+                      <p> {product.pershkrimi} </p>
+                    </div>
+                    <div className="order-edit-pop-container-right-items-item-cmimi">
+                      <p>Cmimi {product.cmimi} Leke</p>
+                      <p>Stock: {product.sasia} </p>
+                    </div>
+                    <div className="order-edit-pop-container-right-items-item-button">
+                      <Button color="primary" variant="contained">
+                        Shto ne porosi
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -409,141 +439,192 @@ export default function Porosite() {
               </Button>
             </Link>
           </div>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  style={{ cursor: "pointer" }}
-                  onClick={() => requestSort("ID")}
-                >
-                  ID
-                  {propertyName.key === "ID" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                    )}
-                  {propertyName.key === "ID" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                    )}
-                </TableCell>
-                <TableCell
-                  style={{ cursor: "pointer" }}
-                  onClick={() => requestSort("orderDate")}
-                  align="left"
-                >
-                  Data
-                  {propertyName.key === "orderDate" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                    )}
-                  {propertyName.key === "orderDate" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                    )}
-                </TableCell>
-                <TableCell
-                  style={{ cursor: "pointer" }}
-                  onClick={() => requestSort("status")}
-                  align="left"
-                >
-                  Status
-                  {propertyName.key === "status" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                    )}
-                  {propertyName.key === "status" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                    )}
-                </TableCell>
-                <TableCell
-                  style={{ cursor: "pointer" }}
-                  onClick={() => requestSort("totali")}
-                  align="left"
-                >
-                  Totali
-                  {propertyName.key === "totali" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                    )}
-                  {propertyName.key === "totali" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                    )}
-                </TableCell>
-                <TableCell style={{ cursor: "pointer" }} align="center">
-                  Veprimet
-                </TableCell>
-              </TableRow>
-            </TableHead>
 
-            <TableBody>
-              {filteredOrders.slice(start, end).map((order) => (
+          {filteredOrders.length === 0 ? (
+            <div
+              className="klient-produkte-search-notfound"
+              style={{ justifyContent: "center" }}
+            >
+              <img src="/search_notfound.gif" alt="" />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <h3>Nuk u gjet asnje porosi nga kerkimi😥</h3>
+                <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
+              </div>
+            </div>
+          ) : (
+            <Table>
+              <TableHead>
                 <TableRow>
-                  <TableCell> {order.ID} </TableCell>
-                  <TableCell> {order.orderDate} </TableCell>
-                  <TableCell>
-                    <p className="status-text">
-                      {" "}
-                      <span
-                        className="status-pulse"
-                        style={{
-                          backgroundColor: renderButtonColorsStatus(
-                            order.status
-                          ),
-                        }}
-                      ></span>{" "}
-                      {renderButtonStatus(order.status)}{" "}
-                    </p>
-                  </TableCell>
-                  <TableCell> {order.totali} Leke </TableCell>
-                  <TableCell align="center">
-                    <div className="veprime" style={{ cursor: "pointer" }}>
-                      <VisibilityOutlinedIcon
-                        onClick={() => {
-                          showOrderDetails(true);
-                          axios
-                            .get(
-                              `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
-                            )
-                            .then((res) => setOrderDetailsContent(res.data));
-                        }}
-                      />
-                      {order.status === 3 ? (
-                        <EditOutlinedIcon
-                          onClick={() => {
-                            setActiveOrder(true);
-                            setResetOrderID(order.ID);
-                            setResetKlientID(order.klientID);
-                          }}
+                  <TableCell
+                    style={{ cursor: "pointer" }}
+                    onClick={() => requestSort("ID")}
+                  >
+                    ID
+                    {propertyName.key === "ID" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "ID" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
                         />
-                      ) : (
-                        <EditOutlinedIcon
+                      )}
+                  </TableCell>
+                  <TableCell
+                    style={{ cursor: "pointer" }}
+                    onClick={() => requestSort("orderDate")}
+                    align="left"
+                  >
+                    Data
+                    {propertyName.key === "orderDate" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "orderDate" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
+                  </TableCell>
+                  <TableCell
+                    style={{ cursor: "pointer" }}
+                    onClick={() => requestSort("status")}
+                    align="left"
+                  >
+                    Status
+                    {propertyName.key === "status" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "status" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
+                  </TableCell>
+                  <TableCell
+                    style={{ cursor: "pointer" }}
+                    onClick={() => requestSort("totali")}
+                    align="left"
+                  >
+                    Totali
+                    {propertyName.key === "totali" &&
+                      propertyName.direction === "ascending" && (
+                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                      )}
+                    {propertyName.key === "totali" &&
+                      propertyName.direction === "descending" && (
+                        <ArrowDownwardOutlinedIcon
+                          style={{ fontSize: "17px" }}
+                        />
+                      )}
+                  </TableCell>
+                  <TableCell style={{ cursor: "pointer" }} align="center">
+                    Veprimet
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {filteredOrders.slice(start, end).map((order) => (
+                  <TableRow>
+                    <TableCell> {order.ID} </TableCell>
+                    <TableCell> {order.orderDate} </TableCell>
+                    <TableCell>
+                      <p className="status-text">
+                        {" "}
+                        <span
+                          className="status-pulse"
+                          style={{
+                            backgroundColor: renderButtonColorsStatus(
+                              order.status
+                            ),
+                          }}
+                        ></span>{" "}
+                        {renderButtonStatus(order.status)}{" "}
+                      </p>
+                    </TableCell>
+                    <TableCell> {order.totali} Leke </TableCell>
+                    <TableCell align="center">
+                      <div className="veprime" style={{ cursor: "pointer" }}>
+                        <VisibilityOutlinedIcon
                           onClick={() => {
-                            setOrderEditPop(true);
+                            showOrderDetails(true);
                             axios
                               .get(
                                 `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
                               )
-                              .then((res) => setEditOrderDetails(res.data));
+                              .then((res) => setOrderDetailsContent(res.data));
                           }}
                         />
-                      )}
+                        {order.status === 3 ? (
+                          <EditOutlinedIcon
+                            onClick={() => {
+                              setActiveOrder(true);
+                              setResetOrderID(order.ID);
+                              setResetKlientID(order.klientID);
+                            }}
+                            style={{
+                              display:
+                                order.status === 2 || order.status === 4
+                                  ? "none"
+                                  : "",
+                            }}
+                          />
+                        ) : (
+                          <EditOutlinedIcon
+                            onClick={() => {
+                              setOrderEditPop(true);
+                              axios
+                                .get(
+                                  `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
+                                )
+                                .then((res) => setEditOrderDetails(res.data));
+                            }}
+                            style={{
+                              display:
+                                order.status === 2 || order.status === 4
+                                  ? "none"
+                                  : "",
+                            }}
+                          />
+                        )}
 
-                      <DeleteOutlineOutlinedIcon
-                        style={{ display: order.status === 3 ? "none" : "" }}
-                        onClick={() => {
-                          setOrderDeletePop(true);
-                          setOrderDeleteID(order.ID);
-                        }}
-                      />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="pagination">
+                        <DeleteOutlineOutlinedIcon
+                          style={{
+                            display:
+                              order.status === 3 ||
+                              order.status === 2 ||
+                              order.status === 4
+                                ? "none"
+                                : "",
+                          }}
+                          onClick={() => {
+                            setOrderDeletePop(true);
+                            setOrderDeleteID(order.ID);
+                          }}
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+
+          <div
+            className="pagination"
+            style={{ display: filteredOrders.length === 0 ? "none" : "" }}
+          >
             <div style={{ display: "flex", alignItems: "center" }}>
               <InputLabel style={{ marginRight: "10px" }} id="row">
                 Porosi ne faqe
