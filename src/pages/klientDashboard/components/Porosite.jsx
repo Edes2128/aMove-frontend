@@ -45,7 +45,7 @@ export default function Porosite() {
     key: "ID",
     direction: "descending",
   });
-const totali  = orderEditDetails.map(order => order.totali);
+  const totali = orderEditDetails.map((order) => order.totali);
   console.log(orderEditDetails);
 
   const filteredOrders = ordersSingleUser.filter(
@@ -119,14 +119,14 @@ const totali  = orderEditDetails.map(order => order.totali);
             className="order-edit-pop-opa"
             onClick={() => {
               setOrderEditPop(false);
-              setEditOrderDetails([])
+              setEditOrderDetails([]);
             }}
           ></div>
           <div className="order-edit-pop-container">
             <CloseOutlinedIcon
               onClick={() => {
                 setOrderEditPop(false);
-                setEditOrderDetails([])
+                setEditOrderDetails([]);
               }}
               style={{
                 position: "absolute",
@@ -178,9 +178,7 @@ const totali  = orderEditDetails.map(order => order.totali);
                 <p>Totali : {totali[0]} Leke </p>
               </div>
             </div>
-            <div className="order-edit-pop-container-right">
-              
-            </div>
+            <div className="order-edit-pop-container-right"></div>
           </div>
         </div>
       )}
@@ -337,7 +335,12 @@ const totali  = orderEditDetails.map(order => order.totali);
           <div className="klient-porosite-header-item">
             <div className="klient-porosite-header-item-left">
               <h3>Porosi Aktive</h3>
-              <p style={{ fontWeight: "700", fontSize: "20px" }}>0</p>
+              <p style={{ fontWeight: "700", fontSize: "20px" }}>
+                {" "}
+                {
+                  ordersSingleUser.filter((order) => order.status === 1).length
+                }{" "}
+              </p>
             </div>
             <div className="klient-porosite-header-item-right">
               <ShoppingBasketOutlinedIcon style={{ fontSize: "50px" }} />
@@ -347,7 +350,9 @@ const totali  = orderEditDetails.map(order => order.totali);
           <div className="klient-porosite-header-item">
             <div className="klient-porosite-header-item-left">
               <h3>Porosi te Anulluara</h3>
-              <p style={{ fontWeight: "700", fontSize: "20px" }}>0</p>
+              <p style={{ fontWeight: "700", fontSize: "20px" }}>
+                {ordersSingleUser.filter((order) => order.status === 3).length}
+              </p>
             </div>
             <div className="klient-porosite-header-item-right">
               <ShoppingBasketOutlinedIcon style={{ fontSize: "50px" }} />
@@ -357,7 +362,9 @@ const totali  = orderEditDetails.map(order => order.totali);
           <div className="klient-porosite-header-item">
             <div className="klient-porosite-header-item-left">
               <h3>Porosi ne Pritje</h3>
-              <p style={{ fontWeight: "700", fontSize: "20px" }}>0</p>
+              <p style={{ fontWeight: "700", fontSize: "20px" }}>
+                {ordersSingleUser.filter((order) => order.status === 2).length}
+              </p>
             </div>
             <div className="klient-porosite-header-item-right">
               <ShoppingBasketOutlinedIcon style={{ fontSize: "50px" }} />
@@ -367,7 +374,9 @@ const totali  = orderEditDetails.map(order => order.totali);
           <div className="klient-porosite-header-item">
             <div className="klient-porosite-header-item-left">
               <h3>Porosi te Perfunduara</h3>
-              <p style={{ fontWeight: "700", fontSize: "20px" }}>0</p>
+              <p style={{ fontWeight: "700", fontSize: "20px" }}>
+                {ordersSingleUser.filter((order) => order.status === 4).length}
+              </p>
             </div>
             <div className="klient-porosite-header-item-right">
               <ShoppingBasketOutlinedIcon style={{ fontSize: "50px" }} />
@@ -537,7 +546,7 @@ const totali  = orderEditDetails.map(order => order.totali);
           <div className="pagination">
             <div style={{ display: "flex", alignItems: "center" }}>
               <InputLabel style={{ marginRight: "10px" }} id="row">
-                User ne faqe
+                Porosi ne faqe
               </InputLabel>
               <Select
                 labelId="row"
