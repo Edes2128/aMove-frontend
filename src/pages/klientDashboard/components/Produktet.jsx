@@ -35,7 +35,24 @@ export default function Produktet() {
   const end = page * itemPage;
   const products = klientContext.products;
   const [disabledButton, setDisabledButton] = useState({});
-  const productFilter = products.filter(
+  const [filterByCategory, setFilterByCategory] = useState("");
+  const [propertyName, setProperty] = useState(null);
+
+
+  
+
+  const productFilterByOther = products.filter((produkt) => {
+    if (filterByCategory === "") {
+        return produkt;
+    } else {
+      return produkt.kategoria
+      .toString()
+      .toLowerCase()
+      .includes(filterByCategory.toLowerCase());
+    }
+  });
+
+  const productFilter = productFilterByOther.filter(
     (product) =>
       product.titulli
         .toString()
@@ -67,6 +84,30 @@ export default function Produktet() {
     setSliderPrice([0, 1000]);
     setRange("all");
     setKategori("");
+  };
+
+  if (propertyName !== null) {
+    productFilter.sort((a, b) => {
+      if (a[propertyName.key] < b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? -1 : 1;
+      }
+
+      if (a[propertyName.key] > b[propertyName.key]) {
+        return propertyName.direction === "ascending" ? 1 : -1;
+      }
+
+      return 0;
+    });
+  }
+  const requestSort = (value) => {
+    let direction;
+
+    if (value === "high") {
+      direction = "descending";
+    } else {
+      direction = "ascending";
+    }
+    setProperty({ key: "cmimi", direction });
   };
 
   return (
@@ -124,7 +165,10 @@ export default function Produktet() {
               <h3>Category</h3>
               <FormControl component="fieldset">
                 <RadioGroup
-                  onChange={(e) => setKategori(e.target.value)}
+                  onChange={(e) => {
+                    setKategori(e.target.value);
+                    setFilterByCategory(e.target.value);
+                  }}
                   value={kategori}
                 >
                   {produktCategories.map((cat) => (
@@ -157,7 +201,10 @@ export default function Produktet() {
             >
               <InputLabel>Featured</InputLabel>
               <Select
-                onChange={(e) => setPriceSort(e.target.value)}
+                onChange={(e) => {
+                  setPriceSort(e.target.value);
+                  requestSort(e.target.value);
+                }}
                 value={priceSort}
               >
                 <MenuItem value="low">Lowest Price</MenuItem>
@@ -431,7 +478,9 @@ export default function Produktet() {
           )}
           <div
             className="produkte-pagination"
-            style={{ display: productFilter.length === 0 ? "none" : "flex" }}
+            style={{
+              display: productFilter.length === 0 ? "none" : "flex",
+            }}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <InputLabel style={{ marginRight: "10px" }} id="row">
