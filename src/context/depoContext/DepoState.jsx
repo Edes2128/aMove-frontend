@@ -218,7 +218,6 @@ export default function DepoState({ children }) {
     });
   };
 
-
   return (
     <DepoContext.Provider
       value={{

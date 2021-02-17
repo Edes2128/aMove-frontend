@@ -45,9 +45,10 @@ export default function Porosite() {
     key: "ID",
     direction: "descending",
   });
-  const totali = orderEditDetails.map((order) => order.totali);
-  console.log(orderEditDetails);
-
+  const [disabledButton, setDisabledButton] = useState({});
+  const ordersIDProdukt = orderEditDetails.map((order) => order.produktID);
+  const [editOrderID, setEditOrderID] = useState("");
+  const [editOrderKlientID, setEditOrderKlientID] = useState("");
   const filteredOrders = ordersSingleUser.filter(
     (order) =>
       order.ID.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
@@ -57,8 +58,6 @@ export default function Porosite() {
         .includes(searchFilter.toLowerCase()) ||
       order.totali.toString().toLowerCase().includes(searchFilter.toLowerCase())
   );
-
-  console.log(products);
 
   if (propertyName !== null) {
     filteredOrders.sort((a, b) => {
@@ -112,6 +111,24 @@ export default function Porosite() {
       return "#FF0000";
     }
   };
+  const increaseQty = (produktID) => {
+    const orders = [...orderEditDetails];
+    const findProduct = orders.find((order) => order.produktID === produktID);
+    findProduct.qty += 1;
+    setEditOrderDetails(orders);
+  };
+
+  const decreaseQty = (produktID) => {
+    const orders = [...orderEditDetails];
+    const findProduct = orders.find((order) => order.produktID === produktID);
+    findProduct.qty -= 1;
+    setEditOrderDetails(orders);
+  };
+  const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  const cmimetPorosise = orderEditDetails.map(
+    (orders) => orders.qty * orders.cmimiProduktit
+  );
+  const totaliPorosise = cmimetPorosise.reduce(reducer, 0);
 
   return (
     <>
@@ -122,6 +139,7 @@ export default function Porosite() {
             onClick={() => {
               setOrderEditPop(false);
               setEditOrderDetails([]);
+              klientConext.getAllOrders();
             }}
           ></div>
           <div className="order-edit-pop-container">
@@ -129,6 +147,7 @@ export default function Porosite() {
               onClick={() => {
                 setOrderEditPop(false);
                 setEditOrderDetails([]);
+                klientConext.getAllOrders();
               }}
               style={{
                 position: "absolute",
@@ -151,6 +170,40 @@ export default function Porosite() {
                         right: "5px",
                         cursor: "pointer",
                       }}
+                      onClick={() => {
+                        axios
+                          .post(
+                            `https://amove.alcodeit.com/delete_product_from_order.php?order_id=${order.ID}&produkt_id=${order.produkt_id}`
+                          )
+                          .then((res) => {
+                            if (res.data.status === 1) {
+                              setEditOrderDetails(
+                                orderEditDetails.filter(
+                                  (orders) =>
+                                    orders.produktID !== order.produktID
+                                )
+                              );
+                              axios
+                                .get(
+                                  `https://amove.alcodeit.com/get_orderDetails.php?klient=${order.klientID}&order_id=${order.ID}`
+                                )
+                                .then((res) => {
+                                  setEditOrderDetails([]);
+                                  setEditOrderDetails(res.data);
+                                });
+                              klientConext.getAllOrders();
+                              alertContext.setAlert(
+                                `${res.data.message}`,
+                                "success"
+                              );
+                            } else {
+                              alertContext.setAlert(
+                                `${res.data.message}`,
+                                "error"
+                              );
+                            }
+                          });
+                      }}
                     />
                     <div className="order-edit-pop-container-left-items-item-image">
                       <img
@@ -162,11 +215,26 @@ export default function Porosite() {
                       <h4>{order.titulli}</h4>
                       <p>Cmimi fillestar: {order.cmimiProduktit} Leke</p>
                       <div className="order-edit-pop-container-left-items-item-titulli-buttons">
-                        <Button color="primary" variant="contained">
+                        <Button
+                          color="primary"
+                          variant="contained"
+                          disabled={order.qty === 1 ? true : false}
+                          onClick={() => {
+                            decreaseQty(order.produktID);
+                            klientConext.decreaseOrderQty(order);
+                          }}
+                        >
                           -
                         </Button>
                         <span> {order.qty} </span>
-                        <Button color="primary" variant="contained">
+                        <Button
+                          color="primary"
+                          variant="contained"
+                          onClick={() => {
+                            increaseQty(order.produktID);
+                            klientConext.increaseOrderQty(order);
+                          }}
+                        >
                           +
                         </Button>
                       </div>
@@ -178,14 +246,23 @@ export default function Porosite() {
                 ))}
               </div>
               <div className="order-edit-pop-container-left-totali">
-                <p>Totali : {totali[0]} Leke </p>
+                <p>Totali : {totaliPorosise} Leke </p>
               </div>
             </div>
             <div className="order-edit-pop-container-right">
               <h3>Produktet</h3>
               <div className="order-edit-pop-container-right-items">
                 {products.map((product) => (
-                  <div className="order-edit-pop-container-right-items-item">
+                  <div
+                    className="order-edit-pop-container-right-items-item"
+                    style={{
+                      display: ordersIDProdukt.some(
+                        (order) => (order === product.id) === true
+                      )
+                        ? "none"
+                        : "",
+                    }}
+                  >
                     <div className="order-edit-pop-container-right-items-item-image">
                       <img
                         src={`https://amove.alcodeit.com/images/${product.image}`}
@@ -201,7 +278,38 @@ export default function Porosite() {
                       <p>Stock: {product.sasia} </p>
                     </div>
                     <div className="order-edit-pop-container-right-items-item-button">
-                      <Button color="primary" variant="contained">
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        disabled={disabledButton === product ? true : false}
+                        onClick={(e) => {
+                          setDisabledButton(product);
+                          setTimeout(() => setDisabledButton({}), 1000);
+                          axios
+                            .post(
+                              `https://amove.alcodeit.com/add_product_to_order.php`,
+                              {
+                                orderID: editOrderID,
+                                cmimi: product.cmimi,
+                                produktID: product.id,
+                              }
+                            )
+                            .then((res) => {
+                              if (res.data.status === 1) {
+                                axios
+                                  .get(
+                                    `https://amove.alcodeit.com/get_orderDetails.php?klient=${editOrderKlientID}&order_id=${editOrderID}`
+                                  )
+                                  .then((res) => {
+                                    setEditOrderDetails([]);
+                                    setEditOrderDetails(res.data);
+                                  });
+                                klientConext.getAllProducts();
+                                klientConext.getAllOrders();
+                              }
+                            });
+                        }}
+                      >
                         Shto ne porosi
                       </Button>
                     </div>
@@ -583,6 +691,8 @@ export default function Porosite() {
                         ) : (
                           <EditOutlinedIcon
                             onClick={() => {
+                              setEditOrderID(order.ID);
+                              setEditOrderKlientID(order.klientID);
                               setOrderEditPop(true);
                               axios
                                 .get(

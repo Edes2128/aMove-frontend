@@ -173,6 +173,43 @@ export default function KlientState({ children }) {
     });
   };
 
+  const increaseOrderQty = async (order) => {
+    await axios.post(
+      `https://amove.alcodeit.com/increase_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
+    );
+  };
+
+  const decreaseOrderQty = async (order) => {
+    await axios.post(
+      `https://amove.alcodeit.com/decrease_order_qty.php?order_id=${order.ID}&produkt_id=${order.produktID}`
+    );
+  };
+
+  const deleteProductFromOrder = async (orderID, productID) => {
+    await axios.post(
+      `https://amove.alcodeit.com/delete_product_from_order.php?order_id=${orderID}&produkt_id=${productID}`
+    );
+
+    setTimeout(() => getAllOrders(), 100);
+    setTimeout(() => getAllProducts(), 100);
+  };
+
+  const addProductToOrder = async (data, orderID) => {
+    const payload = {
+      cmimi: data.cmimi,
+      produktID: data.id,
+      orderID,
+    };
+
+    await axios.post(
+      `https://amove.alcodeit.com/add_product_to_order.php`,
+      payload
+    );
+
+    setTimeout(() => getAllOrders(), 100);
+    // setTimeout(() => getAllProducts(), 100);
+  };
+
   return (
     <KlientContext.Provider
       value={{
@@ -195,6 +232,10 @@ export default function KlientState({ children }) {
         makeOrder,
         getAllOrders,
         getCategoryProducts,
+        increaseOrderQty,
+        decreaseOrderQty,
+        deleteProductFromOrder,
+        addProductToOrder,
       }}
     >
       {children}
