@@ -377,7 +377,7 @@ export default function Porosite() {
                             disabled={disabledButton === produkt ? true : false}
                             onClick={(e) => {
                               setDisabledButton(produkt);
-                              setTimeout(() => setDisabledButton({}), 3000);
+                              setTimeout(() => setDisabledButton({}), 5000);
                               axios
                                 .post(
                                   `https://amove.alcodeit.com/add_product_to_order.php`,
