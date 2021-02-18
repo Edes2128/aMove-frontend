@@ -23,8 +23,7 @@ import Pagination from "@material-ui/lab/Pagination";
 export default function Produktet() {
   const klientContext = useContext(KlientContext);
   const { cartProducts, wishlistProducts, produktCategories } = klientContext;
-  const [sliderPrice, setSliderPrice] = useState([0, 1000]);
-  const [range, setRange] = useState("all");
+  const [range, setRange] = useState("");
   const [produktMenuLayout, setProduktMenuLayout] = useState("horizontal");
   const [kategori, setKategori] = useState("");
   const [priceSort, setPriceSort] = useState("");
@@ -37,18 +36,40 @@ export default function Produktet() {
   const [disabledButton, setDisabledButton] = useState({});
   const [filterByCategory, setFilterByCategory] = useState("");
   const [propertyName, setProperty] = useState(null);
+  const cmimet = products.map((produkt) => produkt.cmimi);
+  const highPrice = Math.max(...cmimet);
+  const lowPirce = Math.min(...cmimet);
+  const [sliderPrice, setSliderPrice] = useState([lowPirce, highPrice]);
+  const [priceType, setPriceType] = useState("slider");
 
+  console.log(range);
 
-  
-
-  const productFilterByOther = products.filter((produkt) => {
-    if (filterByCategory === "") {
+  const filterByPrice = products.filter((produkt) => {
+    if (priceType === "slider") {
+      return produkt.cmimi >= sliderPrice[0] && produkt.cmimi <= sliderPrice[1];
+    } else {
+      if (range === "all") {
         return produkt;
+      } else if (range === "10") {
+        return produkt.cmimi <= 10;
+      } else if (range === "100") {
+        return produkt.cmimi >= 10 && produkt.cmimi <= 100;
+      } else if (range === "500") {
+        return produkt.cmimi === 500;
+      } else if (range === "600") {
+        return produkt.cmimi >= 500;
+      }
+    }
+  });
+
+  const productFilterByOther = filterByPrice.filter((produkt) => {
+    if (!filterByCategory || 0 === filterByCategory.length) {
+      return produkt;
     } else {
       return produkt.kategoria
-      .toString()
-      .toLowerCase()
-      .includes(filterByCategory.toLowerCase());
+        .toString()
+        .toLowerCase()
+        .includes(filterByCategory.toLowerCase());
     }
   });
 
@@ -75,15 +96,17 @@ export default function Produktet() {
 
   const handleChange = (event, newValue) => {
     setSliderPrice(newValue);
-    setRange("");
+    setRange("all");
+    setPriceType("slider");
   };
   function valuetext(sliderPrice) {
     return `${sliderPrice}$`;
   }
   const removeFilter = () => {
-    setSliderPrice([0, 1000]);
+    setSliderPrice([lowPirce, highPrice]);
     setRange("all");
     setKategori("");
+    setFilterByCategory("");
   };
 
   if (propertyName !== null) {
@@ -119,7 +142,10 @@ export default function Produktet() {
               <h3>Multi Range</h3>
               <FormControl component="fieldset">
                 <RadioGroup
-                  onChange={(e) => setRange(e.target.value)}
+                  onChange={(e) => {
+                    setRange(e.target.value);
+                    setPriceType("range");
+                  }}
                   value={range}
                 >
                   <FormControlLabel
@@ -128,22 +154,22 @@ export default function Produktet() {
                     label="All"
                   />
                   <FormControlLabel
-                    value="10"
+                    value={"10"}
                     control={<Radio color="primary" />}
                     label="<=$10"
                   />
                   <FormControlLabel
-                    value="100"
+                    value={"100"}
                     control={<Radio color="primary" />}
                     label="$10-$100"
                   />
                   <FormControlLabel
-                    value="500"
+                    value={"500"}
                     control={<Radio color="primary" />}
                     label="$500"
                   />
                   <FormControlLabel
-                    value="600"
+                    value={"600"}
                     control={<Radio color="primary" />}
                     label=">=$500"
                   />
@@ -158,7 +184,7 @@ export default function Produktet() {
                 valueLabelDisplay="auto"
                 style={{ width: "90%", alignSelf: "center" }}
                 getAriaValueText={valuetext}
-                max={1000}
+                max={highPrice}
               />
             </div>
             <div className="filter-content-category">
