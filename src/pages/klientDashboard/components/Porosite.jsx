@@ -191,7 +191,7 @@ export default function Porosite() {
                                   setEditOrderDetails([]);
                                   setEditOrderDetails(res.data);
                                 });
-                              klientConext.getAllOrders();
+                              // klientConext.getAllOrders();
                               alertContext.setAlert(
                                 `${res.data.message}`,
                                 "success"
@@ -304,8 +304,8 @@ export default function Porosite() {
                                     setEditOrderDetails([]);
                                     setEditOrderDetails(res.data);
                                   });
-                                klientConext.getAllProducts();
-                                klientConext.getAllOrders();
+                                // klientConext.getAllProducts();
+                                // klientConext.getAllOrders();
                               }
                             });
                         }}

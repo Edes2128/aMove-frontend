@@ -280,7 +280,6 @@ export default function Porosite() {
                           onClick={() => {
                             increaseQty(order.produktID);
                             depoContext.increaseOrderQty(order);
-                            depoContext.getAllOrders();
                           }}
                         >
                           {" "}
@@ -317,7 +316,7 @@ export default function Porosite() {
                                     setOrdersDetails([]);
                                     setOrdersDetails(res.data);
                                   });
-                                depoContext.getAllOrders();
+                                // depoContext.getAllOrders();
                                 alertContext.setAlert(
                                   `${res.data.message}`,
                                   "success"
@@ -378,7 +377,7 @@ export default function Porosite() {
                             disabled={disabledButton === produkt ? true : false}
                             onClick={(e) => {
                               setDisabledButton(produkt);
-                              setTimeout(() => setDisabledButton({}), 1000);
+                              setTimeout(() => setDisabledButton({}), 2000);
                               axios
                                 .post(
                                   `https://amove.alcodeit.com/add_product_to_order.php`,
@@ -398,8 +397,8 @@ export default function Porosite() {
                                         setOrdersDetails([]);
                                         setOrdersDetails(res.data);
                                       });
-                                    depoContext.getAllProducts();
-                                    depoContext.getAllOrders();
+                                    // depoContext.getAllProducts();
+                                    // depoContext.getAllOrders();
                                   }
                                 });
                             }}

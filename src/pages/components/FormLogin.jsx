@@ -69,12 +69,12 @@ export default function FormLogin({ history }) {
 
           <div className="div-input-form-login-home">
             <TextField
+
               className="input-form-login-home"
               type="password"
               label="Password"
               variant="outlined"
               name="passowrd"
-              style={{ borderColor: "white" }}
               required
               onChange={(e) => setPassword(e.target.value)}
             />
