@@ -22,7 +22,7 @@ import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined"
 import AlertContext from "../../../context/alertContext/AlertContext";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-
+import IconButton from "@material-ui/core/IconButton";
 export default function Porosite() {
   useEffect(() => {
     depoContext.getAllOrders();
@@ -51,7 +51,7 @@ export default function Porosite() {
     direction: "descending",
   });
   const [disabledButton, setDisabledButton] = useState({});
-
+  const [orderDisabledProduct, setOrderDisabledProduct] = useState({});
   const order2 = {
     klientID: klientIDOrder,
     ID: orderID,
@@ -69,6 +69,8 @@ export default function Porosite() {
         .toLowerCase()
         .includes(searchFilter.toLowerCase())
   );
+
+  console.log(ordersDetails);
 
   if (propertyName !== null) {
     filteredOrder.sort((a, b) => {
@@ -288,7 +290,8 @@ export default function Porosite() {
                       </div>
                     </div>
                     <div className="edit-order-pop-container-item-cmimi">
-                      <CloseOutlinedIcon
+                      <IconButton
+                        disabled={orderDisabledProduct === order ? true : false}
                         style={{
                           color: "red",
                           alignSelf: "flex-end",
@@ -296,18 +299,13 @@ export default function Porosite() {
                           cursor: "pointer",
                         }}
                         onClick={() => {
+                          setOrderDisabledProduct(order);
                           axios
                             .post(
-                              `https://amove.alcodeit.com/delete_product_from_order.php?order_id=${order.ID}&produkt_id=${order.produkt_id}`
+                              `https://amove.alcodeit.com/delete_product_from_order.php?order_id=${order.ID}&produkt_id=${order.produktID}`
                             )
                             .then((res) => {
                               if (res.data.status === 1) {
-                                setOrdersDetails(
-                                  ordersDetails.filter(
-                                    (orders) =>
-                                      orders.produktID !== order.produktID
-                                  )
-                                );
                                 axios
                                   .get(
                                     `https://amove.alcodeit.com/get_orderDetails.php?klient=${order2.klientID}&order_id=${order2.ID}`
@@ -329,7 +327,9 @@ export default function Porosite() {
                               }
                             });
                         }}
-                      />
+                      >
+                        <CloseOutlinedIcon />
+                      </IconButton>
                       <h5> Totali : {order.qty * order.cmimiProduktit} </h5>
                     </div>
                   </div>
@@ -346,7 +346,7 @@ export default function Porosite() {
                   <>
                     <div
                       className="edit-order-pop-container-right-items-item"
-                      key={produkt.titulli}
+                      key={produkt.sku}
                       style={{
                         display:
                           orderDetailsProduktID.some(
@@ -377,7 +377,7 @@ export default function Porosite() {
                             disabled={disabledButton === produkt ? true : false}
                             onClick={(e) => {
                               setDisabledButton(produkt);
-                              setTimeout(() => setDisabledButton({}), 2000);
+                              setTimeout(() => setDisabledButton({}), 3000);
                               axios
                                 .post(
                                   `https://amove.alcodeit.com/add_product_to_order.php`,

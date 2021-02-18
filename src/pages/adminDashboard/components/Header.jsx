@@ -24,7 +24,7 @@ export default function Header({ name, userImg, handleLogout }) {
     >
       <div className="btns-collapse">
         {value === false ? (
-          <IconButton onClick={() => collapseContext.setTrue()}>
+          <IconButton  onClick={() => collapseContext.setTrue()}>
             <ArrowBackIosOutlinedIcon
               onClick={() => collapseContext.setTrue()}
             />
