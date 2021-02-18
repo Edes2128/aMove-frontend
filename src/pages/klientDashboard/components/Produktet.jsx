@@ -22,8 +22,8 @@ import Pagination from "@material-ui/lab/Pagination";
 
 export default function Produktet() {
   const klientContext = useContext(KlientContext);
-  const { cartProducts, wishlistProducts, produktCategories } = klientContext;
-  const [range, setRange] = useState("");
+  const { cartProducts, wishlistProducts, produktCategories ,products } = klientContext;
+  const [range, setRange] = useState("all");
   const [produktMenuLayout, setProduktMenuLayout] = useState("horizontal");
   const [kategori, setKategori] = useState("");
   const [priceSort, setPriceSort] = useState("");
@@ -32,7 +32,6 @@ export default function Produktet() {
   const [itemPage, setItempage] = useState(6);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
-  const products = klientContext.products;
   const [disabledButton, setDisabledButton] = useState({});
   const [filterByCategory, setFilterByCategory] = useState("");
   const [propertyName, setProperty] = useState(null);
@@ -40,14 +39,14 @@ export default function Produktet() {
   const highPrice = Math.max(...cmimet);
   const lowPirce = Math.min(...cmimet);
   const [sliderPrice, setSliderPrice] = useState([lowPirce, highPrice]);
-  const [priceType, setPriceType] = useState("slider");
+  const [priceType, setPriceType] = useState("all");
 
-  console.log(range);
+
 
   const filterByPrice = products.filter((produkt) => {
     if (priceType === "slider") {
       return produkt.cmimi >= sliderPrice[0] && produkt.cmimi <= sliderPrice[1];
-    } else {
+    } else if (priceType === "range") {
       if (range === "all") {
         return produkt;
       } else if (range === "10") {
@@ -59,8 +58,12 @@ export default function Produktet() {
       } else if (range === "600") {
         return produkt.cmimi >= 500;
       }
+    } else {
+      return produkt;
     }
   });
+
+  console.log(filterByPrice)
 
   const productFilterByOther = filterByPrice.filter((produkt) => {
     if (!filterByCategory || 0 === filterByCategory.length) {
@@ -344,7 +347,7 @@ export default function Produktet() {
                             variant="contained"
                             startIcon={<LocalMallOutlinedIcon />}
                             disabled={
-                              product.sasia == 0 || product === disabledButton
+                              product.sasia === 0 || product === disabledButton
                                 ? true
                                 : false
                             }
@@ -453,7 +456,7 @@ export default function Produktet() {
                             <Button
                               startIcon={<LocalMallOutlinedIcon />}
                               disabled={
-                                product.sasia == 0 || product === disabledButton
+                                product.sasia === 0 || product === disabledButton
                                   ? true
                                   : false
                               }
