@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { TextField, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import axios from "axios";
 import AlertContext from "../../context/alertContext/AlertContext";
 import Alerts from "./Alert";
@@ -56,11 +56,10 @@ export default function FormLogin({ history }) {
             Sign in to continue
           </p>
           <div className="div-input-form-login-home">
-            <TextField
+            <input
               className="input-form-login-home"
               type="email"
-              label="Email"
-              variant="outlined"
+              placeholder="Email..."
               name="email"
               required
               onChange={(e) => setName(e.target.value)}
@@ -68,12 +67,10 @@ export default function FormLogin({ history }) {
           </div>
 
           <div className="div-input-form-login-home">
-            <TextField
-
+            <input
+              placeholder="Password..."
               className="input-form-login-home"
               type="password"
-              label="Password"
-              variant="outlined"
               name="passowrd"
               required
               onChange={(e) => setPassword(e.target.value)}
