@@ -518,157 +518,184 @@ export default function Produkte() {
             </Button>
           </div>
         </div>
-        <Table size="medium">
-          <TableHead>
-            <TableRow>
-              <TableCell onClick={() => requestSort("id")}>
-                ID
-                {propertyName.key === "id" &&
-                  propertyName.direction === "ascending" && (
-                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-                {propertyName.key === "id" &&
-                  propertyName.direction === "descending" && (
-                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-              </TableCell>
-              <TableCell align="left">Foto</TableCell>
-              <TableCell onClick={() => requestSort("titulli")} align="left">
-                Titulli
-                {propertyName.key === "titulli" &&
-                  propertyName.direction === "ascending" && (
-                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-                {propertyName.key === "titulli" &&
-                  propertyName.direction === "descending" && (
-                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-              </TableCell>
-              <TableCell onClick={() => requestSort("kategoria")} align="left">
-                Kategoria
-                {propertyName.key === "kategoria" &&
-                  propertyName.direction === "ascending" && (
-                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-                {propertyName.key === "kategoria" &&
-                  propertyName.direction === "descending" && (
-                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-              </TableCell>
-              <TableCell onClick={() => requestSort("sasia")} align="left">
-                Stok
-                {propertyName.key === "sasia" &&
-                  propertyName.direction === "ascending" && (
-                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-                {propertyName.key === "sasia" &&
-                  propertyName.direction === "descending" && (
-                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-              </TableCell>
-              <TableCell onClick={() => requestSort("cmimi")} align="left">
-                Cmimi
-                {propertyName.key === "cmimi" &&
-                  propertyName.direction === "ascending" && (
-                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-                {propertyName.key === "cmimi" &&
-                  propertyName.direction === "descending" && (
-                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-              </TableCell>
-              <TableCell align="left" onClick={() => requestSort("status")}>
-                Status
-                {propertyName.key === "status" &&
-                  propertyName.direction === "ascending" && (
-                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-                {propertyName.key === "status" &&
-                  propertyName.direction === "descending" && (
-                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
-                  )}
-              </TableCell>
-              <TableCell align="center">Veprimet</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredProducts.slice(start, end).map((produkt) => (
-              <TableRow key={produkt.id}>
-                <TableCell style={{ color: "#287DBF" }}>
-                  #{produkt.id}{" "}
+
+        {filteredProducts.length === 0 ? (
+          <div
+            className="klient-produkte-search-notfound"
+            style={{ justifyContent: "center" }}
+          >
+            <img src="/search_notfound.gif" alt="" />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <h3>Nuk u gjet asnje produkt nga kerkimi😥</h3>
+              <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
+            </div>
+          </div>
+        ) : (
+          <Table size="medium">
+            <TableHead>
+              <TableRow>
+                <TableCell onClick={() => requestSort("id")}>
+                  ID
+                  {propertyName.key === "id" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "id" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
                 </TableCell>
-                <TableCell>
-                  <img
-                    width="30"
-                    height="30"
-                    src={`https://amove.alcodeit.com/images/${produkt.image}`}
-                    alt="Foto Produkti"
-                    style={{ borderRadius: "50%" }}
-                  />
+                <TableCell align="left">Foto</TableCell>
+                <TableCell onClick={() => requestSort("titulli")} align="left">
+                  Titulli
+                  {propertyName.key === "titulli" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "titulli" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
                 </TableCell>
-                <TableCell>{produkt.titulli}</TableCell>
-                <TableCell>{produkt.kategoria}</TableCell>
                 <TableCell
-                  style={{
-                    color: stockColor(produkt.sasia),
-                    fontWeight: "bold",
-                  }}
+                  onClick={() => requestSort("kategoria")}
+                  align="left"
                 >
-                  {produkt.sasia === 0 ? "Ska stok" : produkt.sasia}
+                  Kategoria
+                  {propertyName.key === "kategoria" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "kategoria" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
                 </TableCell>
-                <TableCell>{produkt.cmimi}</TableCell>
-                <TableCell>
-                  <p className="status-text">
-                    {" "}
-                    <span
-                      className="status-pulse"
-                      style={{
-                        backgroundColor: renderButtonColorsStatus(
-                          produkt.status
-                        ),
-                      }}
-                    ></span>{" "}
-                    {renderButtonStatus(produkt.status)}{" "}
-                  </p>
+                <TableCell onClick={() => requestSort("sasia")} align="left">
+                  Stok
+                  {propertyName.key === "sasia" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "sasia" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
                 </TableCell>
-                <TableCell align="center">
-                  <div className="veprime" style={{ cursor: "pointer" }}>
-                    <VisibilityOutlinedIcon
-                      onClick={() => {
-                        setProduktDetails(produkt);
-                        setDetailsPop(true);
-                      }}
-                    />
-                    <EditOutlinedIcon
-                      onClick={() => {
-                        showPorduktDetailsPop(true);
-                        setEditTitulli(produkt.titulli);
-                        setEditSku(produkt.sku);
-                        setEditPershkrimi(produkt.pershkrimi);
-                        setEditKategoria(produkt.kategoria);
-                        setEditCmimi(produkt.cmimi);
-                        setEditSasia(produkt.sasia);
-                        setEditNjesia(produkt.njesia);
-                        setEditStatus(produkt.status);
-                        setEditFile(produkt.image);
-                        setEditImage(produkt.image);
-                        setEditID(produkt.id);
-                      }}
-                    />
-                    <DeleteOutlineOutlinedIcon
-                      onClick={() => {
-                        showDeletePop(true);
-                        setDeleteId(produkt.id);
-                      }}
-                      style={{ display: produkt.status === 0 ? "none" : "" }}
-                    />
-                  </div>
+                <TableCell onClick={() => requestSort("cmimi")} align="left">
+                  Cmimi
+                  {propertyName.key === "cmimi" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "cmimi" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
                 </TableCell>
+                <TableCell align="left" onClick={() => requestSort("status")}>
+                  Status
+                  {propertyName.key === "status" &&
+                    propertyName.direction === "ascending" && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                  {propertyName.key === "status" &&
+                    propertyName.direction === "descending" && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                    )}
+                </TableCell>
+                <TableCell align="center">Veprimet</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <div className="pagination">
+            </TableHead>
+            <TableBody>
+              {filteredProducts.slice(start, end).map((produkt) => (
+                <TableRow key={produkt.id}>
+                  <TableCell style={{ color: "#287DBF" }}>
+                    #{produkt.id}{" "}
+                  </TableCell>
+                  <TableCell>
+                    <img
+                      width="30"
+                      height="30"
+                      src={`https://amove.alcodeit.com/images/${produkt.image}`}
+                      alt="Foto Produkti"
+                      style={{ borderRadius: "50%" }}
+                    />
+                  </TableCell>
+                  <TableCell>{produkt.titulli}</TableCell>
+                  <TableCell>{produkt.kategoria}</TableCell>
+                  <TableCell
+                    style={{
+                      color: stockColor(produkt.sasia),
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {produkt.sasia === 0 ? "Ska stok" : produkt.sasia}
+                  </TableCell>
+                  <TableCell>{produkt.cmimi}</TableCell>
+                  <TableCell>
+                    <p className="status-text">
+                      {" "}
+                      <span
+                        className="status-pulse"
+                        style={{
+                          backgroundColor: renderButtonColorsStatus(
+                            produkt.status
+                          ),
+                        }}
+                      ></span>{" "}
+                      {renderButtonStatus(produkt.status)}{" "}
+                    </p>
+                  </TableCell>
+                  <TableCell align="center">
+                    <div className="veprime" style={{ cursor: "pointer" }}>
+                      <VisibilityOutlinedIcon
+                        onClick={() => {
+                          setProduktDetails(produkt);
+                          setDetailsPop(true);
+                        }}
+                      />
+                      <EditOutlinedIcon
+                        onClick={() => {
+                          showPorduktDetailsPop(true);
+                          setEditTitulli(produkt.titulli);
+                          setEditSku(produkt.sku);
+                          setEditPershkrimi(produkt.pershkrimi);
+                          setEditKategoria(produkt.kategoria);
+                          setEditCmimi(produkt.cmimi);
+                          setEditSasia(produkt.sasia);
+                          setEditNjesia(produkt.njesia);
+                          setEditStatus(produkt.status);
+                          setEditFile(produkt.image);
+                          setEditImage(produkt.image);
+                          setEditID(produkt.id);
+                        }}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        onClick={() => {
+                          showDeletePop(true);
+                          setDeleteId(produkt.id);
+                        }}
+                        style={{ display: produkt.status === 0 ? "none" : "" }}
+                      />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+
+        <div
+          className="pagination"
+          style={{ display: filteredProducts.length === 0 ? "none" : "flex" }}
+        >
           <div style={{ display: "flex", alignItems: "center" }}>
             <InputLabel style={{ marginRight: "10px" }} id="row">
               Produkte ne faqe

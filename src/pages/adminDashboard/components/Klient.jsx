@@ -531,163 +531,199 @@ export default function Klient() {
           </div>
 
           <div className="data-table">
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell onClick={() => requestSort("id")}>
-                    ID
-                    {propertyName.key === "id" &&
-                      propertyName.direction === "ascending" && (
-                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                      )}
-                    {propertyName.key === "id" &&
-                      propertyName.direction === "descending" && (
-                        <ArrowDownwardOutlinedIcon
-                          style={{ fontSize: "17px" }}
-                        />
-                      )}
-                  </TableCell>
-                  <TableCell onClick={() => requestSort("name")} align="left">
-                    Emri
-                    {propertyName.key === "name" &&
-                      propertyName.direction === "ascending" && (
-                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                      )}
-                    {propertyName.key === "name" &&
-                      propertyName.direction === "descending" && (
-                        <ArrowDownwardOutlinedIcon
-                          style={{ fontSize: "17px" }}
-                        />
-                      )}
-                  </TableCell>
-                  <TableCell
-                    onClick={() => requestSort("email")}
-                    width="300px"
-                    align="left"
-                  >
-                    Email
-                    {propertyName.key === "email" &&
-                      propertyName.direction === "ascending" && (
-                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                      )}
-                    {propertyName.key === "email" &&
-                      propertyName.direction === "descending" && (
-                        <ArrowDownwardOutlinedIcon
-                          style={{ fontSize: "17px" }}
-                        />
-                      )}
-                  </TableCell>
-                  <TableCell onClick={() => requestSort("zona")} align="left">
-                    Zona
-                    {propertyName.key === "zona" &&
-                      propertyName.direction === "ascending" && (
-                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                      )}
-                    {propertyName.key === "zona" &&
-                      propertyName.direction === "descending" && (
-                        <ArrowDownwardOutlinedIcon
-                          style={{ fontSize: "17px" }}
-                        />
-                      )}
-                  </TableCell>
-                  <TableCell
-                    onClick={() => requestSort("kategoria")}
-                    align="left"
-                  >
-                    Kategoria
-                    {propertyName.key === "kategoria" &&
-                      propertyName.direction === "ascending" && (
-                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                      )}
-                    {propertyName.key === "kategoria" &&
-                      propertyName.direction === "descending" && (
-                        <ArrowDownwardOutlinedIcon
-                          style={{ fontSize: "17px" }}
-                        />
-                      )}
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    onClick={() => requestSort("status_user")}
-                  >
-                    Status
-                    {propertyName.key === "status_user" &&
-                      propertyName.direction === "ascending" && (
-                        <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
-                      )}
-                    {propertyName.key === "status_user" &&
-                      propertyName.direction === "descending" && (
-                        <ArrowDownwardOutlinedIcon
-                          style={{ fontSize: "17px" }}
-                        />
-                      )}
-                  </TableCell>
-                  <TableCell align="center">Veprimet</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {klientetFiltered.slice(start, end).map((row) => (
-                  <TableRow key={row.id}>
-                    <TableCell style={{ color: "#287DBF" }}>
-                      #{row.id}
+            {klientetFiltered.length === 0 ? (
+              <div
+                className="klient-produkte-search-notfound"
+                style={{ justifyContent: "center" }}
+              >
+                <img src="/search_notfound.gif" alt="" />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <h3>Nuk u gjet asnje klient nga kerkimi😥</h3>
+                  <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
+                </div>
+              </div>
+            ) : (
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell onClick={() => requestSort("id")}>
+                      ID
+                      {propertyName.key === "id" &&
+                        propertyName.direction === "ascending" && (
+                          <ArrowUpwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                      {propertyName.key === "id" &&
+                        propertyName.direction === "descending" && (
+                          <ArrowDownwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
                     </TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.zona}</TableCell>
-                    <TableCell>{row.kategoria}</TableCell>
-                    <TableCell>
-                      <p className="status-text">
-                        {" "}
-                        <span
-                          className="status-pulse"
-                          style={{
-                            backgroundColor: renderButtonColorsStatus(
-                              row.status_user
-                            ),
-                          }}
-                        ></span>{" "}
-                        {renderButtonStatus(row.status_user)}{" "}
-                      </p>
+                    <TableCell onClick={() => requestSort("name")} align="left">
+                      Emri
+                      {propertyName.key === "name" &&
+                        propertyName.direction === "ascending" && (
+                          <ArrowUpwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                      {propertyName.key === "name" &&
+                        propertyName.direction === "descending" && (
+                          <ArrowDownwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
                     </TableCell>
-                    <TableCell align="center">
-                      <div className="veprime" style={{ cursor: "pointer" }}>
-                        <VisibilityOutlinedIcon
-                          onClick={() => {
-                            setUserDetails(row);
-                            showUserDetailsPop(true);
-                          }}
-                        />
-                        <EditOutlinedIcon
-                          onClick={() => {
-                            setUserEditPop(true);
-                            setEditID(row.id);
-                            setEditEmri(row.name);
-                            setEditEmail(row.email);
-                            setEditPassword(row.password);
-                            setEditStatus(row.status_user);
-                            setEditZona(row.zona);
-                            setEditKategoria(row.kategoria);
-                            setEditFile(row.image_profile);
-                            setEditImage(row.image_profile);
-                          }}
-                        />
-                        <DeleteOutlineOutlinedIcon
-                          style={{
-                            display: row.status_user === 0 ? "none" : "",
-                          }}
-                          onClick={() => {
-                            setDeletedID(row.id);
-                            setDeletePop(true);
-                          }}
-                        />
-                      </div>
+                    <TableCell
+                      onClick={() => requestSort("email")}
+                      width="300px"
+                      align="left"
+                    >
+                      Email
+                      {propertyName.key === "email" &&
+                        propertyName.direction === "ascending" && (
+                          <ArrowUpwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                      {propertyName.key === "email" &&
+                        propertyName.direction === "descending" && (
+                          <ArrowDownwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
                     </TableCell>
+                    <TableCell onClick={() => requestSort("zona")} align="left">
+                      Zona
+                      {propertyName.key === "zona" &&
+                        propertyName.direction === "ascending" && (
+                          <ArrowUpwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                      {propertyName.key === "zona" &&
+                        propertyName.direction === "descending" && (
+                          <ArrowDownwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                    </TableCell>
+                    <TableCell
+                      onClick={() => requestSort("kategoria")}
+                      align="left"
+                    >
+                      Kategoria
+                      {propertyName.key === "kategoria" &&
+                        propertyName.direction === "ascending" && (
+                          <ArrowUpwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                      {propertyName.key === "kategoria" &&
+                        propertyName.direction === "descending" && (
+                          <ArrowDownwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      onClick={() => requestSort("status_user")}
+                    >
+                      Status
+                      {propertyName.key === "status_user" &&
+                        propertyName.direction === "ascending" && (
+                          <ArrowUpwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                      {propertyName.key === "status_user" &&
+                        propertyName.direction === "descending" && (
+                          <ArrowDownwardOutlinedIcon
+                            style={{ fontSize: "17px" }}
+                          />
+                        )}
+                    </TableCell>
+                    <TableCell align="center">Veprimet</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHead>
+                <TableBody>
+                  {klientetFiltered.slice(start, end).map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell style={{ color: "#287DBF" }}>
+                        #{row.id}
+                      </TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.email}</TableCell>
+                      <TableCell>{row.zona}</TableCell>
+                      <TableCell>{row.kategoria}</TableCell>
+                      <TableCell>
+                        <p className="status-text">
+                          {" "}
+                          <span
+                            className="status-pulse"
+                            style={{
+                              backgroundColor: renderButtonColorsStatus(
+                                row.status_user
+                              ),
+                            }}
+                          ></span>{" "}
+                          {renderButtonStatus(row.status_user)}{" "}
+                        </p>
+                      </TableCell>
+                      <TableCell align="center">
+                        <div className="veprime" style={{ cursor: "pointer" }}>
+                          <VisibilityOutlinedIcon
+                            onClick={() => {
+                              setUserDetails(row);
+                              showUserDetailsPop(true);
+                            }}
+                          />
+                          <EditOutlinedIcon
+                            onClick={() => {
+                              setUserEditPop(true);
+                              setEditID(row.id);
+                              setEditEmri(row.name);
+                              setEditEmail(row.email);
+                              setEditPassword(row.password);
+                              setEditStatus(row.status_user);
+                              setEditZona(row.zona);
+                              setEditKategoria(row.kategoria);
+                              setEditFile(row.image_profile);
+                              setEditImage(row.image_profile);
+                            }}
+                          />
+                          <DeleteOutlineOutlinedIcon
+                            style={{
+                              display: row.status_user === 0 ? "none" : "",
+                            }}
+                            onClick={() => {
+                              setDeletedID(row.id);
+                              setDeletePop(true);
+                            }}
+                          />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )}
 
-            <div className="pagination">
+            <div
+              className="pagination"
+              style={{
+                display: klientetFiltered.length === 0 ? "none" : "flex",
+              }}
+            >
               <div style={{ display: "flex", alignItems: "center" }}>
                 <InputLabel style={{ marginRight: "10px" }} id="row">
                   User ne faqe
