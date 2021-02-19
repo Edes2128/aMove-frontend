@@ -27,7 +27,7 @@ export default function FormLogin({ history }) {
           localStorage.setItem("auth", true);
           localStorage.setItem("id", JSON.stringify(res.data.id));
           alertContext.setAlert(`${res.data.message}`, "success");
-          setTimeout(() => history.push("/klient/produktet"), 2000);
+          setTimeout(() => history.push("/klient/porosite"), 2000);
         } else {
           alertContext.setAlert(`${res.data.message}`, "error");
         }
