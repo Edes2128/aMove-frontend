@@ -1,33 +1,33 @@
-import React, { useState, useEffect, useContext } from "react";
-import Button from "@material-ui/core/Button";
-import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import TextField from "@material-ui/core/TextField";
-import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import AlertContext from "../../../context/alertContext/AlertContext";
-import DepoContext from "../../../context/depoContext/DepoContext";
-import axios from "axios";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import Pagination from "@material-ui/lab/Pagination";
-import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
-import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
+import React, { useState, useEffect, useContext } from 'react';
+import Button from '@material-ui/core/Button';
+import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import TextField from '@material-ui/core/TextField';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import AlertContext from '../../../context/alertContext/AlertContext';
+import DepoContext from '../../../context/depoContext/DepoContext';
+import axios from 'axios';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import Pagination from '@material-ui/lab/Pagination';
+import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined';
+import ArrowDownwardOutlinedIcon from '@material-ui/icons/ArrowDownwardOutlined';
 
 export default function ShtoKategoriProduktesh() {
   const [shtoKategoriPop, showKategoriPop] = useState(false);
   const [editKategoriPop, showEditKategoriPop] = useState(false);
   const [deleteKategoriPop, showDeleteKategoriPop] = useState(false);
-  const [editKategoriName, setEditKategoriName] = useState("");
-  const [editID, setEditID] = useState("");
-  const [deleteID, setDeleteID] = useState("");
-  const [kategoriName, setKategoriName] = useState("");
+  const [editKategoriName, setEditKategoriName] = useState('');
+  const [editID, setEditID] = useState('');
+  const [deleteID, setDeleteID] = useState('');
+  const [kategoriName, setKategoriName] = useState('');
   const depoContext = useContext(DepoContext);
   const alertContext = useContext(AlertContext);
   const { categoryProducts } = depoContext;
@@ -36,28 +36,28 @@ export default function ShtoKategoriProduktesh() {
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const [propertyName, setProperty] = useState({
-    key: "id",
-    direction: "descending",
+    key: 'id',
+    direction: 'descending'
   });
 
   const requestSort = (key) => {
-    let direction = "ascending";
+    let direction = 'ascending';
     if (
       propertyName &&
       propertyName.key === key &&
-      propertyName.direction === "ascending"
+      propertyName.direction === 'ascending'
     ) {
-      direction = "descending";
+      direction = 'descending';
     }
     setProperty({ key, direction });
   };
   if (propertyName !== null) {
     categoryProducts.sort((a, b) => {
       if (a[propertyName.key] < b[propertyName.key]) {
-        return propertyName.direction === "ascending" ? -1 : 1;
+        return propertyName.direction === 'ascending' ? -1 : 1;
       }
       if (a[propertyName.key] > b[propertyName.key]) {
-        return propertyName.direction === "ascending" ? 1 : -1;
+        return propertyName.direction === 'ascending' ? 1 : -1;
       }
       return 0;
     });
@@ -77,7 +77,7 @@ export default function ShtoKategoriProduktesh() {
             className="produkt-kategori-delete-pop-opa"
             onClick={() => {
               showDeleteKategoriPop(false);
-              setDeleteID("");
+              setDeleteID('');
             }}
           ></div>
 
@@ -90,17 +90,17 @@ export default function ShtoKategoriProduktesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://amove.alcodeit.com/delete_categoryProduct.php",
+                      'https://amove.alcodeit.com/delete_categoryProduct.php',
                       { id: deleteID }
                     )
                     .then((res) => {
                       if (res.data.status === 1) {
-                        alertContext.setAlert(`${res.data.message}`, "success");
+                        alertContext.setAlert(`${res.data.message}`, 'success');
                         showDeleteKategoriPop(false);
-                        setDeleteID("");
+                        setDeleteID('');
                         depoContext.getCategoryProducts();
                       } else {
-                        alertContext.setAlert(`${res.data.message}`, "error");
+                        alertContext.setAlert(`${res.data.message}`, 'error');
                       }
                     });
                 }}
@@ -112,7 +112,7 @@ export default function ShtoKategoriProduktesh() {
                 variant="outlined"
                 onClick={() => {
                   showDeleteKategoriPop(false);
-                  setDeleteID("");
+                  setDeleteID('');
                 }}
               >
                 Jo
@@ -128,25 +128,25 @@ export default function ShtoKategoriProduktesh() {
             className="produkt-kategori-edit-pop-opa"
             onClick={() => {
               showEditKategoriPop(false);
-              setEditID("");
-              setEditKategoriName("");
+              setEditID('');
+              setEditKategoriName('');
             }}
           ></div>
           <div className="produkt-kategori-edit-pop-container">
             <CloseOutlinedIcon
               style={{
-                alignSelf: "flex-end",
-                marginRight: "20px",
-                cursor: "pointer",
+                alignSelf: 'flex-end',
+                marginRight: '20px',
+                cursor: 'pointer'
               }}
               onClick={() => {
                 showEditKategoriPop(false);
-                setEditID("");
-                setEditKategoriName("");
+                setEditID('');
+                setEditKategoriName('');
               }}
             />
             <TextField
-              style={{ width: "60%" }}
+              style={{ width: '60%' }}
               variant="outlined"
               label="Emri i kategorise"
               value={editKategoriName}
@@ -160,17 +160,17 @@ export default function ShtoKategoriProduktesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://amove.alcodeit.com/edit_productCategory.php",
+                      'https://amove.alcodeit.com/edit_productCategory.php',
                       { id: editID, name: editKategoriName }
                     )
                     .then((res) => {
                       if (res.data.status === 1) {
-                        alertContext.setAlert(`${res.data.message}`, "success");
+                        alertContext.setAlert(`${res.data.message}`, 'success');
                         showKategoriPop(false);
-                        setEditID("");
-                        setEditKategoriName("");
+                        setEditID('');
+                        setEditKategoriName('');
                       } else {
-                        alertContext.setAlert(`${res.data.message}`, "error");
+                        alertContext.setAlert(`${res.data.message}`, 'error');
                       }
                     });
                 }}
@@ -182,8 +182,8 @@ export default function ShtoKategoriProduktesh() {
                 variant="outlined"
                 onClick={() => {
                   showEditKategoriPop(false);
-                  setEditID("");
-                  setEditKategoriName("");
+                  setEditID('');
+                  setEditKategoriName('');
                 }}
               >
                 Anullo
@@ -199,25 +199,25 @@ export default function ShtoKategoriProduktesh() {
             className="shto-kategori-pop-opa"
             onClick={() => {
               showKategoriPop(false);
-              setKategoriName("");
+              setKategoriName('');
             }}
           ></div>
           <div className="shto-kategori-pop-container">
             <CloseOutlinedIcon
               style={{
-                alignSelf: "flex-end",
-                marginRight: "20px",
-                cursor: "pointer",
+                alignSelf: 'flex-end',
+                marginRight: '20px',
+                cursor: 'pointer'
               }}
               onClick={() => {
                 showKategoriPop(false);
-                setKategoriName("");
+                setKategoriName('');
               }}
             />
 
             <TextField
               value={kategoriName}
-              style={{ width: "60%" }}
+              style={{ width: '60%' }}
               variant="outlined"
               label="Emri i kategorise"
               onChange={(e) => setKategoriName(e.target.value)}
@@ -229,17 +229,17 @@ export default function ShtoKategoriProduktesh() {
                 onClick={() => {
                   axios
                     .post(
-                      "https://amove.alcodeit.com/add_product_category.php",
+                      'https://amove.alcodeit.com/add_product_category.php',
                       { name: kategoriName }
                     )
                     .then((res) => {
                       if (res.data.status === 1) {
-                        alertContext.setAlert(`${res.data.message}`, "success");
-                        setKategoriName("");
+                        alertContext.setAlert(`${res.data.message}`, 'success');
+                        setKategoriName('');
                         showKategoriPop(false);
                         depoContext.getCategoryProducts();
                       } else {
-                        alertContext.setAlert(`${res.data.message}`, "error");
+                        alertContext.setAlert(`${res.data.message}`, 'error');
                       }
                     });
                 }}
@@ -251,7 +251,7 @@ export default function ShtoKategoriProduktesh() {
                 color="secondary"
                 onClick={() => {
                   showKategoriPop(false);
-                  setKategoriName("");
+                  setKategoriName('');
                 }}
               >
                 Anullo
@@ -279,36 +279,36 @@ export default function ShtoKategoriProduktesh() {
           <TableHead>
             <TableRow>
               <TableCell
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
                 align="center"
-                onClick={() => requestSort("id")}
+                onClick={() => requestSort('id')}
               >
                 ID
-                {propertyName.key === "id" &&
-                  propertyName.direction === "ascending" && (
-                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                {propertyName.key === 'id' &&
+                  propertyName.direction === 'ascending' && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: '17px' }} />
                   )}
-                {propertyName.key === "id" &&
-                  propertyName.direction === "descending" && (
-                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                {propertyName.key === 'id' &&
+                  propertyName.direction === 'descending' && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: '17px' }} />
                   )}
               </TableCell>
               <TableCell
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
                 align="center"
-                onClick={() => requestSort("name")}
+                onClick={() => requestSort('name')}
               >
                 Emri
-                {propertyName.key === "name" &&
-                  propertyName.direction === "ascending" && (
-                    <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                {propertyName.key === 'name' &&
+                  propertyName.direction === 'ascending' && (
+                    <ArrowUpwardOutlinedIcon style={{ fontSize: '17px' }} />
                   )}
-                {propertyName.key === "name" &&
-                  propertyName.direction === "descending" && (
-                    <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                {propertyName.key === 'name' &&
+                  propertyName.direction === 'descending' && (
+                    <ArrowDownwardOutlinedIcon style={{ fontSize: '17px' }} />
                   )}
               </TableCell>
-              <TableCell style={{ cursor: "pointer" }} align="center">
+              <TableCell style={{ cursor: 'pointer' }} align="center">
                 Veprimet
               </TableCell>
             </TableRow>
@@ -320,7 +320,7 @@ export default function ShtoKategoriProduktesh() {
                 <TableCell align="center"> {category.name} </TableCell>
                 <TableCell align="center">
                   <EditOutlinedIcon
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     onClick={() => {
                       showEditKategoriPop(true);
                       setEditKategoriName(category.name);
@@ -328,7 +328,7 @@ export default function ShtoKategoriProduktesh() {
                     }}
                   />
                   <DeleteOutlineOutlinedIcon
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     onClick={() => {
                       setDeleteID(category.id);
                       showDeleteKategoriPop(true);
@@ -340,8 +340,8 @@ export default function ShtoKategoriProduktesh() {
           </TableBody>
         </Table>
         <div className="pagination">
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <InputLabel style={{ marginRight: "10px" }} id="row">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <InputLabel style={{ marginRight: '10px' }} id="row">
               Kategori ne faqe
             </InputLabel>
             <Select
