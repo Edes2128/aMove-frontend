@@ -347,7 +347,10 @@ export default function ShtoAttributes() {
         <div className="shto-attributes-pop">
           <div
             className="shto-attributes-pop-opa"
-            onClick={() => showAttrPop(false)}
+            onClick={() => {
+              setAttrValue("");
+              showAttrPop(false);
+            }}
           ></div>
           <div className="shto-attributes-pop-container">
             <CloseOutlinedIcon
@@ -356,7 +359,10 @@ export default function ShtoAttributes() {
                 marginRight: "20px",
                 cursor: "pointer",
               }}
-              onClick={() => showAttrPop(false)}
+              onClick={() => {
+                showAttrPop(false);
+                setAttrValue("");
+              }}
             />
             <TextField
               onChange={(e) => setAttrValue(e.target.value)}

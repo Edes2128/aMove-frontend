@@ -702,7 +702,16 @@ export default function Produkte() {
             </InputLabel>
             <Select
               labelId="row"
-              onChange={(e) => setItempage(e.target.value)}
+              onChange={(e) => {
+                setItempage(e.target.value);
+
+                if ((page - 0.5) * e.target.value >= filteredProducts.length) {
+                  let maxPage = Math.ceil(
+                    filteredProducts.length / e.target.value
+                  );
+                  setPage(maxPage);
+                }
+              }}
               value={itemPage}
             >
               <MenuItem value={5}>5</MenuItem>

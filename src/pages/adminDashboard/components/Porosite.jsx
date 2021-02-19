@@ -70,8 +70,6 @@ export default function Porosite() {
         .includes(searchFilter.toLowerCase())
   );
 
-  console.log(ordersDetails);
-
   if (propertyName !== null) {
     filteredOrder.sort((a, b) => {
       if (a[propertyName.key] < b[propertyName.key]) {
@@ -791,6 +789,12 @@ export default function Porosite() {
               labelId="row"
               onChange={(e) => {
                 setItempage(e.target.value);
+                if ((page - 0.5) * e.target.value >= filteredOrder.length) {
+                  let maxPage = Math.ceil(
+                    filteredOrder.length / e.target.value
+                  );
+                  setPage(maxPage);
+                }
               }}
               value={itemPage}
             >

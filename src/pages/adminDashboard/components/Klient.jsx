@@ -730,7 +730,19 @@ export default function Klient() {
                 </InputLabel>
                 <Select
                   labelId="row"
-                  onChange={(e) => setItempage(e.target.value)}
+                  onChange={(e) => {
+                    setItempage(e.target.value);
+
+                    if (
+                      (page - 0.5) * e.target.value >=
+                      klientetFiltered.length
+                    ) {
+                      let maxPage = Math.ceil(
+                        klientetFiltered.length / e.target.value
+                      );
+                      setPage(maxPage);
+                    }
+                  }}
                   value={itemPage}
                 >
                   <MenuItem value={5}>5</MenuItem>
