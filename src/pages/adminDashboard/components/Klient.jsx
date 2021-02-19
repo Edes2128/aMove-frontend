@@ -1,67 +1,75 @@
-import React, { useState, useEffect, useContext } from "react";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import { Button, TextField } from "@material-ui/core";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
-import Pagination from "@material-ui/lab/Pagination";
-import CategoryOutlinedIcon from "@material-ui/icons/CategoryOutlined";
-import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
-import PeopleAltOutlinedIcon from "@material-ui/icons/PeopleAltOutlined";
-import GroupAddOutlinedIcon from "@material-ui/icons/GroupAddOutlined";
-import ShtoKlientPopup from "./ShtoKlientPopup";
-import DepoContext from "../../../context/depoContext/DepoContext";
-import { CloseOutlined } from "@material-ui/icons";
-import Avatar from "@material-ui/core/Avatar";
-import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
-import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
-import AlertContext from "../../../context/alertContext/AlertContext";
-import FormControl from "@material-ui/core/FormControl";
-import AddIcon from "@material-ui/icons/Add";
-import Input from "@material-ui/core/Input";
-import axios from "axios";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+import React, { useState, useEffect, useContext } from 'react';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import { Button, TextField } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import Pagination from '@material-ui/lab/Pagination';
+import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
+import ExploreOutlinedIcon from '@material-ui/icons/ExploreOutlined';
+import PeopleAltOutlinedIcon from '@material-ui/icons/PeopleAltOutlined';
+import GroupAddOutlinedIcon from '@material-ui/icons/GroupAddOutlined';
+import ShtoKlientPopup from './ShtoKlientPopup';
+import DepoContext from '../../../context/depoContext/DepoContext';
+import { CloseOutlined } from '@material-ui/icons';
+import Avatar from '@material-ui/core/Avatar';
+import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined';
+import ArrowDownwardOutlinedIcon from '@material-ui/icons/ArrowDownwardOutlined';
+import AlertContext from '../../../context/alertContext/AlertContext';
+import FormControl from '@material-ui/core/FormControl';
+import AddIcon from '@material-ui/icons/Add';
+import Input from '@material-ui/core/Input';
+import axios from 'axios';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 export default function Klient() {
-  const [deletedID, setDeletedID] = useState("");
+  const [deletedID, setDeletedID] = useState('');
   const [deletePop, setDeletePop] = useState(false);
-  const [editID, setEditID] = useState("");
-  const [editEmri, setEditEmri] = useState("");
-  const [editEmail, setEditEmail] = useState("");
-  const [editPassword, setEditPassword] = useState("");
-  const [editStatus, setEditStatus] = useState("");
-  const [editZona, setEditZona] = useState("");
-  const [editKategoria, setEditKategoria] = useState("");
-  const [editFile, setEditFile] = useState("");
-  const [editImage, setEditImage] = useState("");
+  const [editID, setEditID] = useState('');
+  const [editEmri, setEditEmri] = useState('');
+  const [editEmail, setEditEmail] = useState('');
+  const [editPassword, setEditPassword] = useState('');
+  const [editStatus, setEditStatus] = useState('');
+  const [editZona, setEditZona] = useState('');
+  const [editKategoria, setEditKategoria] = useState('');
+  const [editFile, setEditFile] = useState('');
+  const [editImage, setEditImage] = useState('');
   const [deletedImage, setDeletedImage] = useState(false);
   const [userEditPop, setUserEditPop] = useState(false);
   const [userPopup, shotUserPopup] = useState(false);
   const alertContext = useContext(AlertContext);
-  const [kategori, Setkategori] = useState("");
-  const [zona, Setzona] = useState("");
+  const [kategori, Setkategori] = useState('');
+  const [zona, Setzona] = useState('');
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const depoContext = useContext(DepoContext);
-  const { klientet } = depoContext;
+  const { klientet, categoryClients, zonaClients } = depoContext;
   const [userDetails, setUserDetails] = useState({});
   const [userDetailsPop, showUserDetailsPop] = useState(false);
   const [propertyName, setProperty] = useState({
-    key: "id",
-    direction: "descending",
+    key: 'id',
+    direction: 'descending'
   });
-  const [searchFilter, setSearchFilter] = useState("");
+  const [searchFilter, setSearchFilter] = useState('');
 
-  const klientetFiltered = klientet.filter(
+  const filterByOther = klientet.filter((klient) => {
+    if (zona === '' && kategori === '') {
+      return klient;
+    }
+
+    return klient.zona === zona || klient.kategoria === kategori;
+  });
+
+  const klientetFiltered = filterByOther.filter(
     (order) =>
       order.id.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
       order.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
@@ -74,21 +82,21 @@ export default function Klient() {
     e.preventDefault();
 
     let fd = new FormData();
-    fd.append("name", editEmri);
-    fd.append("email", editEmail);
-    fd.append("password", editPassword);
-    fd.append("zona", editZona);
-    fd.append("kategoria", editKategoria);
-    fd.append("image", editImage);
-    fd.append("status", editStatus);
+    fd.append('name', editEmri);
+    fd.append('email', editEmail);
+    fd.append('password', editPassword);
+    fd.append('zona', editZona);
+    fd.append('kategoria', editKategoria);
+    fd.append('image', editImage);
+    fd.append('status', editStatus);
 
     axios
       .post(`https://amove.alcodeit.com/edit_user.php?user_id=${editID}`, fd)
       .then((res) => {
         if (res.data.status === 0) {
-          alertContext.setAlert(`${res.data.message}`, "error");
+          alertContext.setAlert(`${res.data.message}`, 'error');
         } else if (res.data.status === 1) {
-          alertContext.setAlert(`${res.data.message}`, "success");
+          alertContext.setAlert(`${res.data.message}`, 'success');
           depoContext.getAllClients();
           setUserEditPop(false);
         }
@@ -97,15 +105,17 @@ export default function Klient() {
 
   useEffect(() => {
     depoContext.getAllClients();
+    depoContext.getCategoryClients();
+    depoContext.getZonaClients();
   }, []);
 
   if (propertyName !== null) {
     klientetFiltered.sort((a, b) => {
       if (a[propertyName.key] < b[propertyName.key]) {
-        return propertyName.direction === "ascending" ? -1 : 1;
+        return propertyName.direction === 'ascending' ? -1 : 1;
       }
       if (a[propertyName.key] > b[propertyName.key]) {
-        return propertyName.direction === "ascending" ? 1 : -1;
+        return propertyName.direction === 'ascending' ? 1 : -1;
       }
       return 0;
     });
@@ -113,27 +123,27 @@ export default function Klient() {
 
   const renderButtonStatus = (status) => {
     if (status === 1) {
-      return "Aktive";
+      return 'Aktive';
     } else if (status === 0) {
-      return "Joaktive";
+      return 'Joaktive';
     }
   };
 
   const renderButtonColorsStatus = (status) => {
     if (status === 1) {
-      return "#73C850";
+      return '#73C850';
     } else if (status === 0) {
-      return "#FF0000";
+      return '#FF0000';
     }
   };
   const requestSort = (key) => {
-    let direction = "ascending";
+    let direction = 'ascending';
     if (
       propertyName &&
       propertyName.key === key &&
-      propertyName.direction === "ascending"
+      propertyName.direction === 'ascending'
     ) {
-      direction = "descending";
+      direction = 'descending';
     }
     setProperty({ key, direction });
   };
@@ -148,7 +158,7 @@ export default function Klient() {
           <div
             className="user-delete-pop-opa"
             onClick={() => {
-              alertContext.setAlert("Klienti nuk u fshi", "info");
+              alertContext.setAlert('Klienti nuk u fshi', 'info');
               setDeletePop(false);
             }}
           ></div>
@@ -158,29 +168,29 @@ export default function Klient() {
               <ButtonGroup size="large" disableElevation variant="contained">
                 <Button
                   style={{
-                    borderTopLeftRadius: "30px",
-                    borderBottomLeftRadius: "30px",
-                    backgroundColor: "white",
-                    color: "black",
+                    borderTopLeftRadius: '30px',
+                    borderBottomLeftRadius: '30px',
+                    backgroundColor: 'white',
+                    color: 'black'
                   }}
                   onClick={() => {
                     depoContext.deleteUser(deletedID);
                     setDeletePop(false);
-                    alertContext.setAlert("Klienti u fshi", "warning");
+                    alertContext.setAlert('Klienti u fshi', 'warning');
                   }}
                 >
                   Po
                 </Button>
                 <Button
                   style={{
-                    borderTopRightRadius: "30px",
-                    borderBottomRightRadius: "30px",
-                    backgroundColor: "#FF0000",
-                    color: "white",
+                    borderTopRightRadius: '30px',
+                    borderBottomRightRadius: '30px',
+                    backgroundColor: '#FF0000',
+                    color: 'white'
                   }}
                   onClick={() => {
                     setDeletePop(false);
-                    alertContext.setAlert("Klienti nuk u fshi", "info");
+                    alertContext.setAlert('Klienti nuk u fshi', 'info');
                   }}
                 >
                   Jo
@@ -197,7 +207,7 @@ export default function Klient() {
             className="user-edit-pop-opa"
             onClick={() => {
               setUserEditPop(false);
-              alertContext.setAlert("Klienti nuk u ndryshua", "info");
+              alertContext.setAlert('Klienti nuk u ndryshua', 'info');
               setDeletedImage(false);
             }}
           ></div>
@@ -211,7 +221,7 @@ export default function Klient() {
                 <div className="user-edit-pop-container-form-left">
                   <TextField
                     label="Emri"
-                    style={{ width: "80%" }}
+                    style={{ width: '80%' }}
                     variant="outlined"
                     value={editEmri}
                     type="text"
@@ -219,7 +229,7 @@ export default function Klient() {
                   />
                   <TextField
                     label="Email"
-                    style={{ width: "80%" }}
+                    style={{ width: '80%' }}
                     variant="outlined"
                     value={editEmail}
                     type="email"
@@ -228,7 +238,7 @@ export default function Klient() {
                   <TextField
                     type="password"
                     label="Password"
-                    style={{ width: "80%" }}
+                    style={{ width: '80%' }}
                     variant="outlined"
                     value={editPassword}
                     onChange={(e) => setEditPassword(e.target.value)}
@@ -240,11 +250,11 @@ export default function Klient() {
                     <Select
                       value={editStatus}
                       onChange={(e) => setEditStatus(e.target.value)}
-                      style={{ width: "227px" }}
+                      style={{ width: '227px' }}
                       label="Status"
                       inputProps={{
-                        name: "status",
-                        id: "njesia-label",
+                        name: 'status',
+                        id: 'njesia-label'
                       }}
                     >
                       <MenuItem value={1}>Aktive</MenuItem>
@@ -257,17 +267,17 @@ export default function Klient() {
                     <Select
                       value={editKategoria}
                       onChange={(e) => setEditKategoria(e.target.value)}
-                      style={{ width: "227px" }}
+                      style={{ width: '227px' }}
                       label="Status"
                       inputProps={{
-                        name: "status",
-                        id: "njesia-label",
+                        name: 'status',
+                        id: 'njesia-label'
                       }}
                     >
                       <MenuItem value="None"></MenuItem>
-                      <MenuItem value={"Kategoria 1"}>Kategoria 1</MenuItem>
-                      <MenuItem value={"Ktegoria 2"}>Kategoria 2</MenuItem>
-                      <MenuItem value={"Kategoria 3"}>Kategoria 3</MenuItem>
+                      <MenuItem value={'Kategoria 1'}>Kategoria 1</MenuItem>
+                      <MenuItem value={'Ktegoria 2'}>Kategoria 2</MenuItem>
+                      <MenuItem value={'Kategoria 3'}>Kategoria 3</MenuItem>
                     </Select>
                   </FormControl>
 
@@ -276,38 +286,38 @@ export default function Klient() {
                     <Select
                       value={editZona}
                       onChange={(e) => setEditZona(e.target.value)}
-                      style={{ width: "227px" }}
+                      style={{ width: '227px' }}
                       label="Status"
                       inputProps={{
-                        name: "status",
-                        id: "njesia-label",
+                        name: 'status',
+                        id: 'njesia-label'
                       }}
                     >
                       <MenuItem value="None"></MenuItem>
-                      <MenuItem value={"Zona 1"}>Zona 1</MenuItem>
-                      <MenuItem value={"Zona 2"}>Zona 2</MenuItem>
-                      <MenuItem value={"Zona 3"}>Zona 3</MenuItem>
+                      <MenuItem value={'Zona 1'}>Zona 1</MenuItem>
+                      <MenuItem value={'Zona 2'}>Zona 2</MenuItem>
+                      <MenuItem value={'Zona 3'}>Zona 3</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
               </div>
               <div
                 className={
-                  editImage === "" ? "image-2" : "image-2 outlinestyle-none"
+                  editImage === '' ? 'image-2' : 'image-2 outlinestyle-none'
                 }
               >
-                {editImage === "" ? (
+                {editImage === '' ? (
                   <>
                     <InputLabel
                       style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        cursor: "pointer",
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer'
                       }}
                       htmlFor="image"
                     >
-                      <AddIcon style={{ fontSize: "70px" }} /> upload{" "}
+                      <AddIcon style={{ fontSize: '70px' }} /> upload{' '}
                     </InputLabel>
                     <Input
                       onChange={(e) => {
@@ -316,7 +326,7 @@ export default function Klient() {
                       }}
                       id="image"
                       type="file"
-                      style={{ display: "none" }}
+                      style={{ display: 'none' }}
                     />
                   </>
                 ) : (
@@ -325,8 +335,8 @@ export default function Klient() {
                       <>
                         <DeleteOutlineOutlinedIcon
                           onClick={() => {
-                            setEditImage("");
-                            setEditFile("");
+                            setEditImage('');
+                            setEditFile('');
                             setDeletedImage(true);
                           }}
                           className="delete-icon-image"
@@ -337,8 +347,8 @@ export default function Klient() {
                       <>
                         <DeleteOutlineOutlinedIcon
                           onClick={() => {
-                            setEditImage("");
-                            setEditFile("");
+                            setEditImage('');
+                            setEditFile('');
                             setDeletedImage(true);
                           }}
                           className="delete-icon-image"
@@ -359,15 +369,15 @@ export default function Klient() {
                   type="submit"
                   onClick={() => setDeletedImage(false)}
                 >
-                  {" "}
-                  Edit{" "}
+                  {' '}
+                  Edit{' '}
                 </Button>
                 <Button
                   color="secondary"
                   variant="contained"
                   onClick={() => {
                     setUserEditPop(false);
-                    alertContext.setAlert("Klienti nuk u ndryshua", "info");
+                    alertContext.setAlert('Klienti nuk u ndryshua', 'info');
                   }}
                 >
                   Anullo
@@ -387,17 +397,17 @@ export default function Klient() {
           <div className="user-details-pop-container">
             <CloseOutlined
               style={{
-                alignSelf: "flex-end",
-                marginRight: "20px",
-                marginTop: "20px",
-                fontSize: "30px",
-                cursor: "pointer",
+                alignSelf: 'flex-end',
+                marginRight: '20px',
+                marginTop: '20px',
+                fontSize: '30px',
+                cursor: 'pointer'
               }}
               onClick={() => showUserDetailsPop(false)}
             />
             <Avatar
               src={`https://amove.alcodeit.com/images/${userDetails.image_profile}`}
-              style={{ height: "200px", width: "200px" }}
+              style={{ height: '200px', width: '200px' }}
             />
             <div className="user-pop-details-content">
               <div className="user-pop-details-content-detail">
@@ -410,7 +420,7 @@ export default function Klient() {
               <div className="user-pop-details-content-detail">
                 <h4>Email: </h4>
                 <i>
-                  {" "}
+                  {' '}
                   <p>{userDetails.email}</p>
                 </i>
               </div>
@@ -442,27 +452,27 @@ export default function Klient() {
               </span> */}
             </div>
             <div className="admin-klient-cat-icon">
-              <PeopleAltOutlinedIcon style={{ fontSize: "50px" }} />
+              <PeopleAltOutlinedIcon style={{ fontSize: '50px' }} />
             </div>
           </div>
 
           <div className="admin-klient-cat">
             <div className="admin-klient-cat-content">
-              <InputLabel id="kategori" style={{ color: "white" }}>
+              <InputLabel id="kategori" style={{ color: 'white' }}>
                 Kategoria
               </InputLabel>
               <Select
                 labelId="kategori"
-                value={kategori === "" ? "none" : kategori}
+                value={kategori === '' ? 'none' : kategori}
                 onChange={(e) => Setkategori(e.target.value)}
-                style={{ color: "white" }}
+                style={{ color: 'white' }}
               >
-                <MenuItem value="none">
+                <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={"Kategoria 1"}>Kategoria 1</MenuItem>
-                <MenuItem value={"Kategoria 2"}>Kategoria 2</MenuItem>
-                <MenuItem value={"Kategoria 3"}>Kategoria 3</MenuItem>
+                {categoryClients.map((category) => (
+                  <MenuItem value={category.name}> {category.name} </MenuItem>
+                ))}
               </Select>
 
               <span className="span-client-offer">
@@ -470,32 +480,32 @@ export default function Klient() {
               </span>
             </div>
             <div className="admin-klient-cat-icon">
-              <CategoryOutlinedIcon style={{ fontSize: "50px" }} />
+              <CategoryOutlinedIcon style={{ fontSize: '50px' }} />
             </div>
           </div>
 
           <div className="admin-klient-cat">
             <div className="admin-klient-cat-content">
-              <InputLabel id="zona" style={{ color: "white" }}>
+              <InputLabel id="zona" style={{ color: 'white' }}>
                 Zona
               </InputLabel>
               <Select
                 labelId="zona"
-                value={zona === "" ? "none" : zona}
+                value={zona === '' ? 'none' : zona}
                 onChange={(e) => Setzona(e.target.value)}
-                style={{ color: "white" }}
+                style={{ color: 'white' }}
               >
-                <MenuItem value="none">
+                <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={"Zona 1"}>Zona 1</MenuItem>
-                <MenuItem value={"Zona 2"}>Zona 2</MenuItem>
-                <MenuItem value={"Zona 3"}>Zona 3</MenuItem>
+                {zonaClients.map((zona) => (
+                  <MenuItem value={zona.name}> {zona.name} </MenuItem>
+                ))}
               </Select>
               <span className="span-client-offer">Asnje zone e zgjedhur</span>
             </div>
             <div className="admin-klient-cat-icon">
-              <ExploreOutlinedIcon style={{ fontSize: "50px" }} />
+              <ExploreOutlinedIcon style={{ fontSize: '50px' }} />
             </div>
           </div>
         </div>
@@ -514,16 +524,16 @@ export default function Klient() {
               ></TextField>
               <Button
                 style={{
-                  backgroundColor: "#2A7EBF",
-                  borderRadius: "8px",
-                  padding: "10px 20px",
+                  backgroundColor: '#2A7EBF',
+                  borderRadius: '8px',
+                  padding: '10px 20px'
                 }}
                 variant="contained"
                 onClick={() => shotUserPopup(true)}
                 color="primary"
               >
-                <GroupAddOutlinedIcon style={{ marginRight: "10px" }} />
-                <p style={{ color: "white", textDecoration: "none" }}>
+                <GroupAddOutlinedIcon style={{ marginRight: '10px' }} />
+                <p style={{ color: 'white', textDecoration: 'none' }}>
                   Shto klient
                 </p>
               </Button>
@@ -534,121 +544,121 @@ export default function Klient() {
             {klientetFiltered.length === 0 ? (
               <div
                 className="klient-produkte-search-notfound"
-                style={{ justifyContent: "center" }}
+                style={{ justifyContent: 'center' }}
               >
                 <img src="/search_notfound.gif" alt="" />
                 <div
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column'
                   }}
                 >
                   <h3>Nuk u gjet asnje klient nga kerkimi😥</h3>
-                  <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
+                  <p style={{ fontSize: '17px' }}>Provoni perseri!</p>
                 </div>
               </div>
             ) : (
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell onClick={() => requestSort("id")}>
+                    <TableCell onClick={() => requestSort('id')}>
                       ID
-                      {propertyName.key === "id" &&
-                        propertyName.direction === "ascending" && (
+                      {propertyName.key === 'id' &&
+                        propertyName.direction === 'ascending' && (
                           <ArrowUpwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
-                      {propertyName.key === "id" &&
-                        propertyName.direction === "descending" && (
+                      {propertyName.key === 'id' &&
+                        propertyName.direction === 'descending' && (
                           <ArrowDownwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
                     </TableCell>
-                    <TableCell onClick={() => requestSort("name")} align="left">
+                    <TableCell onClick={() => requestSort('name')} align="left">
                       Emri
-                      {propertyName.key === "name" &&
-                        propertyName.direction === "ascending" && (
+                      {propertyName.key === 'name' &&
+                        propertyName.direction === 'ascending' && (
                           <ArrowUpwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
-                      {propertyName.key === "name" &&
-                        propertyName.direction === "descending" && (
+                      {propertyName.key === 'name' &&
+                        propertyName.direction === 'descending' && (
                           <ArrowDownwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
                     </TableCell>
                     <TableCell
-                      onClick={() => requestSort("email")}
+                      onClick={() => requestSort('email')}
                       width="300px"
                       align="left"
                     >
                       Email
-                      {propertyName.key === "email" &&
-                        propertyName.direction === "ascending" && (
+                      {propertyName.key === 'email' &&
+                        propertyName.direction === 'ascending' && (
                           <ArrowUpwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
-                      {propertyName.key === "email" &&
-                        propertyName.direction === "descending" && (
+                      {propertyName.key === 'email' &&
+                        propertyName.direction === 'descending' && (
                           <ArrowDownwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
                     </TableCell>
-                    <TableCell onClick={() => requestSort("zona")} align="left">
+                    <TableCell onClick={() => requestSort('zona')} align="left">
                       Zona
-                      {propertyName.key === "zona" &&
-                        propertyName.direction === "ascending" && (
+                      {propertyName.key === 'zona' &&
+                        propertyName.direction === 'ascending' && (
                           <ArrowUpwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
-                      {propertyName.key === "zona" &&
-                        propertyName.direction === "descending" && (
+                      {propertyName.key === 'zona' &&
+                        propertyName.direction === 'descending' && (
                           <ArrowDownwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
                     </TableCell>
                     <TableCell
-                      onClick={() => requestSort("kategoria")}
+                      onClick={() => requestSort('kategoria')}
                       align="left"
                     >
                       Kategoria
-                      {propertyName.key === "kategoria" &&
-                        propertyName.direction === "ascending" && (
+                      {propertyName.key === 'kategoria' &&
+                        propertyName.direction === 'ascending' && (
                           <ArrowUpwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
-                      {propertyName.key === "kategoria" &&
-                        propertyName.direction === "descending" && (
+                      {propertyName.key === 'kategoria' &&
+                        propertyName.direction === 'descending' && (
                           <ArrowDownwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
                     </TableCell>
                     <TableCell
                       align="left"
-                      onClick={() => requestSort("status_user")}
+                      onClick={() => requestSort('status_user')}
                     >
                       Status
-                      {propertyName.key === "status_user" &&
-                        propertyName.direction === "ascending" && (
+                      {propertyName.key === 'status_user' &&
+                        propertyName.direction === 'ascending' && (
                           <ArrowUpwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
-                      {propertyName.key === "status_user" &&
-                        propertyName.direction === "descending" && (
+                      {propertyName.key === 'status_user' &&
+                        propertyName.direction === 'descending' && (
                           <ArrowDownwardOutlinedIcon
-                            style={{ fontSize: "17px" }}
+                            style={{ fontSize: '17px' }}
                           />
                         )}
                     </TableCell>
@@ -658,7 +668,7 @@ export default function Klient() {
                 <TableBody>
                   {klientetFiltered.slice(start, end).map((row) => (
                     <TableRow key={row.id}>
-                      <TableCell style={{ color: "#287DBF" }}>
+                      <TableCell style={{ color: '#287DBF' }}>
                         #{row.id}
                       </TableCell>
                       <TableCell>{row.name}</TableCell>
@@ -667,20 +677,20 @@ export default function Klient() {
                       <TableCell>{row.kategoria}</TableCell>
                       <TableCell>
                         <p className="status-text">
-                          {" "}
+                          {' '}
                           <span
                             className="status-pulse"
                             style={{
                               backgroundColor: renderButtonColorsStatus(
                                 row.status_user
-                              ),
+                              )
                             }}
-                          ></span>{" "}
-                          {renderButtonStatus(row.status_user)}{" "}
+                          ></span>{' '}
+                          {renderButtonStatus(row.status_user)}{' '}
                         </p>
                       </TableCell>
                       <TableCell align="center">
-                        <div className="veprime" style={{ cursor: "pointer" }}>
+                        <div className="veprime" style={{ cursor: 'pointer' }}>
                           <VisibilityOutlinedIcon
                             onClick={() => {
                               setUserDetails(row);
@@ -703,7 +713,7 @@ export default function Klient() {
                           />
                           <DeleteOutlineOutlinedIcon
                             style={{
-                              display: row.status_user === 0 ? "none" : "",
+                              display: row.status_user === 0 ? 'none' : ''
                             }}
                             onClick={() => {
                               setDeletedID(row.id);
@@ -721,11 +731,11 @@ export default function Klient() {
             <div
               className="pagination"
               style={{
-                display: klientetFiltered.length === 0 ? "none" : "flex",
+                display: klientetFiltered.length === 0 ? 'none' : 'flex'
               }}
             >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <InputLabel style={{ marginRight: "10px" }} id="row">
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <InputLabel style={{ marginRight: '10px' }} id="row">
                   User ne faqe
                 </InputLabel>
                 <Select

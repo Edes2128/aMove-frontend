@@ -1,41 +1,41 @@
 @font-face {
-  font-family: "Campton";
-  src: url("/src/fonts/Campton/Campton-Light.eot");
-  src: url("/src/fonts/Campton/Campton-Light.eot?#iefix")
-      format("embedded-opentype"),
-    url("/src/fonts/Campton/Campton-Light.woff2") format("woff2"),
-    url("/src/fonts/Campton/Campton-Light.woff") format("woff"),
-    url("/src/fonts/Campton/Campton-Light.ttf") format("truetype"),
-    url("/src/fonts/Campton/Campton-Light.svg#Campton-Light") format("svg");
+  font-family: 'Campton';
+  src: url('/src/fonts/Campton/Campton-Light.eot');
+  src: url('/src/fonts/Campton/Campton-Light.eot?#iefix')
+      format('embedded-opentype'),
+    url('/src/fonts/Campton/Campton-Light.woff2') format('woff2'),
+    url('/src/fonts/Campton/Campton-Light.woff') format('woff'),
+    url('/src/fonts/Campton/Campton-Light.ttf') format('truetype'),
+    url('/src/fonts/Campton/Campton-Light.svg#Campton-Light') format('svg');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Campton";
-  src: url("/src/fonts/Campton/Campton-Bold.eot");
-  src: url("/src/fonts/Campton/Campton-Bold.eot?#iefix")
-      format("embedded-opentype"),
-    url("/src/fonts/Campton/Campton-Bold.woff2") format("woff2"),
-    url("/src/fonts/Campton/Campton-Bold.woff") format("woff"),
-    url("/src/fonts/Campton/Campton-Bold.ttf") format("truetype"),
-    url("/src/fonts/Campton/Campton-Bold.svg#Campton-Bold") format("svg");
+  font-family: 'Campton';
+  src: url('/src/fonts/Campton/Campton-Bold.eot');
+  src: url('/src/fonts/Campton/Campton-Bold.eot?#iefix')
+      format('embedded-opentype'),
+    url('/src/fonts/Campton/Campton-Bold.woff2') format('woff2'),
+    url('/src/fonts/Campton/Campton-Bold.woff') format('woff'),
+    url('/src/fonts/Campton/Campton-Bold.ttf') format('truetype'),
+    url('/src/fonts/Campton/Campton-Bold.svg#Campton-Bold') format('svg');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Campton";
-  src: url("/src/fonts/Campton/Campton-SemiBold.eot");
-  src: url("/src/fonts/Campton/Campton-SemiBold.eot?#iefix")
-      format("embedded-opentype"),
-    url("/src/fonts/Campton/Campton-SemiBold.woff2") format("woff2"),
-    url("/src/fonts/Campton/Campton-SemiBold.woff") format("woff"),
-    url("/src/fonts/Campton/Campton-SemiBold.ttf") format("truetype"),
-    url("/src/fonts/Campton/Campton-SemiBold.svg#Campton-SemiBold")
-      format("svg");
+  font-family: 'Campton';
+  src: url('/src/fonts/Campton/Campton-SemiBold.eot');
+  src: url('/src/fonts/Campton/Campton-SemiBold.eot?#iefix')
+      format('embedded-opentype'),
+    url('/src/fonts/Campton/Campton-SemiBold.woff2') format('woff2'),
+    url('/src/fonts/Campton/Campton-SemiBold.woff') format('woff'),
+    url('/src/fonts/Campton/Campton-SemiBold.ttf') format('truetype'),
+    url('/src/fonts/Campton/Campton-SemiBold.svg#Campton-SemiBold')
+      format('svg');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -44,14 +44,28 @@
   background-color: salmon;
   color: white;
 }
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid rgb(255, 255, 255);
+  -webkit-text-fill-color: rgb(255, 255, 255);
+  -webkit-box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset;
+  box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 html {
-  font-family: "Campton", sans-serif;
+  font-family: 'Campton', sans-serif;
 }
 body {
   background-color: #ffffff;
@@ -155,7 +169,7 @@ tbody tr:hover td:last-child {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/src/images/gradient-home-10.jpg");
+  background: url('/src/images/gradient-home-10.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -273,7 +287,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .user-name-admin::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: -10px;
@@ -497,7 +511,7 @@ tbody tr:hover td:last-child {
   border-radius: 25px;
 }
 .produkte-header-item::before {
-  content: "";
+  content: '';
   position: absolute;
   background-color: #1f5f91;
   top: 25%;
@@ -508,7 +522,7 @@ tbody tr:hover td:last-child {
   border-bottom-left-radius: 5px;
 }
 .produkte-header-item::after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: #32ff0c;
   top: 37%;
@@ -517,7 +531,7 @@ tbody tr:hover td:last-child {
   width: 4px;
 }
 .produkte-header-item:nth-child(3):after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: #ff0000;
   top: 37%;
@@ -526,7 +540,7 @@ tbody tr:hover td:last-child {
   width: 4px;
 }
 .produkte-header-item:nth-child(4):after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: #f8f000;
   top: 37%;
@@ -617,7 +631,7 @@ tbody tr:hover td:last-child {
   margin-bottom: 10px;
 }
 .shtoprodukt-popup-form-header::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -782,7 +796,7 @@ tbody tr:hover td:last-child {
 }
 
 .porosite-header-item::before {
-  content: "";
+  content: '';
   position: absolute;
   right: 0;
   top: 25%;
@@ -794,7 +808,7 @@ tbody tr:hover td:last-child {
 }
 
 .porosite-header-item::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 3px;
   top: 38%;
@@ -964,7 +978,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .filter-content-multi-range::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -982,7 +996,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .filter-content-price-slider::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -15px;
   left: 0;
@@ -1001,7 +1015,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .filter-content-category::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0px;
   left: 0;
@@ -1153,7 +1167,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .single-product-right-title-price::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1177,7 +1191,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .single-product-right-description-sku::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1441,7 +1455,7 @@ tbody tr:hover td:last-child {
 }
 
 .header-cart-products-content-item::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1545,7 +1559,7 @@ tbody tr:hover td:last-child {
 }
 
 .order-details-pop-content-item::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: 0px;
@@ -2062,7 +2076,7 @@ tbody tr:hover td:last-child {
   margin-top: 20px;
 }
 .edit-order-pop-container-left::after {
-  content: "";
+  content: '';
   position: absolute;
   height: 100%;
   width: 1px;
@@ -2089,7 +2103,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .edit-order-pop-container-left-totali::after {
-  content: "";
+  content: '';
   position: absolute;
   height: 1px;
   width: 100%;
@@ -2861,7 +2875,7 @@ tbody tr:hover td:last-child {
   height: 100%;
 }
 .ofertat-header-item::before {
-  content: "";
+  content: '';
   position: absolute;
   background-color: #1f5f91;
   top: 21%;
@@ -2873,7 +2887,7 @@ tbody tr:hover td:last-child {
 }
 
 .ofertat-header-item::after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: #32ff0c;
   top: 38%;
@@ -2941,7 +2955,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .shto-oferte-pop-cotnainer-header-tabs::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -2950,7 +2964,7 @@ tbody tr:hover td:last-child {
   background-color: rgba(0, 0, 0, 0.151);
 }
 .shto-oferte-pop-cotnainer-header-tabs::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -3234,7 +3248,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .account-details-buttons::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   left: 0;
@@ -3341,7 +3355,7 @@ tbody tr:hover td:last-child {
   align-items: center;
 }
 .home-header-item::before {
-  content: "";
+  content: '';
   position: absolute;
   background-color: #1f5f91;
   top: 25%;
@@ -3352,7 +3366,7 @@ tbody tr:hover td:last-child {
   border-bottom-left-radius: 5px;
 }
 .home-header-item::after {
-  content: "";
+  content: '';
   position: absolute;
   background-color: #32ff0c;
   top: 37%;
@@ -3497,7 +3511,7 @@ tbody tr:hover td:last-child {
   position: relative;
 }
 .produktet-list-vertical-item-titulli::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -3614,7 +3628,7 @@ tbody tr:hover td:last-child {
 }
 
 .order-edit-pop-container-left::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -3675,8 +3689,36 @@ tbody tr:hover td:last-child {
 .order-edit-pop-container-right-items-item-button {
   width: 100%;
   height: 20%;
-
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.see-attr-names-pop-delete{
+  position: fixed;
+  top: -100%;
+  left: 37%;
+  z-index: 101;
+  padding: 0 15px;
+  background-color: white;
+  height: 200px;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all .4s ease-out;
+}
+.see-attr-names-pop-delete-buttons{
+  margin: 0 auto;
+  width: 50%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.show-see-attr-names-pop-delete{
+  top: 10px;
+  transition: all .4s ease-out;
 }
