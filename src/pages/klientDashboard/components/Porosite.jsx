@@ -278,7 +278,7 @@ export default function Porosite() {
                         disabled={disabledButton === product ? true : false}
                         onClick={(e) => {
                           setDisabledButton(product);
-                          setTimeout(() => setDisabledButton({}), 8000);
+                          setTimeout(() => setDisabledButton({}), 10000);
                           axios
                             .post(
                               `https://amove.alcodeit.com/add_product_to_order.php`,
@@ -290,11 +290,19 @@ export default function Porosite() {
                             )
                             .then((res) => {
                               if (res.data.status === 1) {
+                                // setDisabledButton({})
+                                // setTimeout(() => setDisabledButton({}), 2000);
                                 axios
                                   .get(
                                     `https://amove.alcodeit.com/get_orderDetails.php?klient=${editOrderKlientID}&order_id=${editOrderID}`
                                   )
                                   .then((res) => {
+                                    if (res.status === 200) {
+                                      setTimeout(
+                                        () => setDisabledButton({}),
+                                        6000
+                                      );
+                                    }
                                     setEditOrderDetails([]);
                                     setEditOrderDetails(res.data);
                                   });

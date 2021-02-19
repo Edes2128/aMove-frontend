@@ -464,7 +464,10 @@ export default function Klient() {
               <Select
                 labelId="kategori"
                 value={kategori === '' ? 'none' : kategori}
-                onChange={(e) => Setkategori(e.target.value)}
+                onChange={(e) => {
+                  Setkategori(e.target.value);
+                  setPage(1);
+                }}
                 style={{ color: 'white' }}
               >
                 <MenuItem value="">
@@ -492,7 +495,10 @@ export default function Klient() {
               <Select
                 labelId="zona"
                 value={zona === '' ? 'none' : zona}
-                onChange={(e) => Setzona(e.target.value)}
+                onChange={(e) => {
+                  Setzona(e.target.value);
+                  setPage(1);
+                }}
                 style={{ color: 'white' }}
               >
                 <MenuItem value="">
@@ -520,7 +526,10 @@ export default function Klient() {
                 type="search"
                 label="Kerko"
                 variant="outlined"
-                onChange={(e) => setSearchFilter(e.target.value)}
+                onChange={(e) => {
+                  setSearchFilter(e.target.value);
+                  setPage(1);
+                }}
               ></TextField>
               <Button
                 style={{

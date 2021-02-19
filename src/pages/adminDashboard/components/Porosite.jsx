@@ -1,28 +1,28 @@
-import React, { useState, useEffect, useContext } from "react";
-import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import AddIcon from "@material-ui/icons/Add";
-import axios from "axios";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
-import Pagination from "@material-ui/lab/Pagination";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import DepoContext from "../../../context/depoContext/DepoContext";
-import ArrowUpwardOutlinedIcon from "@material-ui/icons/ArrowUpwardOutlined";
-import ArrowDownwardOutlinedIcon from "@material-ui/icons/ArrowDownwardOutlined";
-import AlertContext from "../../../context/alertContext/AlertContext";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import CloseOutlinedIcon from "@material-ui/icons/CloseOutlined";
-import IconButton from "@material-ui/core/IconButton";
+import React, { useState, useEffect, useContext } from 'react';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import AddIcon from '@material-ui/icons/Add';
+import axios from 'axios';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import Pagination from '@material-ui/lab/Pagination';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import DepoContext from '../../../context/depoContext/DepoContext';
+import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined';
+import ArrowDownwardOutlinedIcon from '@material-ui/icons/ArrowDownwardOutlined';
+import AlertContext from '../../../context/alertContext/AlertContext';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
+import IconButton from '@material-ui/core/IconButton';
 export default function Porosite() {
   useEffect(() => {
     depoContext.getAllOrders();
@@ -38,26 +38,26 @@ export default function Porosite() {
   const [orderDetailss, showOrderDetails] = useState(false);
   const [deletePop, showDeletePop] = useState(false);
   const [resetOrderPop, setResetOrderPop] = useState(false);
-  const [idDelete, setDeleteId] = useState("");
+  const [idDelete, setDeleteId] = useState('');
   const [orderContentDetails, setOrderDetailsContent] = useState([]);
-  const [klientIDOrder, setKlientIDOrder] = useState("");
-  const [orderID, setOrderID] = useState("");
+  const [klientIDOrder, setKlientIDOrder] = useState('');
+  const [orderID, setOrderID] = useState('');
   const [page, setPage] = useState(1);
   const [itemPage, setItempage] = useState(5);
   const start = (page - 1) * itemPage;
   const end = page * itemPage;
   const [propertyName, setProperty] = useState({
-    key: "order_date",
-    direction: "descending",
+    key: 'order_date',
+    direction: 'descending'
   });
   const [disabledButton, setDisabledButton] = useState({});
   const [orderDisabledProduct, setOrderDisabledProduct] = useState({});
   const order2 = {
     klientID: klientIDOrder,
-    ID: orderID,
+    ID: orderID
   };
 
-  const [searchFilter, setSearchFilter] = useState("");
+  const [searchFilter, setSearchFilter] = useState('');
   const filteredOrder = porosite.filter(
     (order) =>
       order.ID.toString().toLowerCase().includes(searchFilter.toLowerCase()) ||
@@ -73,23 +73,23 @@ export default function Porosite() {
   if (propertyName !== null) {
     filteredOrder.sort((a, b) => {
       if (a[propertyName.key] < b[propertyName.key]) {
-        return propertyName.direction === "ascending" ? -1 : 1;
+        return propertyName.direction === 'ascending' ? -1 : 1;
       }
       if (a[propertyName.key] > b[propertyName.key]) {
-        return propertyName.direction === "ascending" ? 1 : -1;
+        return propertyName.direction === 'ascending' ? 1 : -1;
       }
       return 0;
     });
   }
 
   const requestSort = (key) => {
-    let direction = "ascending";
+    let direction = 'ascending';
     if (
       propertyName &&
       propertyName.key === key &&
-      propertyName.direction === "ascending"
+      propertyName.direction === 'ascending'
     ) {
-      direction = "descending";
+      direction = 'descending';
     }
     setProperty({ key, direction });
   };
@@ -100,25 +100,25 @@ export default function Porosite() {
 
   const renderButtonStatus = (status) => {
     if (status === 1) {
-      return "Aktive";
+      return 'Aktive';
     } else if (status === 2) {
-      return "Ne Pritje";
+      return 'Ne Pritje';
     } else if (status === 3) {
-      return "Anulluar";
+      return 'Anulluar';
     } else {
-      return "Perfunduar";
+      return 'Perfunduar';
     }
   };
 
   const renderButtonColorsStatus = (status) => {
     if (status === 1) {
-      return "#3ccc38";
+      return '#3ccc38';
     } else if (status === 2) {
-      return "#FECD2F";
+      return '#FECD2F';
     } else if (status === 3) {
-      return "#fd3259";
+      return '#fd3259';
     } else {
-      return "#6569df";
+      return '#6569df';
     }
   };
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -149,22 +149,22 @@ export default function Porosite() {
             className="reset-order-pop-opa"
             onClick={() => {
               setResetOrderPop(false);
-              setOrderID("");
-              setKlientIDOrder("");
+              setOrderID('');
+              setKlientIDOrder('');
             }}
           ></div>
           <div className="reset-order-pop-container">
             <CloseOutlinedIcon
               style={{
-                position: "absolute",
-                top: "7px",
-                right: "7px",
-                cursor: "pointer",
+                position: 'absolute',
+                top: '7px',
+                right: '7px',
+                cursor: 'pointer'
               }}
               onClick={() => {
                 setResetOrderPop(false);
-                setOrderID("");
-                setKlientIDOrder("");
+                setOrderID('');
+                setKlientIDOrder('');
               }}
             />
             <h3>Deshironi te beni porosine aktive?</h3>
@@ -174,19 +174,19 @@ export default function Porosite() {
                 variant="outlined"
                 onClick={() => {
                   axios
-                    .post("https://amove.alcodeit.com/edit_order_status.php", {
+                    .post('https://amove.alcodeit.com/edit_order_status.php', {
                       orderID: orderID,
-                      klientID: klientIDOrder,
+                      klientID: klientIDOrder
                     })
                     .then((res) => {
                       if (res.data.status === 1) {
                         setResetOrderPop(false);
-                        setOrderID("");
-                        setKlientIDOrder("");
+                        setOrderID('');
+                        setKlientIDOrder('');
                         depoContext.getAllOrders();
-                        alertContext.setAlert(`${res.data.message}`, "success");
+                        alertContext.setAlert(`${res.data.message}`, 'success');
                       } else {
-                        alertContext.setAlert(`${res.data.message}`, "error");
+                        alertContext.setAlert(`${res.data.message}`, 'error');
                       }
                     });
                 }}
@@ -198,8 +198,8 @@ export default function Porosite() {
                 variant="outlined"
                 onClick={() => {
                   setResetOrderPop(false);
-                  setOrderID("");
-                  setKlientIDOrder("");
+                  setOrderID('');
+                  setKlientIDOrder('');
                 }}
               >
                 Jo
@@ -223,11 +223,11 @@ export default function Porosite() {
           <div className="edit-order-pop-container">
             <CloseOutlinedIcon
               style={{
-                position: "absolute",
-                right: "10px",
-                top: "10px",
-                fontSize: "25px",
-                cursor: "pointer",
+                position: 'absolute',
+                right: '10px',
+                top: '10px',
+                fontSize: '25px',
+                cursor: 'pointer'
               }}
               onClick={() => {
                 setEditOrderPop(false);
@@ -266,8 +266,8 @@ export default function Porosite() {
                             depoContext.decreaseOrderQty(order);
                           }}
                         >
-                          {" "}
-                          -{" "}
+                          {' '}
+                          -{' '}
                         </Button>
 
                         <p> {order.qty} </p>
@@ -282,8 +282,8 @@ export default function Porosite() {
                             depoContext.increaseOrderQty(order);
                           }}
                         >
-                          {" "}
-                          +{" "}
+                          {' '}
+                          +{' '}
                         </Button>
                       </div>
                     </div>
@@ -291,10 +291,10 @@ export default function Porosite() {
                       <IconButton
                         disabled={orderDisabledProduct === order ? true : false}
                         style={{
-                          color: "red",
-                          alignSelf: "flex-end",
-                          justifySelf: "flex-end",
-                          cursor: "pointer",
+                          color: 'red',
+                          alignSelf: 'flex-end',
+                          justifySelf: 'flex-end',
+                          cursor: 'pointer'
                         }}
                         onClick={() => {
                           setOrderDisabledProduct(order);
@@ -315,12 +315,12 @@ export default function Porosite() {
                                 // depoContext.getAllOrders();
                                 alertContext.setAlert(
                                   `${res.data.message}`,
-                                  "success"
+                                  'success'
                                 );
                               } else {
                                 alertContext.setAlert(
                                   `${res.data.message}`,
-                                  "error"
+                                  'error'
                                 );
                               }
                             });
@@ -350,8 +350,8 @@ export default function Porosite() {
                           orderDetailsProduktID.some(
                             (order) => order === produkt.id
                           ) === true
-                            ? "none"
-                            : "",
+                            ? 'none'
+                            : ''
                       }}
                     >
                       <div className="edit-order-pop-container-right-items-item-image">
@@ -372,7 +372,11 @@ export default function Porosite() {
                             size="medium"
                             color="primary"
                             variant="contained"
-                            disabled={disabledButton === produkt ? true : false}
+                            disabled={
+                              disabledButton === produkt || produkt.sasia === 0
+                                ? true
+                                : false
+                            }
                             onClick={(e) => {
                               setDisabledButton(produkt);
                               setTimeout(() => setDisabledButton({}), 5000);
@@ -382,7 +386,7 @@ export default function Porosite() {
                                   {
                                     orderID,
                                     cmimi: produkt.cmimi,
-                                    produktID: produkt.id,
+                                    produktID: produkt.id
                                   }
                                 )
                                 .then((res) => {
@@ -392,6 +396,12 @@ export default function Porosite() {
                                         `https://amove.alcodeit.com/get_orderDetails.php?klient=${order2.klientID}&order_id=${order2.ID}`
                                       )
                                       .then((res) => {
+                                        if (res.status === 200) {
+                                          setTimeout(
+                                            () => setDisabledButton({}),
+                                            5000
+                                          );
+                                        }
                                         setOrdersDetails([]);
                                         setOrdersDetails(res.data);
                                       });
@@ -401,8 +411,8 @@ export default function Porosite() {
                                 });
                             }}
                           >
-                            {" "}
-                            Shto tek porosite{" "}
+                            {' '}
+                            Shto tek porosite{' '}
                           </Button>
                         </div>
                       </div>
@@ -425,7 +435,7 @@ export default function Porosite() {
             className="delete-pop-opa"
             onClick={() => {
               showDeletePop(false);
-              alertContext.setAlert("Porosia nuk u anullua!", "info");
+              alertContext.setAlert('Porosia nuk u anullua!', 'info');
             }}
           ></div>
           <div className="delete-pop-container">
@@ -436,7 +446,7 @@ export default function Porosite() {
                 variant="contained"
                 onClick={() => {
                   depoContext.cancelOrder(idDelete);
-                  alertContext.setAlert("Porosia u anullua!", "warning");
+                  alertContext.setAlert('Porosia u anullua!', 'warning');
                   showDeletePop(false);
                 }}
               >
@@ -445,7 +455,7 @@ export default function Porosite() {
               <Button
                 onClick={() => {
                   showDeletePop(false);
-                  alertContext.setAlert("Porosia nuk u anullua!", "info");
+                  alertContext.setAlert('Porosia nuk u anullua!', 'info');
                 }}
                 className="btn-delete-opa"
                 variant="contained"
@@ -495,7 +505,7 @@ export default function Porosite() {
             <p></p>
           </div>
           <div className="porosite-header-item-right">
-            <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
+            <LocalMallOutlinedIcon style={{ fontSize: '40px' }} />
           </div>
         </div>
 
@@ -503,15 +513,15 @@ export default function Porosite() {
           <div className="porosite-header-item-left">
             <p>Porosi aktive</p>
             <h2>
-              {" "}
+              {' '}
               {
                 porosite.filter((porosi) => porosi.order_status === 1).length
-              }{" "}
+              }{' '}
             </h2>
             <p></p>
           </div>
           <div className="porosite-header-item-right">
-            <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
+            <LocalMallOutlinedIcon style={{ fontSize: '40px' }} />
           </div>
         </div>
 
@@ -519,15 +529,15 @@ export default function Porosite() {
           <div className="porosite-header-item-left">
             <p>Porosi ne pritje</p>
             <h2>
-              {" "}
+              {' '}
               {
                 porosite.filter((porosi) => porosi.order_status === 2).length
-              }{" "}
+              }{' '}
             </h2>
             <p></p>
           </div>
           <div className="porosite-header-item-right">
-            <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
+            <LocalMallOutlinedIcon style={{ fontSize: '40px' }} />
           </div>
         </div>
 
@@ -535,15 +545,15 @@ export default function Porosite() {
           <div className="porosite-header-item-left">
             <p>Porosi te anulluara</p>
             <h2>
-              {" "}
+              {' '}
               {
                 porosite.filter((porosi) => porosi.order_status === 3).length
-              }{" "}
+              }{' '}
             </h2>
             <p></p>
           </div>
           <div className="porosite-header-item-right">
-            <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
+            <LocalMallOutlinedIcon style={{ fontSize: '40px' }} />
           </div>
         </div>
 
@@ -551,15 +561,15 @@ export default function Porosite() {
           <div className="porosite-header-item-left">
             <p>Porosi te perfunduara</p>
             <h2>
-              {" "}
+              {' '}
               {
                 porosite.filter((porosi) => porosi.order_status === 4).length
-              }{" "}
+              }{' '}
             </h2>
             <p></p>
           </div>
           <div className="porosite-header-item-right">
-            <LocalMallOutlinedIcon style={{ fontSize: "40px" }} />
+            <LocalMallOutlinedIcon style={{ fontSize: '40px' }} />
           </div>
         </div>
       </div>
@@ -574,16 +584,19 @@ export default function Porosite() {
               size="small"
               label="Kerko"
               placeholder="Kerko..."
-              onChange={(e) => setSearchFilter(e.target.value)}
+              onChange={(e) => { 
+                setSearchFilter(e.target.value)
+                setPage(1)
+              }}
             />
             <Button
               startIcon={<AddIcon />}
               color="primary"
               variant="contained"
               style={{
-                backgroundColor: "#2A7EBF",
-                borderRadius: "8px",
-                padding: "10px 20px",
+                backgroundColor: '#2A7EBF',
+                borderRadius: '8px',
+                padding: '10px 20px'
               }}
             >
               Shto Porosi
@@ -594,103 +607,103 @@ export default function Porosite() {
         {filteredOrder.length === 0 ? (
           <div
             className="klient-produkte-search-notfound"
-            style={{ justifyContent: "center" }}
+            style={{ justifyContent: 'center' }}
           >
             <img src="/search_notfound.gif" alt="" />
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                flexDirection: "column",
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column'
               }}
             >
               <h3>Nuk u gjet asnje porosi nga kerkimi😥</h3>
-              <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
+              <p style={{ fontSize: '17px' }}>Provoni perseri!</p>
             </div>
           </div>
         ) : (
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell onClick={() => requestSort("ID")}>
+                <TableCell onClick={() => requestSort('ID')}>
                   ID
-                  {propertyName.key === "ID" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'ID' &&
+                    propertyName.direction === 'ascending' && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
-                  {propertyName.key === "ID" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'ID' &&
+                    propertyName.direction === 'descending' && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
                 </TableCell>
                 <TableCell
                   align="left"
-                  onClick={() => requestSort("klient_emer")}
+                  onClick={() => requestSort('klient_emer')}
                 >
                   Emri
-                  {propertyName.key === "klient_emer" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'klient_emer' &&
+                    propertyName.direction === 'ascending' && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
-                  {propertyName.key === "klient_emer" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'klient_emer' &&
+                    propertyName.direction === 'descending' && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
                 </TableCell>
                 <TableCell
                   align="left"
-                  onClick={() => requestSort("order_date")}
+                  onClick={() => requestSort('order_date')}
                 >
                   Data
-                  {propertyName.key === "order_date" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'order_date' &&
+                    propertyName.direction === 'ascending' && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
-                  {propertyName.key === "order_date" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'order_date' &&
+                    propertyName.direction === 'descending' && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
                 </TableCell>
                 <TableCell
                   align="left"
-                  onClick={() => requestSort("klient_zona")}
+                  onClick={() => requestSort('klient_zona')}
                 >
                   Zona
-                  {propertyName.key === "klient_zona" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'klient_zona' &&
+                    propertyName.direction === 'ascending' && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
-                  {propertyName.key === "klient_zona" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'klient_zona' &&
+                    propertyName.direction === 'descending' && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
                 </TableCell>
                 <TableCell
                   align="left"
-                  onClick={() => requestSort("total_price")}
+                  onClick={() => requestSort('total_price')}
                 >
                   Vlera
-                  {propertyName.key === "total_price" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'total_price' &&
+                    propertyName.direction === 'ascending' && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
-                  {propertyName.key === "total_price" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'total_price' &&
+                    propertyName.direction === 'descending' && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
                 </TableCell>
                 <TableCell
                   align="left"
-                  onClick={() => requestSort("order_status")}
+                  onClick={() => requestSort('order_status')}
                 >
                   Porosia
-                  {propertyName.key === "order_status" &&
-                    propertyName.direction === "ascending" && (
-                      <ArrowUpwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'order_status' &&
+                    propertyName.direction === 'ascending' && (
+                      <ArrowUpwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
-                  {propertyName.key === "order_status" &&
-                    propertyName.direction === "descending" && (
-                      <ArrowDownwardOutlinedIcon style={{ fontSize: "17px" }} />
+                  {propertyName.key === 'order_status' &&
+                    propertyName.direction === 'descending' && (
+                      <ArrowDownwardOutlinedIcon style={{ fontSize: '17px' }} />
                     )}
                 </TableCell>
                 <TableCell align="center">Veprimet</TableCell>
@@ -700,8 +713,8 @@ export default function Porosite() {
             <TableBody>
               {filteredOrder.slice(start, end).map((order) => (
                 <TableRow key={order.ID}>
-                  <TableCell style={{ color: "#287DBF" }}>
-                    #{order.ID}{" "}
+                  <TableCell style={{ color: '#287DBF' }}>
+                    #{order.ID}{' '}
                   </TableCell>
                   <TableCell> {order.klient_emer} </TableCell>
                   <TableCell> {order.order_date} </TableCell>
@@ -709,21 +722,21 @@ export default function Porosite() {
                   <TableCell> {order.total_price} Leke </TableCell>
                   <TableCell>
                     <p className="status-text">
-                      {" "}
+                      {' '}
                       <span
                         className="status-pulse"
                         style={{
                           backgroundColor: renderButtonColorsStatus(
                             order.order_status
-                          ),
+                          )
                         }}
-                      ></span>{" "}
-                      {renderButtonStatus(order.order_status)}{" "}
+                      ></span>{' '}
+                      {renderButtonStatus(order.order_status)}{' '}
                     </p>
                   </TableCell>
 
                   <TableCell align="center">
-                    <div className="veprime" style={{ cursor: "pointer" }}>
+                    <div className="veprime" style={{ cursor: 'pointer' }}>
                       <VisibilityOutlinedIcon
                         onClick={() => {
                           showOrderDetails(true);
@@ -766,7 +779,7 @@ export default function Porosite() {
                           setDeleteId(order.ID);
                         }}
                         style={{
-                          display: order.order_status === 3 ? "none" : "",
+                          display: order.order_status === 3 ? 'none' : ''
                         }}
                       />
                     </div>
@@ -779,10 +792,10 @@ export default function Porosite() {
 
         <div
           className="pagination"
-          style={{ display: filteredOrder.length === 0 ? "none" : "flex" }}
+          style={{ display: filteredOrder.length === 0 ? 'none' : 'flex' }}
         >
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <InputLabel style={{ marginRight: "10px" }} id="row">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <InputLabel style={{ marginRight: '10px' }} id="row">
               Porosi ne faqe
             </InputLabel>
             <Select

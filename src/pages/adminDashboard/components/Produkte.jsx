@@ -446,7 +446,10 @@ export default function Produkte() {
             <Select
               variant="filled"
               fullWidth
-              onChange={(e) => setKategoria(e.target.value)}
+              onChange={(e) => {
+                setKategoria(e.target.value);
+                setPage(1);
+              }}
               value={kategoria === '' ? 'None' : kategoria}
               style={{ color: 'white' }}
             >
@@ -509,7 +512,10 @@ export default function Produkte() {
               label="Kerko"
               placeholder="Kerko"
               type="search"
-              onChange={(e) => setSearchFilter(e.target.value)}
+              onChange={(e) => {
+                setSearchFilter(e.target.value);
+                setPage(1);
+              }}
             ></TextField>
             <Button
               style={{
