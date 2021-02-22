@@ -90,6 +90,7 @@ thead tr th:last-child {
 tr {
   transition: all 0.2s ease-in-out;
   margin-bottom: -10px;
+  border-radius: 20px;
 }
 
 td {
@@ -120,10 +121,12 @@ tbody tr td:last-child {
 
 tbody tr:hover {
   background: #287dbf;
+  border-radius: 20px;
 }
 
 tbody tr:hover td {
   color: white !important;
+  border-bottom: 1px solid #287dbf;
 }
 tbody tr:hover td:first-child {
   border-top-left-radius: 15px;
@@ -147,7 +150,7 @@ tbody tr:hover td:last-child {
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.377);
   }
 
-  70% {
+  60% {
     transform: scale(1);
     box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
   }
@@ -3693,7 +3696,7 @@ tbody tr:hover td:last-child {
   justify-content: center;
   align-items: center;
 }
-.see-attr-names-pop-delete{
+.see-attr-names-pop-delete {
   position: fixed;
   top: -100%;
   left: 37%;
@@ -3708,9 +3711,9 @@ tbody tr:hover td:last-child {
   justify-content: space-around;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: all .4s ease-out;
+  transition: all 0.4s ease-out;
 }
-.see-attr-names-pop-delete-buttons{
+.see-attr-names-pop-delete-buttons {
   margin: 0 auto;
   width: 50%;
   height: 20%;
@@ -3718,7 +3721,7 @@ tbody tr:hover td:last-child {
   align-items: center;
   justify-content: space-around;
 }
-.show-see-attr-names-pop-delete{
+.show-see-attr-names-pop-delete {
   top: 10px;
-  transition: all .4s ease-out;
+  transition: all 0.4s ease-out;
 }

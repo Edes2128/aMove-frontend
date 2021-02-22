@@ -11,6 +11,9 @@ import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutli
 import CollapseContext from '../../../context/collpaseContext/CollpaseContext';
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import { Link } from 'react-router-dom';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
+
 export default function Header({ name, userImg, handleLogout }) {
   const [logout, Setlogout] = useState(false);
   const collapseContext = useContext(CollapseContext);
@@ -58,31 +61,33 @@ export default function Header({ name, userImg, handleLogout }) {
           <ArrowDropUpOutlinedIcon onClick={() => Setlogout(!logout)} />
         )}
 
-        <div
-          className={!logout ? 'hover-logout' : 'hover-logout display-block'}
-        >
-          <p onClick={handleLogout}>
-            {' '}
-            <PowerSettingsNewIcon onClick={handleLogout} />
-            Logout
-          </p>
-          <Link
-            style={{
-              textDecoration: 'none',
-              color: 'black',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-              fontSize: '20px',
-              fontWeight: 'bolder',
-              width: '40%'
-            }}
-            to="/admin/account"
-          >
-            <PermIdentityOutlinedIcon />
-            Account
-          </Link>
-        </div>
+
+        {logout && <ClickAwayListener onClickAway={() => Setlogout(false)} >
+          <div className={!logout ? 'hover-logout' : 'hover-logout display-block'}>
+            <p onClick={handleLogout}>
+              {' '}
+              <PowerSettingsNewIcon onClick={handleLogout} />
+          Logout
+        </p>
+            <Link
+              style={{
+                textDecoration: 'none',
+                color: 'black',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
+                fontSize: '20px',
+                fontWeight: 'bolder',
+                width: '40%'
+              }}
+              to="/admin/account"
+            >
+              <PermIdentityOutlinedIcon />
+          Account
+        </Link>
+          </div>
+        </ClickAwayListener>}
+
       </div>
     </div>
   );
