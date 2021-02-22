@@ -15,9 +15,11 @@ import {
   GET_CATEGORY_CLIENTS,
   GET_ZONA_CLIENTS,
   GET_PRODUKT_ATTR,
+  SET_LOADING,
 } from "./types";
 
 export default function DepoState({ children }) {
+
   const initialState = {
     user: {},
     klientet: [],
@@ -30,9 +32,20 @@ export default function DepoState({ children }) {
     categoryProducts: [],
     categoryClients: [],
     zonaClients: [],
+    loading: false
   };
 
   const [state, dispatch] = useReducer(DepoReducer, initialState);
+
+
+  const setLoading = () => {
+
+    dispatch({
+      type: SET_LOADING
+    })
+
+
+  }
 
   const getUser = async () => {
     const res = await axios.get(
@@ -64,6 +77,8 @@ export default function DepoState({ children }) {
   };
 
   const getAllClients = async () => {
+    setLoading();
+
     const res = await axios.get(
       "https://amove.alcodeit.com/getAll_clients.php"
     );
@@ -86,6 +101,9 @@ export default function DepoState({ children }) {
   };
 
   const getAllOrders = async () => {
+
+    setLoading();
+
     const res = await axios.get("https://amove.alcodeit.com/getAll_orders.php");
 
     dispatch({
@@ -232,6 +250,7 @@ export default function DepoState({ children }) {
         categoryClients: state.categoryClients,
         zonaClients: state.zonaClients,
         produktAttr: state.produktAttr,
+        loading: state.loading,
         getUser,
         getAllClients,
         getAllProducts,

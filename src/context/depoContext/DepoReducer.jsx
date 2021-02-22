@@ -11,18 +11,19 @@ import {
   GET_CATEGORY_CLIENTS,
   GET_ZONA_CLIENTS,
   GET_PRODUKT_ATTR,
+  SET_LOADING
 } from "./types";
 
 export default (state, action) => {
   switch (action.type) {
     case GET_USER:
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload  };
     case GET_ALL_CLIENTS:
-      return { ...state, klientet: action.payload };
+      return { ...state, klientet: action.payload , loading : false };
     case GET_ALL_PRODUCTS:
       return { ...state, produktet: action.payload };
     case GET_ALL_ORDERS:
-      return { ...state, porosite: action.payload };
+      return { ...state, porosite: action.payload ,loading : false};
     case GET_ORDER_DETAILS:
       return { ...state, orderDetails: action.payload };
     case EMPTY_ORDER_DETAILS:
@@ -39,7 +40,9 @@ export default (state, action) => {
       return { ...state, zonaClients: action.payload };
     case GET_PRODUKT_ATTR:
       return { ...state, produktAttr: action.payload };
-    default:
+    case SET_LOADING:
+      return {...state , loading : true }
+      default:
       return state;
   }
 };
