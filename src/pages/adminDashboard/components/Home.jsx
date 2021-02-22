@@ -7,7 +7,6 @@ import Skeleton from '@material-ui/lab/Skeleton';
 export default function Home() {
   const depoContext = useContext(DepoContext);
   const { klientet, porosite, loading } = depoContext;
-  // const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     depoContext.getAllClients();
@@ -18,7 +17,7 @@ export default function Home() {
   return (
     <div className="home">
       <div className="home-header">
-        {loading ? <Skeleton variant="rect" height={140} style={{ borderRadius: "20px", width: "30%" }} /> :
+        {loading ? <Skeleton variant="rect" height={140} animation={"wave"} style={{ borderRadius: "20px", width: "30%" }} /> :
 
           <div className="home-header-item">
             <div className="home-header-item-left">
@@ -30,7 +29,7 @@ export default function Home() {
             </div>
           </div>
         }
-        {loading ? <Skeleton variant="rect" width={490} height={140} style={{ borderRadius: "20px" }} /> :
+        {loading ? <Skeleton variant="rect" height={140} animation={"wave"} style={{ borderRadius: "20px", width: "30%" }} /> :
 
           <div className="home-header-item">
             <div className="home-header-item-left">
@@ -44,7 +43,7 @@ export default function Home() {
             </div>
           </div>
         }
-        {loading ? <Skeleton variant="rect" width={490} height={140} style={{ borderRadius: "20px" }} /> :
+        {loading ? <Skeleton variant="rect" height={140} animation={"wave"} style={{ borderRadius: "20px", width: "30%" }} /> :
           <div className="home-header-item">
             <div className="home-header-item-left">
               <p>Klientet</p>

@@ -3,7 +3,6 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import { Switch, Route } from "react-router-dom";
 import ProtectedRoutes from "../components/ProtectedRoutes";
-import Home from "./components/Home";
 import Porosite from "./components/Porosite";
 import Produktet from "./components/Produktet";
 import SingleProduct from "./components/SingleProduct";
@@ -47,7 +46,6 @@ export default function KlientDashboard({ history }) {
           }
         >
           <Switch>
-            <ProtectedRoutes exact path="/klient" component={Home} />
             <ProtectedRoutes
               exact
               path="/klient/porosite"
