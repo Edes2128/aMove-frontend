@@ -14,7 +14,7 @@ export default function AlertState({ children }) {
       payload: { msg, type },
     });
 
-    setTimeout(() => dispatch({ type: REMOVE_ALERT }), 7000);
+    setTimeout(() => dispatch({ type: REMOVE_ALERT }), 6000);
   };
 
   const removeAlert = () => {

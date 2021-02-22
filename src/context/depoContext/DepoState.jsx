@@ -32,22 +32,20 @@ export default function DepoState({ children }) {
     categoryProducts: [],
     categoryClients: [],
     zonaClients: [],
-    loading : false
+    loading: false
   };
 
   const [state, dispatch] = useReducer(DepoReducer, initialState);
 
 
   const setLoading = () => {
-
-      dispatch({
-        type : SET_LOADING
-      })
-
+    dispatch({
+      type: SET_LOADING
+    })
   }
 
   const getUser = async () => {
-    
+
     const res = await axios.get(
       `https://amove.alcodeit.com/user_profile.php?token="${JSON.parse(
         localStorage.getItem("token")
@@ -78,7 +76,6 @@ export default function DepoState({ children }) {
 
   const getAllClients = async () => {
 
-    setLoading()
 
     const res = await axios.get(
       "https://amove.alcodeit.com/getAll_clients.php"
@@ -88,11 +85,13 @@ export default function DepoState({ children }) {
       type: GET_ALL_CLIENTS,
       payload: res.data,
     });
+
+    if (res.status === 200) {
+      setTimeout(() => setLoading(), 1000)
+    }
   };
 
   const getAllProducts = async () => {
-
-    setLoading()
 
     const res = await axios.get(
       "https://amove.alcodeit.com/get_allProducts.php"
@@ -102,6 +101,11 @@ export default function DepoState({ children }) {
       type: GET_ALL_PRODUCTS,
       payload: res.data,
     });
+
+
+    if (res.status === 200) {
+      setTimeout(() => setLoading(), 1000)
+    }
   };
 
   const getAllOrders = async () => {
@@ -252,7 +256,7 @@ export default function DepoState({ children }) {
         categoryClients: state.categoryClients,
         zonaClients: state.zonaClients,
         produktAttr: state.produktAttr,
-        loading : state.loading,
+        loading: state.loading,
         getUser,
         getAllClients,
         getAllProducts,

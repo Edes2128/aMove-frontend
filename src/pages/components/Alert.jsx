@@ -16,7 +16,7 @@ export default function Alerts() {
             horizontal: "left",
           }}
           open={alerts !== null ? true : false}
-          autoHideDuration={7000}
+          autoHideDuration={6000}
           onClose={() => alertContext.removeAlert()}
         >
           <Alert

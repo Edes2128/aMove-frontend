@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <div className="home">
       <div className="home-header">
-        {loading ? <Skeleton variant="rect" height={140} animation={"wave"} style={{ borderRadius: "20px", width: "30%" }} /> :
+        {loading ? <Skeleton variant="rect" height={140} animation={"wave"}  style={{ borderRadius: "20px", width: "30%" }} /> :
 
           <div className="home-header-item">
             <div className="home-header-item-left">

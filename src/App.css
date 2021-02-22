@@ -41,8 +41,8 @@
   font-display: swap;
 }
 ::selection {
-  background-color: salmon;
-  color: white;
+  background-color: rgb(0, 219, 235);
+  color: rgb(0, 0, 0);
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

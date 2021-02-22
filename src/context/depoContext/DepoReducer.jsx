@@ -19,11 +19,11 @@ export default (state, action) => {
     case GET_USER:
       return { ...state, user: action.payload  };
     case GET_ALL_CLIENTS:
-      return { ...state, klientet: action.payload, loading: false };
+      return { ...state, klientet: action.payload, loading: true };
     case GET_ALL_PRODUCTS:
-      return { ...state, produktet: action.payload, loading : false };
+      return { ...state, produktet: action.payload, loading : true };
     case GET_ALL_ORDERS:
-      return { ...state, porosite: action.payload, loading: false };
+      return { ...state, porosite: action.payload, loading: true };
     case GET_ORDER_DETAILS:
       return { ...state, orderDetails: action.payload };
     case EMPTY_ORDER_DETAILS:
@@ -41,7 +41,7 @@ export default (state, action) => {
     case GET_PRODUKT_ATTR:
       return { ...state, produktAttr: action.payload };
       case SET_LOADING:
-        return {...state,loading : true }
+        return {...state,loading : false }
     default:
       return state;
   }
