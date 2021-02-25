@@ -13,7 +13,6 @@ import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
 import { Link } from 'react-router-dom';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
-
 export default function Header({ name, userImg, handleLogout }) {
   const [logout, Setlogout] = useState(false);
   const collapseContext = useContext(CollapseContext);
@@ -55,7 +54,7 @@ export default function Header({ name, userImg, handleLogout }) {
           alt="LogoUser"
         />
         {!logout && (
-          <ArrowDropDownOutlinedIcon onClick={() => Setlogout(!logout)} />
+          <ArrowDropDownOutlinedIcon style={{cursor:"pointer"}} onClick={() => Setlogout(!logout)} />
         )}
         {logout && (
           <ArrowDropUpOutlinedIcon onClick={() => Setlogout(!logout)} />

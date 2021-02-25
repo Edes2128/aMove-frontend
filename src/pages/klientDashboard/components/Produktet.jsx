@@ -102,6 +102,7 @@ export default function Produktet() {
     setSliderPrice(newValue);
     setRange("all");
     setPriceType("slider");
+    setPage(1)
   };
   function valuetext(sliderPrice) {
     return `${sliderPrice}$`;
@@ -149,6 +150,7 @@ export default function Produktet() {
                   onChange={(e) => {
                     setRange(e.target.value);
                     setPriceType("range");
+                    setPage(1)
                   }}
                   value={range}
                 >
@@ -198,6 +200,7 @@ export default function Produktet() {
                   onChange={(e) => {
                     setKategori(e.target.value);
                     setFilterByCategory(e.target.value);
+                    setPage(1)
                   }}
                   value={kategori}
                 >
@@ -232,6 +235,7 @@ export default function Produktet() {
               <InputLabel>Featured</InputLabel>
               <Select
                 onChange={(e) => {
+
                   setPriceSort(e.target.value);
                   requestSort(e.target.value);
                 }}
@@ -398,113 +402,113 @@ export default function Produktet() {
 
           {produktMenuLayout === "horizontal" && (
             <div className="produktet-list">
-              <>
-                {productFilter.length === 0 ? (
-                  <div className="klient-produkte-search-notfound">
-                    <img src="/search_notfound.gif" alt="" />
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        flexDirection: "column",
-                      }}
-                    >
-                      <h3>Nuk u gjet asnje produkt nga kerkimi😥</h3>
-                      <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
-                    </div>
+
+              {productFilter.length === 0 ? (
+                <div className="klient-produkte-search-notfound">
+                  <img src="/search_notfound.gif" alt="" />
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <h3>Nuk u gjet asnje produkt nga kerkimi😥</h3>
+                    <p style={{ fontSize: "17px" }}>Provoni perseri!</p>
                   </div>
-                ) : (
-                  <>
-                    {productFilter.slice(start, end).map((product) => (
-                      <div className="produktet-list-item" key={product.id}>
-                        <div className="produkte-header-item-image">
-                          <Link to={`/klient/${product.id}`}>
-                            <img
-                              src={`https://amove.alcodeit.com/images/${product.image}`}
-                              alt=""
-                            />
-                          </Link>
-                        </div>
+                </div>
+              ) : (
+                <>
+                  {productFilter.slice(start, end).map((product) => (
+                    <div className="produktet-list-item" key={product.id}>
+                      <div className="produkte-header-item-image">
+                        <Link to={`/klient/${product.id}`}>
+                          <img
+                            src={`https://amove.alcodeit.com/images/${product.image}`}
+                            alt=""
+                          />
+                        </Link>
+                      </div>
 
-                        <div className="produktet-list-item-price">
-                          <p> {product.cmimi} Leke </p>
-                        </div>
-                        <div className="produkte-header-item-title-description">
-                          <h4> {product.titulli} </h4>
-                          <p> {product.pershkrimi} </p>
-                        </div>
+                      <div className="produktet-list-item-price">
+                      <div className="produkte-header-item-title-description">
+                      <h4> {product.titulli} </h4>
+                      <p> {product.pershkrimi} </p>
+                    </div>
+                        <p> {product.cmimi} Leke </p>
+                      </div>
+                
 
-                        <div className="produkte-header-item-wish-cart">
-                          {cartProducts.some(
-                            (item) => item.product_id === product.id
-                          ) === true ? (
-                            <Button
-                              startIcon={<LocalMallOutlinedIcon />}
-                              color="primary"
-                              style={{ width: "50%" }}
-                            >
-                              <Link
-                                to="/klient/shporta"
-                                style={{
-                                  color: "inherit",
-                                  textDecoration: "none",
-                                }}
-                              >
-                                View in Cart
-                              </Link>
-                            </Button>
-                          ) : (
-                            <Button
-                              startIcon={<LocalMallOutlinedIcon />}
-                              disabled={
-                                product.sasia === 0 ||
-                                product === disabledButton
-                                  ? true
-                                  : false
-                              }
-                              color="primary"
-                              style={{ width: "50%" }}
-                              onClick={() => {
-                                klientContext.addToCart(product);
-                                setDisabledButton(product);
-                                setTimeout(() => setDisabledButton({}), 1500);
+                      <div className="produkte-header-item-wish-cart">
+                        {cartProducts.some(
+                          (item) => item.product_id === product.id
+                        ) === true ? (
+                          <Button
+                            startIcon={<LocalMallOutlinedIcon />}
+                            color="primary"
+                            style={{ width: "50%" }}
+                          >
+                            <Link
+                              to="/klient/shporta"
+                              style={{
+                                color: "inherit",
+                                textDecoration: "none",
                               }}
                             >
-                              Add to Cart
-                            </Button>
-                          )}
+                              View in Cart
+                              </Link>
+                          </Button>
+                        ) : (
+                          <Button
+                            startIcon={<LocalMallOutlinedIcon />}
+                            disabled={
+                              product.sasia === 0 ||
+                                product === disabledButton
+                                ? true
+                                : false
+                            }
+                            color="primary"
+                            style={{ width: "50%" }}
+                            onClick={() => {
+                              klientContext.addToCart(product);
+                              setDisabledButton(product);
+                              setTimeout(() => setDisabledButton({}), 1500);
+                            }}
+                          >
+                            Add to Cart
+                          </Button>
+                        )}
 
-                          {wishlistProducts.some(
-                            (item) => item.product_id === product.id
-                          ) ? (
-                            <Button
-                              startIcon={<FavoriteIcon />}
-                              color="secondary"
-                              style={{ width: "50%" }}
-                              onClick={() =>
-                                klientContext.removeFromWishlist(product)
-                              }
-                            >
-                              Wish List
-                            </Button>
-                          ) : (
-                            <Button
-                              startIcon={<FavoriteBorderOutlinedIcon />}
-                              color="secondary"
-                              style={{ width: "50%" }}
-                              onClick={() =>
-                                klientContext.addToWishlist(product)
-                              }
-                            >
-                              Wish List
-                            </Button>
-                          )}
-                        </div>
+                        {wishlistProducts.some(
+                          (item) => item.product_id === product.id
+                        ) ? (
+                          <Button
+                            startIcon={<FavoriteIcon />}
+                            color="secondary"
+                            style={{ width: "50%" }}
+                            onClick={() =>
+                              klientContext.removeFromWishlist(product)
+                            }
+                          >
+                            Wish List
+                          </Button>
+                        ) : (
+                          <Button
+                            startIcon={<FavoriteBorderOutlinedIcon />}
+                            color="secondary"
+                            style={{ width: "50%" }}
+                            onClick={() =>
+                              klientContext.addToWishlist(product)
+                            }
+                          >
+                            Wish List
+                          </Button>
+                        )}
                       </div>
-                    ))}
-                  </>
-                )}
-              </>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           )}
           <div
@@ -519,7 +523,21 @@ export default function Produktet() {
               </InputLabel>
               <Select
                 labelId="row"
-                onChange={(e) => setItempage(e.target.value)}
+                onChange={(e) => {
+
+                  setItempage(e.target.value)
+
+                  if (
+                    (page - 0.5) * e.target.value >=
+                    productFilter.length
+                  ) {
+                    const maxPage = Math.ceil(
+                      productFilter.length / e.target.value
+                    );
+                    setPage(maxPage);
+                  }
+
+                }}
                 value={itemPage}
               >
                 <MenuItem value={4}>4</MenuItem>

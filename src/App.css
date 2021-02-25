@@ -1102,37 +1102,34 @@ tbody tr:hover td:last-child {
 }
 .produkte-header-item-image {
   width: 100%;
-  height: 60%;
+  height: 70%;
   background-color: rgb(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .produkte-header-item-image img {
-  width: 100%;
-  height: auto;
+  width: 400px;
 }
 .produktet-list-item-price {
   width: 100%;
-  height: 6%;
+  height: 20%;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
   background-color: white;
   padding-right: 10px;
+  justify-content: space-between;
 }
+
 .produkte-header-item-title-description {
-  width: 100%;
-  height: 24%;
+  width: 70%;
   display: flex;
   background-color: white;
   flex-direction: column;
-  justify-content: space-around;
   padding-left: 10px;
 }
 .produkte-header-item-wish-cart {
   width: 100%;
-  height: 20%;
+  height: 10%;
   background-color: white;
   display: flex;
 }
