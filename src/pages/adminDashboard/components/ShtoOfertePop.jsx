@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import Button from "@material-ui/core/Button";
-import OfertaSingleProductForm from "./ofertaForms/OfertaSingleProductForm";
-import CategoryProductOfertaForm from "./ofertaForms/CategoryProductOfertaForm";
-import ClientSpecifikOfertaForm from "./ofertaForms/ClientSpecifikOfertaForm";
-import CategoryClientOfertaForm from "./ofertaForms/CategoryClientOfertaForm";
-import OfertSetForm from "./ofertaForms/OfertSetForm";
-import OfertaGrupForm from "./ofertaForms/OfertaGrupForm";
 import { CloseOutlined } from "@material-ui/icons";
-export default function ShtoOfertePop({ closePop }) {
-  const [ofertaType, setOfertaType] = useState("singleProduct");
 
+
+
+export default function ShtoOfertePop({ closePop }) {
+
+  
   return (
     <div className="shto-oferte-pop">
       <div className="shto-oferte-pop-opa" onClick={closePop}></div>
@@ -24,52 +20,7 @@ export default function ShtoOfertePop({ closePop }) {
           }}
           onClick={closePop}
         />
-        <div className="shto-oferte-pop-cotnainer-header-tabs">
-          <Button
-            style={{ color: ofertaType === "singleProduct" ? "#2a7ebf" : "" }}
-            onClick={() => setOfertaType("singleProduct")}
-          >
-            Single Product
-          </Button>
-          <Button
-            style={{ color: ofertaType === "categoryProduct" ? "#2a7ebf" : "" }}
-            onClick={() => setOfertaType("categoryProduct")}
-          >
-            Kategori Produkti
-          </Button>
-          <Button
-            style={{ color: ofertaType === "specifikClient" ? "#2a7ebf" : "" }}
-            onClick={() => setOfertaType("specifikClient")}
-          >
-            Klient Specifik
-          </Button>
-          <Button
-            style={{ color: ofertaType === "categoryClient" ? "#2a7ebf" : "" }}
-            onClick={() => setOfertaType("categoryClient")}
-          >
-            Kategori Klienti
-          </Button>
-          <Button
-            style={{ color: ofertaType === "ofertSet" ? "#2a7ebf" : "" }}
-            onClick={() => setOfertaType("ofertSet")}
-          >
-            Ofert Set
-          </Button>
-          <Button
-            style={{ color: ofertaType === "ofertGrup" ? "#2a7ebf" : "" }}
-            onClick={() => setOfertaType("ofertGrup")}
-          >
-            Ofert Grup
-          </Button>
-        </div>
-        <div className="shto-oferte-pop-cotnainer-forms">
-          {ofertaType === "singleProduct" && <OfertaSingleProductForm />}
-          {ofertaType === "categoryProduct" && <CategoryProductOfertaForm />}
-          {ofertaType === "specifikClient" && <ClientSpecifikOfertaForm />}
-          {ofertaType === "categoryClient" && <CategoryClientOfertaForm />}
-          {ofertaType === "ofertSet" && <OfertSetForm />}
-          {ofertaType === "ofertGrup" && <OfertaGrupForm />}
-        </div>
+        
       </div>
     </div>
   );
