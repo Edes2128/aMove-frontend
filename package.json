@@ -11,7 +11,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.2",
     "axios": "^0.21.1",
-    "netlify-cli": "^3.9.0",
+    "netlify-cli": "^3.10.2",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-calendar": "^3.3.1",
