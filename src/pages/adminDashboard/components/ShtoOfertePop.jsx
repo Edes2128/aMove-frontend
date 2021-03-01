@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import { CloseOutlined } from "@material-ui/icons";
-
-
 
 export default function ShtoOfertePop({ closePop }) {
 
-  
   return (
     <div className="shto-oferte-pop">
       <div className="shto-oferte-pop-opa" onClick={closePop}></div>
@@ -20,7 +17,9 @@ export default function ShtoOfertePop({ closePop }) {
           }}
           onClick={closePop}
         />
-        
+
+                    
+
       </div>
     </div>
   );
